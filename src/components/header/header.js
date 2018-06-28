@@ -185,7 +185,7 @@ class Header extends Component {
 
 						</div>
 					</div>
-					<Menu1 onStateChange={isMenuOpen} isOpen={this.state.isOpen} burgerButtonClassName="burgerbutton" >
+					<Menu1 onStateChange={isMenuOpen}  burgerButtonClassName="burgerbutton" >
 						<Menu
 							onClick={this.handleClick}
 							selectedKeys={[this.state.current]}
