@@ -1,0 +1,28 @@
+.navbar-collapse1{
+    display: block;
+}
+
+.course-image{
+    text-align: left;
+}
+
+.imagedropshadow {
+    -moz-box-shadow: 1px 1px 5px #999;
+    -webkit-box-shadow: 1px 1px 5px #999;
+    box-shadow: 1px 1px 5px #999;
+    border-radius: 6px;
+    height: 90px;
+    margin-bottom: 10px;
+}
+a:hover img.imagedropshadow {
+    border: solid 1px #CCC;
+  
+}
+.float-right{
+    float: right;
+}
+
+.col-sm-3 .nav-links{
+    margin-top: -150px;
+}
+.mcontent-course{}

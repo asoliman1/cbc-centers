@@ -1,0 +1,23 @@
+.payment-page{
+    background-color: lightgray;
+}
+.tab-content{
+    background: white;
+}
+.nav-tabs > li > a {
+    /* margin-right: 3px; */
+    /* font-size: 1em; */
+    /* color: #717171; */
+    /* border: solid 1px #c3c3c3; */
+    /* border-radius: 3px; */
+    background: #ffffff;
+    /* padding: .2em 0.573em; */
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #ffffff;
+    cursor: default;
+    background: #337ab7;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    border: 0;
+}

@@ -1,0 +1,12 @@
+
+a{
+    cursor: pointer;
+}
+.main{
+    margin-top: 148px;
+}
+@media only screen and (max-width: 600px) {
+  .main{
+      margin-top: 95px;
+  }
+}

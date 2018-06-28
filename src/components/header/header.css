@@ -1,0 +1,74 @@
+
+  .badge{
+      background: rgba(255,0,0,0.8);
+      font-size: 10px;
+  }
+  .s{
+      background: transparent;
+      padding-top:9px;
+      font-size: 12px;
+      display: inline;
+  }
+  
+  .bm-burger-button {
+   display: none !important;
+  }
+  
+  /* Color/shape of burger icon bars */
+
+  
+  /* Position and sizing of clickable cross button */
+ 
+  
+  /* Color/shape of close button cross */
+  .bm-cross {
+    background: #bdc3c7;
+  }
+  
+  /* General sidebar styles */
+  .bm-menu {
+    background: white;
+    padding: 2.5em 1.5em 0;
+    font-size: 1.15em;
+  }
+  
+  /* Morph shape necessary with bubble or elastic */
+  .bm-morph-shape {
+    fill: #373a47;
+  }
+  
+  /* Wrapper for item list */
+  .bm-item-list {
+    color: #b8b7ad;
+    padding: 0.8em;
+  }
+  
+  /* Individual item */
+  .bm-item {
+    display: inline-block;
+  }
+  
+  /* Styling of overlay */
+  .bm-overlay {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .ant-menu-item.ant-menu-item-selected{
+    background-color: black ;
+    color:white !important ;
+  }
+  .ant-menu-submenu-arrow{
+      width: auto !important;
+      right: 14px !important;
+  }
+  .ant-anchor-wrapper{
+    padding:20px !important;
+    border-radius: 4px !important;
+  }
+
+  .ant-anchor-link{
+      line-height: 2 !important;
+      font-size: 14px !important;
+  }
+  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: black !important;
+  }

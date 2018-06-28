@@ -1,0 +1,31 @@
+.course-enrollment-page{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.itOSKA {
+    border-left: 4px solid blue;
+    font-weight: bold;
+}
+.course-enrollment-content{
+    padding: 50px;
+    flex: 1;
+}
+.sc-bdVaJa {
+    margin-left: 3px;
+    margin-bottom: 5px;
+}
+
+.side-header {
+    padding: 30px;
+    color:darkgrey !important;
+    font-weight: 100 !important;
+}
+
+.side-header h4{
+    color:darkgrey !important;
+    font-weight: 100 !important;
+}
+.__rsnav___itemchild{
+    margin-left: 25px
+}

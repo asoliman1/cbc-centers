@@ -1,0 +1,42 @@
+
+.carousel li{
+    margin: 0;
+}
+.posf-grids{
+    background: white;
+}
+
+.glyphicon-chevron-left{
+    color:gray !important; 
+}
+.glyphicon-chevron-right{
+    color: gray !important;
+}
+
+
+
+.ant-carousel .slick-slide {
+    text-align: center;
+    height: 400px !important ;
+    line-height: 400px;
+    background: #364d79;
+    overflow: hidden;
+  }
+  
+  .ant-carousel .slick-slide h3 {
+    color: #fff;
+  }
+
+  .ant-tabs-tab-active{
+      color:white !important;
+      background: #035ea4 !important; 
+  }
+
+  .ant-tabs-tab{
+      width: auto;
+}
+
+.materialsf-section{
+    margin-bottom: 20px;
+    padding:10px;
+}

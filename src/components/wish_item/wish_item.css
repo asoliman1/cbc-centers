@@ -1,0 +1,87 @@
+.media-object{
+    width: 140px;
+    height: 140px;
+}
+.media-body p,footer{
+    line-height: 1.4rem;
+    font-size: 14px !important;
+    letter-spacing: 0.4px;
+}
+@media only screen and (max-width: 600px) {
+   .media-object{
+       width: 75px;
+       height: 75px;
+   }
+   .list-group-item{
+       width: 99% !important;
+   }
+   .media-body h4{
+    font-weight: 600;       
+    font-size: 15px;
+}
+  .media-body p,footer,blockqoute{
+      line-height: 0.9rem;
+      font-size: 10px !important;
+      letter-spacing: 0.5px;
+  }
+
+}
+
+@media only screen and (max-width: 900px) {
+    .media-object{
+        width: 100px;
+        height: 100px;
+    }
+    .list-group-item{
+        width: 99% !important;
+    }
+    .media-body h4{
+        font-weight: 600;
+        font-size: 15px;
+    }
+   .media-body p,footer,blockqoute{
+       line-height: 0.9rem;
+       font-size: 10px !important;
+       letter-spacing: 0.5px;
+   }
+ 
+ }
+
+ @media only screen and (max-width: 1024px) {
+    .media-object{
+        width: 120px;
+        height: 120px;
+    }
+    .list-group-item{
+        width: 90% !important;
+    }
+    .media-body h4{
+        font-size: 20px;
+    }
+   .media-body p,footer,blockqoute{
+       line-height: 1.2rem;
+       font-size: 13px !important;
+       letter-spacing: 0.5px;
+   }
+ 
+ }
+
+ @media only screen and (max-width: 500px) {
+    .media-object{
+        width: 70px;
+        height: 70px;
+    }
+    .list-group-item{
+        width: 97% !important;
+    }
+    .media-body h4{
+        font-size: 15px;
+        font-weight: bold;
+    }
+   .media-body p,footer,blockqoute{
+       line-height: 0.9rem;
+       font-size: 11px !important;
+       letter-spacing: 0.2px;
+   }
+ 
+ }
