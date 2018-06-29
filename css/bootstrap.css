@@ -530,9 +530,11 @@ th {
 }
 .glyphicon-chevron-left:before {
   content: "\e079";
+  color: white;
 }
 .glyphicon-chevron-right:before {
   content: "\e080";
+  color: white;
 }
 .glyphicon-plus-sign:before {
   content: "\e081";
@@ -4816,9 +4818,8 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pager li > span {
   display: inline-block;
   padding: 5px 14px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 15px;
+  background-color: #ff6600;
+  margin: 5px
 }
 .pager li > a:hover,
 .pager li > a:focus {

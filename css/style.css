@@ -352,7 +352,7 @@ ul.short_ls li a {
 /*-- Banner-bottom --*/
 /*-- Material --*/
 .materialsf-section {
-    background: url(../images/matrlf.jpg) no-repeat 0px 0px;
+    background: #c2c2c2;
     background-size: cover;
     -webkit-background-size: cover;
     -o-background-size: cover;
@@ -765,7 +765,7 @@ ul.social-icons3.two li a {
 
 /*-- Colors --*/
 h3.white-clrf{
-	color:#fff;
+	color:#555252;
 }
 p.white-clrf{
 	color:#fdfdfd;
