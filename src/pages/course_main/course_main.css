@@ -20,9 +20,9 @@ a:hover img.imagedropshadow {
 }
 .float-right{
     float: right;
+    margin-right: 20px;
 }
 
 .col-sm-3 .nav-links{
     margin-top: -150px;
 }
-.mcontent-course{}

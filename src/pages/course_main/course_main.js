@@ -7,6 +7,10 @@ import May_like from '../../components/may_like/may_like';
 import Course_week from '../../components/course_week/course_week';
 import How_works from '../../components/how_works/how_works';
 class course_main extends Component {
+constructor(props) {
+	super(props);
+	console.log(this.props)
+}
 
 	render() {
 		window.scrollTo(0, 0)
@@ -14,11 +18,8 @@ class course_main extends Component {
 			<div>
 				<div className="minner_page_mainsmk minner_page_mainsmk_2">
 					<div className="float-right">
-						<h3 className="mtittle">Courses</h3>
-						<p>The only course you need to learn development -
-					<b>Core IT Skills</b>,
-					<b>Hardware</b>,
-					<b>Network And Security</b>, more.</p>
+						<h3 className="mtittle">{this.props.location.state?this.props.location.state.nameE:'Course Name'}</h3>
+						<p> {this.props.location.state?this.props.location.state.shortDescE:'Short Describtion'} </p>
 					</div>
 					<div className="col-sm-3 nav-links">
 						<nav className='navbar navbar-default mtextmk-nav'>
@@ -37,7 +38,7 @@ class course_main extends Component {
 										<a href="#intro" className="scroll">
 											<div className="course-image">
 												<img className="imagedropshadow" src="https://blog.stylingandroid.com/wp-content/themes/lontano-pro/images/no-image-slide.png" /> <br />
-												<span>	Course Name </span>
+												<span>	{this.props.location.state?this.props.location.state.nameE:'Course Name'} </span>
 											</div>
 										</a>
 

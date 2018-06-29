@@ -7,7 +7,7 @@ class Course_card extends Component {
             <div className="fff">
                 <div className="thumbnail">
                     <a href="#">
-                        <img src="/images/mf2.jpg" alt="" />
+                        <img src="../images/mf2.jpg" alt="" />
                     </a>
                 </div>
                 <div className="caption">

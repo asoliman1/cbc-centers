@@ -103,9 +103,7 @@ class Header extends Component {
 	}
 
 	render() {
-		var isMenuOpen = function (state) {
-			return state.isOpen;
-		};
+
 		return (
 			<header>
 				<LoadingBar showFastActions={true} style={{ zIndex: '100000' }} />
@@ -185,7 +183,7 @@ class Header extends Component {
 
 						</div>
 					</div>
-					<Menu1 onStateChange={isMenuOpen}  burgerButtonClassName="burgerbutton" >
+					<Menu1 isOpen={this.state.isOpen} burgerButtonClassName="burgerbutton" >
 						<Menu
 							onClick={this.handleClick}
 							selectedKeys={[this.state.current]}
@@ -242,9 +240,8 @@ class Header extends Component {
 
 							<SubMenu title={<span>Courses <Icon type="arrow-down" /></span>}>
 								<Anchor bounds={100} offsetTop={150} showInkInFixed={true} affix={false}>
-
-									<Link1 href="/home#offered_courses" title="Offered Courses" />
 									<Link1 href="/home#popular_courses" title="Popular Courses" />
+									<Link1 href="/home#offered_courses" title="Offered Courses" />
 									<Link1 href="/home#rated_courses" title="Rated Courses" />
 
 								</Anchor>

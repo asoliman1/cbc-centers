@@ -8,7 +8,7 @@ class Notification_item extends Component {
 
                     <div class="media">
                         <div class="media-left">
-                            <a href="#">
+                            <a >
                                 <img class="media-object img-rounded" src="/images/m1.jpg" alt="..."  />
                             </a>
                         </div>

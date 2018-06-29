@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button,Card,Avatar,Icon } from 'antd';
+import { Button, Card, Icon } from 'antd';
 const { Meta } = Card;
 
 
@@ -8,6 +8,7 @@ class Courses_type extends Component {
     constructor(props) {
         super(props);
         this.state = { open: false }
+        console.log(this.props)
     }
 
     closeModal() {
@@ -17,15 +18,15 @@ class Courses_type extends Component {
         return (
             <div>
                 <div className="col-md-3 col-sm-6 tabsf-w3-agileits-grids">
-                <Card hoverable 
-    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
-    actions={[<Button type="primary" >More Details<Icon type="ellipsis" /></Button>]}
-  >
-    <Meta
-      title={this.props.name}
-      description={this.props.desc}
-    />
-  </Card>
+                    <Card hoverable loading={this.props.loading}
+                        cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                        actions={[<Button type="primary" > <Link style={{color:'white'}} to={{pathname:`courses/${this.props.id}`,state:this.props.course}} > More Details<Icon type="ellipsis" /> </Link> </Button>]}
+                    >
+                        <Meta
+                            title={this.props.name}
+                            description={this.props.desc}
+                        />
+                    </Card>
                     {/* <img src="/images/bbf1.jpg" alt="" />
                     <div className="img-caption">
                         <div className="tabs-inn-info-agileits-w3layouts">
@@ -65,7 +66,7 @@ class Courses_type extends Component {
                     </div>
 
                 </Modal> */}
-            </div>
+                </div>
 
             </div>
         );

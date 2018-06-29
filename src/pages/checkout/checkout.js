@@ -28,7 +28,7 @@ class checkout extends Component {
 						<tbody>
 							<tr class="rem1">
 								<td class="invert">1</td>
-								<td class="invert-image"><a href="shop_single.html"><img src="images/mf2.jpg" alt=" " class="img-responsive"/></a></td>
+								<td class="invert-image"><a ><img src="../images/mf2.jpg" alt=" " class="img-responsive"/></a></td>
 								<td class="invert">
 									<div class="quantity">
 										<div class="quantity-select">
@@ -50,7 +50,7 @@ class checkout extends Component {
 							</tr>
 							<tr class="rem2">
 								<td class="invert">2</td>
-								<td class="invert-image"><a href="shop_single.html"><img src="images/mf3.jpg" alt=" " class="img-responsive"/></a></td>
+								<td class="invert-image"><a ><img src="../images/mf3.jpg" alt=" " class="img-responsive"/></a></td>
 								<td class="invert">
 									<div class="quantity">
 										<div class="quantity-select">
@@ -72,7 +72,7 @@ class checkout extends Component {
 							</tr>
 							<tr class="rem3">
 								<td class="invert">3</td>
-								<td class="invert-image"><a href="shop_single.html"><img src="images/mf6.jpg" alt=" " class="img-responsive"/></a></td>
+								<td class="invert-image"><a ><img src="../images/mf6.jpg" alt=" " class="img-responsive"/></a></td>
 								<td class="invert">
 									<div class="quantity">
 										<div class="quantity-select">

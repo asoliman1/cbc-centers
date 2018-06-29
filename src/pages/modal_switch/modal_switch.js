@@ -52,6 +52,11 @@ class ModalSwitch extends React.Component {
         }
     }
 
+    componentDidMount(){
+        if(this.props.location.pathname==='/')
+        this.props.history.push('/home');
+    }
+
 
     render() {
         const { location } = this.props;
@@ -70,11 +75,11 @@ class ModalSwitch extends React.Component {
                     <Route path="/search" component={search} />
                     {/* <Route path="/instructor" component={instructor} /> */}
                     <Route path="/payment" component={payment} />
-                    <Route path="/courses" component={course_main} />
-                    <Route path="/course_details" component={course_details} />
+                    <Route path="/courses/:id" component={course_main} />
+                    <Route path="/course_details/:id" component={course_details} />
                     <Route path="/checkout" component={checkout} />
                     <Route path="/wish" component={wish} />
-                    <Route path="/course_enrollment" component={course_enrollment} />
+                    <Route path="/course_enrollment/:id" component={course_enrollment} />
                     <Route path="/enrollments" component={enrollments} />
                     <Route path="/notifications" component={notifications} />
                     <Route exact component={NoMatch} />

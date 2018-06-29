@@ -72,3 +72,23 @@
   .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
     background-color: black !important;
   }
+
+  .ant-menu-item-active{
+    color: #e34b11 !important;
+    border-color: #e34b11 !important;
+  }
+
+  .ant-menu-submenu-active{
+    color: #e34b11 !important;
+    border-color: #e34b11 !important;
+  }
+
+  .ant-menu-submenu:hover{
+    color: #e34b11 !important;
+  }
+  .ant-menu-submenu-title:hover{
+    color:#e34b11 !important;
+  }
+  a:hover{
+    color: #e34b11 !important;
+  }

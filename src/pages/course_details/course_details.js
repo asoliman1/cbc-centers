@@ -388,7 +388,7 @@ class course_details extends Component {
 							</h6>
 							<div className="col-md-5 left-instr">
 								<div className="col-md-5 demo-inst-left">
-									<img src="images/i1.png" className="img-responsive" alt="" />
+									<img src="../images/i1.png" className="img-responsive" alt="" />
 									<div className="inst-txt">
 										<h5>Helen L. Odom</h5>
 										<p>designation in detail</p>

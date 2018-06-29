@@ -13,7 +13,7 @@ class Footer extends Component {
 					<div className="container">
 						<div className="col-md-4 footer_w3layouts_gridf">
 							<h2>
-								<a href="index.html">CBC Centers</a>
+								<a href="/home" >CBC Centers</a>
 							</h2>
 							<p className="paragraphf">Providing best coaching at affordable prices.</p>
 						</div>
@@ -26,15 +26,15 @@ class Footer extends Component {
 									</li>
 									<li>
 										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<a href="marketing.html">Marketing</a>
+										<a >Marketing</a>
 									</li>
 									<li>
 										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<a href="development.html">Development</a>
+										<a >Development</a>
 									</li>
 									<li>
 										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<a href="maths.html">Maths</a>
+										<a >Maths</a>
 									</li>
 								</ul>
 							</nav>
@@ -86,8 +86,7 @@ class Footer extends Component {
 							<p>
 								<span className="fa fa-map-marker" aria-hidden="true"></span>Ehrenfeld Gutenbergstr. Cologne, Germany.</p>
 						</div>
-						<p>© 2018 CBC Centers. All rights reserved | Design by
-				<a>Ahmed</a>
+						<p>© 2018 CBC Centers. All rights reserved 
 						</p>
 						<div className="clearfix"> </div>
 					</div>

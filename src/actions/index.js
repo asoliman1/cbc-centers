@@ -17,12 +17,12 @@ export const GET_HOME_NEW_COURSES = 'GET_HOME_NEW_COURSES'
 
 export function search(text, page, size) {
     return function(dispatch) {
-        dispatch(showLoading())
+        dispatch(showLoading('search'))
       return httpService.search(text,page,size).then(data => {
         dispatch(loadSuccess(SEARCH,data.data));
-        dispatch(hideLoading())
+        dispatch(hideLoading('search'))
       }).catch(error => {
-        dispatch(resetLoading());
+        dispatch(resetLoading('search'));
         throw(error);
       });
     };
@@ -30,12 +30,12 @@ export function search(text, page, size) {
 
 export function menuCat() {  
     return function(dispatch) {
-        dispatch(showLoading())
+        dispatch(showLoading('menucat'))
       return httpService.menuCat().then(data => {
         dispatch(loadSuccess(GET_MENU_CATEGORIES,data.data));
-        dispatch(hideLoading())
+        dispatch(hideLoading('menucat'))
       }).catch(error => {
-        dispatch(resetLoading());
+        dispatch(resetLoading('menucat'));
         throw(error);
       });
     };
@@ -43,12 +43,12 @@ export function menuCat() {
 
 export function homeSlider() {
     return function(dispatch) {
-        dispatch(showLoading())
+        dispatch(showLoading('homeslider'))
       return httpService.homeSlider().then(data => {
         dispatch(loadSuccess(GET_HOME_SLIDER,data.data));
-        dispatch(hideLoading())
+        dispatch(hideLoading('homeslider'))
       }).catch(error => {
-        dispatch(resetLoading());
+        dispatch(resetLoading('homeslider'));
         throw(error);
       });
     };
@@ -56,12 +56,12 @@ export function homeSlider() {
 
 export function homeEventNotif() {
     return function(dispatch) {
-        dispatch(showLoading())
+        dispatch(showLoading('homeEvents'))
       return httpService.homeEventNotif().then(data => {
         dispatch(loadSuccess(GET_HOME_EVENTS_NOTIFICATIONS,data.data));
-        dispatch(hideLoading())
+        dispatch(hideLoading('homeEvents'))
       }).catch(error => {
-        dispatch(resetLoading());
+        dispatch(resetLoading('homeEvents'));
         throw(error);
       });
     };
@@ -69,12 +69,12 @@ export function homeEventNotif() {
 
 export function homeCatList() {
     return function(dispatch) {
-        dispatch(showLoading())
+        dispatch(showLoading('homecat'))
       return httpService.homeCatList().then(data => {
         dispatch(loadSuccess(GET_HOME_CATEGORIES,data.data));
-        dispatch(hideLoading())
+        dispatch(hideLoading('homecat'))
       }).catch(error => {
-        dispatch(resetLoading());
+        dispatch(resetLoading('homecat'));
         throw(error);
       });
     };
@@ -82,12 +82,12 @@ export function homeCatList() {
 
 export function homeCatItems(id, page, size) {
     return function(dispatch) {
-        dispatch(showLoading())
+        dispatch(showLoading('homecatitem'))
       return httpService.homeCatItems(id,page,size).then(data => {
         dispatch(loadSuccess(GET_HOME_CATEGORY_ITEMS,data.data));
-        dispatch(hideLoading())
+        dispatch(hideLoading('homecatitem'))
       }).catch(error => {
-        dispatch(resetLoading());
+        dispatch(resetLoading('homecatitem'));
         throw(error);
       });
     };
@@ -96,12 +96,12 @@ export function homeCatItems(id, page, size) {
 
 export function homeRatCourses(page, size) {
     return function(dispatch) {
-        dispatch(showLoading())
+        dispatch(showLoading('homeratedcourses'))
       return httpService.homeClassfCourseSerach('RATED',page,size).then(data => {
         dispatch(loadSuccess(GET_HOME_RATED_COURSES,data.data));
-        dispatch(hideLoading())
+        dispatch(hideLoading('homeratedcourses'))
       }).catch(error => {
-        dispatch(resetLoading());
+        dispatch(resetLoading('homeratedcourses'));
         throw(error);
       });
     };
@@ -109,12 +109,12 @@ export function homeRatCourses(page, size) {
 
 export function homeOffCourses( page, size) {
     return function(dispatch) {
-        dispatch(showLoading())
+        dispatch(showLoading('homeoffcourses'))
       return httpService.homeClassfCourseSerach('OFFERED',page,size).then(data => {
         dispatch(loadSuccess(GET_HOME_OFFERED_COURSES,data.data));
-        dispatch(hideLoading())
+        dispatch(hideLoading('homeoffcourses'))
       }).catch(error => {
-        dispatch(resetLoading());
+        dispatch(resetLoading('homeoffcourses'));
         throw(error);
       });
     };
@@ -122,12 +122,12 @@ export function homeOffCourses( page, size) {
 
 export function homeNewCourses( page, size) {
     return function(dispatch) {
-        dispatch(showLoading())
+        dispatch(showLoading('homenewcourses'))
       return httpService.homeClassfCourseSerach('NEW',page,size).then(data => {
         dispatch(loadSuccess(GET_HOME_NEW_COURSES,data.data));
-        dispatch(hideLoading())
+        dispatch(hideLoading('homenewcourses'))
       }).catch(error => {
-        dispatch(resetLoading());
+        dispatch(resetLoading('homenewcourses'));
         throw(error);
       });
     };
@@ -135,12 +135,12 @@ export function homeNewCourses( page, size) {
 
 export function homePopCourses( page, size) {
     return function(dispatch) {
-        dispatch(showLoading())
+        dispatch(showLoading('homepopcourses'))
       return httpService.homeClassfCourseSerach('POPULAR',page,size).then(data => {
         dispatch(loadSuccess(GET_HOME_POPULAR_COURSES,data.data));
-        dispatch(hideLoading())
+        dispatch(hideLoading('homepopcourses'))
       }).catch(error => {
-        dispatch(resetLoading());
+        dispatch(resetLoading('homepopcourses'));
         throw(error);
       });
     };
