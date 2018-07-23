@@ -14,6 +14,8 @@ import terms_conditions from "../terms&conditions/terms_conditions";
 import contact from "../contact/contact";
 import course_details from "../course_details/course_details";
 import notifications from "../notifications/notifications";
+import store from '../../helpers/store';
+import myprofile from '../myprofile/myprofile';
 
 const NoMatch = ({ location }) => (
     <div style={{ textAlign: 'center', padding: '50px' }} >
@@ -27,7 +29,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            localStorage.getItem('api_token') ? (
+            store.getState().Authentication.status ? (
                 <Component {...props} />
             ) : (
                     <Redirect to={{ pathname: '/login_signup', state: { modal: true } }} />
@@ -55,6 +57,9 @@ class ModalSwitch extends React.Component {
     componentDidMount(){
         if(this.props.location.pathname==='/')
         this.props.history.push('/home');
+        else if(this.props.location.pathname==='/login_signup')
+        this.props.history.push('/home');
+
     }
 
 
@@ -74,14 +79,15 @@ class ModalSwitch extends React.Component {
                     <Route path="/terms" component={terms_conditions} />
                     <Route path="/search" component={search} />
                     {/* <Route path="/instructor" component={instructor} /> */}
-                    <Route path="/payment" component={payment} />
+                    <PrivateRoute path="/payment" component={payment} />
                     <Route path="/courses/:id" component={course_main} />
                     <Route path="/course_details/:id" component={course_details} />
-                    <Route path="/checkout" component={checkout} />
-                    <Route path="/wish" component={wish} />
-                    <Route path="/course_enrollment/:id" component={course_enrollment} />
-                    <Route path="/enrollments" component={enrollments} />
-                    <Route path="/notifications" component={notifications} />
+                    <PrivateRoute path="/checkout" component={checkout} />
+                    <PrivateRoute path="/wish" component={wish} />
+                    <PrivateRoute path="/course_enrollment/:id" component={course_enrollment} />
+                    <PrivateRoute path="/enrollments" component={enrollments} />
+                    <PrivateRoute path="/notifications" component={notifications} />
+                    <PrivateRoute path="/profile" component={myprofile} />
                     <Route exact component={NoMatch} />
                 </Switch>
                 {isModal ? <Route path="/login_signup" component={Login_register} /> : null}
@@ -91,4 +97,5 @@ class ModalSwitch extends React.Component {
 }
 
 
-export default ModalSwitch;
+
+export default ModalSwitch

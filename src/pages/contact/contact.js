@@ -10,7 +10,7 @@ class contact extends Component {
                 <h3 className="tittlef-agileits-w3layouts">Contact Us</h3>
                 <div className="shopf-sear-headinfo_mail_grids">
                     <div className="col-md-7 contctf_mail_grid_right">
-                        <h3 className="sub-w3ls-headf">Please fill this form to contact with us.</h3>
+                        <h3 className="sub-w3ls-headf" style={{color:'black'}} >Please fill this form to contact with us.</h3>
                         <form action="#" method="post">
                             <div className="inputf_left">
                                 <input type="text" name="Name" placeholder="Name" required />
@@ -34,7 +34,7 @@ class contact extends Component {
                         </form>
                     </div>
                     <div className="col-md-5 contactf-left">
-                        <h3 className="sub-w3ls-headf">Contact Info</h3>
+                        <h3 className="sub-w3ls-headf" style={{color:'black'}} >Contact Info</h3>
                         <div className="visit">
                             <div className="col-md-2 col-sm-2 col-xs-2 contact-icon-sidef">
                                 <span className="fa fa-home" aria-hidden="true"></span>

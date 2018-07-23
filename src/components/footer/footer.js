@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './footer.css';
+import {connect} from 'react-redux';
+import {searchByfilters,shopCarts,wishList} from '../../actions/index'
 import Signup_news from '../signup_news_letter/signup_news';
 class Footer extends Component {
+	
 	render() {
 		return (
 			<div>
@@ -15,26 +18,22 @@ class Footer extends Component {
 							<h2>
 								<a href="/home" >CBC Centers</a>
 							</h2>
-							<p className="paragraphf">Providing best coaching at affordable prices.</p>
+							<p className="paragraphf">Providing best courses at affordable prices.</p>
 						</div>
 						<div className="col-md-4 footer_w3layouts_gridf">
 							<nav>
 								<ul className="footer_w3layouts_gridf_list">
 									<li>
 										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<Link to="/courses">Courses</Link>
+										<Link to="/search" >Courses</Link>
 									</li>
 									<li>
 										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<a >Marketing</a>
+										<Link to="/wish">Wishlist</Link>
 									</li>
 									<li>
 										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<a >Development</a>
-									</li>
-									<li>
-										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<a >Maths</a>
+										<Link to="/checkout" >Shopcart</Link>
 									</li>
 								</ul>
 							</nav>
@@ -45,7 +44,7 @@ class Footer extends Component {
 
 									<li>
 										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<a >Faq</a>
+										<Link to="/about">About</Link>
 									</li>
 									<li>
 										<span className="fa fa-angle-right" aria-hidden="true"></span>
@@ -98,4 +97,8 @@ class Footer extends Component {
 	}
 }
 
-export default Footer;
+function mapStateToProps(state){
+	return state
+}
+
+export default connect(mapStateToProps,{searchByfilters,shopCarts,wishList}) (Footer);

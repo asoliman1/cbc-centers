@@ -15,17 +15,7 @@ class about extends Component {
 
 		return (
 			<div>
-				<div className="services-agile-breadcrumb">
-					<div className="inner_breadcrumb">
-						<ul className="short_ls">
-							<li>
-								<Link to="/home">Home</Link>
-								<span>| |</span>
-							</li>
-							<li>About</li>
-						</ul>
-					</div>
-				</div>
+			
 				<div className="about-ftop-inn">
 					<div className="container">
 						<h3 className="tittlef-agileits-w3layouts">About Us</h3>
@@ -63,24 +53,24 @@ class about extends Component {
 						arcu, interdum risus.Integer quis tristique.</p>
 								<div className="stats-f_left counter_grid">
 									<span className="fa fa-book" aria-hidden="true"></span>
-									<p className="counter"> <CountUp start={0} end={145} /> </p>
+									<p className="counter"> <CountUp duration={50}  start={0} end={145} /> </p>
 									<h4>Courses</h4>
 								</div>
 								<div className="stats-f_left counter_grid1">
 									<span className="fa fa-users" aria-hidden="true"></span>
-									<p className="counter"> <CountUp start={0} end={365} /> </p>
+									<p className="counter"> <CountUp duration={50} start={0} end={365} /> </p>
 									<h4>Happy clients</h4>
 								</div>
 							</div>
 							<div className="col-md-6">
 								<div className="stats-f_left counter_grid2">
 									<span className="fa fa-user-plus" aria-hidden="true"></span>
-									<p className="counter"> <CountUp start={0} end={563} />  </p>
+									<p className="counter"> <CountUp duration={50} start={0} end={563} />  </p>
 									<h4>People loved</h4>
 								</div>
 								<div className="stats-f_left counter_grid3">
 									<span className="fa fa-trophy" aria-hidden="true"></span>
-									<p className="counter"> <CountUp start={0} end={1045} />  </p>
+									<p className="counter"> <CountUp duration={50} start={0} end={1045} />  </p>
 									<h4>Awards won</h4>
 								</div>
 								<h3 className="sub-w3ls-headf white-clrf">Success coaching programs</h3>

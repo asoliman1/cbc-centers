@@ -9,19 +9,44 @@ import { Provider } from 'react-redux';
 import store from './helpers/store';
 import './index.css';
 import 'antd/dist/antd.css';
+import { BackTop,LocaleProvider } from 'antd';
+import { checkAuth } from './actions';
+import './css/animate.css'
+import './css/banner.css'
+import './css/bootstrap.css'
+import './css/checkout.css'
+import './css/client.css'
+import './css/courses.css'
+import './css/style.css'
+import './css/single.css'
+import './css/index.css'
+import './css/shop.css'
+import './css/font-awesome.css'
+import './css/jquery-ui1.css'
+import './css/index.css'
+import ar_EG from 'antd/lib/locale-provider/ar_EG';
+import en_US from 'antd/lib/locale-provider/en_US'
+import moment from 'moment';
+// import 'moment/locale/ar-sa';
 
+
+// moment.locale('ar')
+store.dispatch(checkAuth())
 
 ReactDOM.render(
 <Provider store={store} >
+<LocaleProvider locale={en_US} >
   <Router>
     <div>
       <Route  component={Header} />
       <div className="main">
+      <BackTop />
         <Route component={ModalSwitch} />
       </div>
       <Route  component={Footer} />
     </div>
   </Router>
+  </LocaleProvider>
   </Provider>
 
   , document.getElementById('root'));

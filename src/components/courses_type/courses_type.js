@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, Icon } from 'antd';
+import './courses_type.css';
 const { Meta } = Card;
 
 
@@ -16,11 +17,11 @@ class Courses_type extends Component {
 
     render() {
         return (
-            <div>
+            <div className="animated fadeIn" >
                 <div className="col-md-3 col-sm-6 tabsf-w3-agileits-grids">
                     <Card hoverable loading={this.props.loading}
-                        cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
-                        actions={[<Button type="primary" > <Link style={{color:'white'}} to={{pathname:`courses/${this.props.id}`,state:this.props.course}} > More Details<Icon type="ellipsis" /> </Link> </Button>]}
+                        cover={<img alt="example" src={this.props.image?this.props.image:'./images/error.jpg'} />}
+                        actions={[<Button type="primary" > <Link style={{color:'white'}} to={{pathname:`courses/${this.props.id}`,state:this.props.course}} > More Details <Icon type="ellipsis" /> </Link> </Button>]}
                     >
                         <Meta
                             title={this.props.name}

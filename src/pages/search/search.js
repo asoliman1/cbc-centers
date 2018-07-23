@@ -3,8 +3,11 @@ import './search.css';
 import Search_item from '../../components/search_item/search_item';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Spin, Pagination, Menu, Modal,Radio ,Affix, Button, Icon} from 'antd';
-import { search as search1 } from '../../actions';
+import { Spin, Pagination, Modal,Affix, Button, Icon,Row,Col} from 'antd';
+import { search as search1,getLanguages,searchByfilters } from '../../actions';
+import { Checkbox } from 'antd';
+
+const CheckboxGroup = Checkbox.Group;
 
 
 
@@ -18,37 +21,54 @@ class search extends Component {
         this.state = {
             ModalText: 'Content of the modal',
             visible: false,
-            confirmLoading: false, currentPage: 1, hideNav: false
+            confirmLoading: false, currentPage: 1, hideNav: false,
+                checkedList_cat: [],
+                checkedList_lang: [],
+                indeterminate_cat: false,
+                indeterminate_lang: false,
+                checkAll_cat: false,
+                checkAll_lang: false,
+                filters : false,
+                currentSize:20
         }
     }
 
 
     componentWillMount() {
+        window.scroll(0, 0);
         window.addEventListener("resize", this.resize.bind(this));
         this.resize();
 
         if (this.props.location.search === '') {
             if (this.props.history.location.pathname === '/search') {
-                this.props.history.go('/home');
+                this.props.searchByfilters('','','','','',1,20)
             } else {
                 this.this.props.history.goBack()
             }
         } else {
-            this.props.search1(this.props.location.search.replace('?', ''), 0, 20)
+            this.props.search1(this.props.location.search.replace('?', ''), 1, 20)
         }
+        
+    }
+
+    componentDidMount(){
+        this.props.getLanguages();
+        console.log(this.props)
     }
 
     resize() {
         this.setState({ hideNav: window.innerWidth <= 600 });
     }
 
+
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
         });
     }
+
     showTotal(total) {
-        return `Total ${total} items`;
+        return `Total ${this.props.search.results.length} items`;
     }
 
     showModal = () => {
@@ -59,7 +79,7 @@ class search extends Component {
 
     handleOk = () => {
         this.setState({
-          ModalText: 'The modal will be closed after two seconds',
+          filters:true,
           confirmLoading: true,
         });
         setTimeout(() => {
@@ -68,7 +88,10 @@ class search extends Component {
             confirmLoading: false,
           });
         }, 2000);
+
+this.props.searchByfilters(this.state.checkedList_cat.toString(),'',this.state.checkedList_lang.toString(),'',this.props.location.search.replace('?', ''),1,20)        
       }
+
       handleCancel = () => {
         console.log('Clicked cancel button');
         this.setState({
@@ -76,128 +99,133 @@ class search extends Component {
         });
       }
 
-    render() {
-        window.scroll(0, 0);
-        const { visible, confirmLoading, ModalText } = this.state;
+      onChange_cat = (checkedList) => {
+        this.setState({
+          checkedList_cat:checkedList,
+          indeterminate_cat: !!checkedList.length && (checkedList.length < this.props.categories.length),
+          checkAll_cat: checkedList.length === this.props.categories.length,
+        });
+      }
 
+      onChange_lang = (checkedList) => {
+        this.setState({
+            checkedList_lang:checkedList,
+            indeterminate_lang: !!checkedList.length && (checkedList.length < this.props.search.languages.length),
+            checkAll_lang: checkedList.length === this.props.search.languages.length,
+          });
+      }
+    
+      onCheckAllChange = (e) => {
+          if(e.target.name==='checkAll_cat'){ 
+        this.setState({
+          checkedList_cat: e.target.checked  ? this.props.categories.map(e=>{return e.id}) : [],
+          indeterminate_cat: false,
+          checkAll_cat: e.target.checked,
+        });
+    }else{
+        this.setState({
+            checkedList_lang: e.target.checked ? this.props.search.languages.map(e=>{return e.id}) : [],
+            indeterminate_lang: false,
+            checkAll_lang: e.target.checked,
+          });
+    }
+      }
+
+    render() {
+        const { visible, confirmLoading, ModalText } = this.state;
+        const search_text = this.props.location.search
         return (
             <div className="search-page" >
-             <Modal title="Filters"
+             <Modal
           visible={visible}
           onOk={this.handleOk}
           confirmLoading={confirmLoading}
           onCancel={this.handleCancel}
-          style={{ top: 160 }}
+          style={{ top: 20 }}
           okText="Apply Filters"
+          
         >
-
-            <ul>
-                <div className="ccontainer">
-                    <div className="cheader" >Language</div>
-                    <div className="ccontent" >
-                        <ul>
-                            <li><Radio>عربي</Radio> </li>
-                            <li><Radio>انجليزي</Radio> </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div className="ccontainer" >
-                    <div className="cheader" >Category</div>
-                    <div className="ccontent" id="category" >
-                        <ul>
-                            <li><Radio> الفنون و العلوم الانسانيه </Radio> </li>
-                            <li><Radio>اعمال</Radio>  </li>
-                            <li><Radio>علوم الكمبيوتر</Radio> </li>
-                            <li><Radio>علوم البيانات</Radio> </li>
-                            <li><Radio>تقنيه المعلومات</Radio> </li>
-                            <li><Radio>علوم الحياه</Radio> </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div className="ccontainer" >
-                    <div className="cheader" >Gender</div>
-                    <div className="ccontent" >
-                        <ul>
-                            <li><Radio>ذكر</Radio> </li>
-                            <li><Radio>انثي</Radio> </li>
-                            <li><Radio>غير محدد</Radio> </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div className="ccontainer" >
-                    <div className="cheader" >Location</div>
-                    <div className="ccontent" >
-                        <ul>
-                            <li><Radio>اونلاين</Radio> </li>
-                            <li><Radio>بالحضور</Radio> </li>
-                        </ul>
-                    </div>
-                </div>
-
-            </ul>
+<div className="modal-filters" >
+             <div className="filter-container">
+        <div style={{ borderBottom: '1px solid #E9E9E9' }}>
+          <Checkbox
+            indeterminate={this.state.indeterminate_lang}
+            onChange={this.onCheckAllChange}
+            checked={this.state.checkAll_lang}
+            name="checkAll_lang"
+          >
+            Languages
+          </Checkbox>
+        </div>
+        <br />
+        <Checkbox.Group style={{ width: '100%' }} value={this.state.checkedList_lang} onChange={this.onChange_lang}>
+    <Row>
+        {this.props.search.languages.map(e=>{
+            return <Col key={e.id} ><Checkbox value={e.id}  >{e.attr1}</Checkbox></Col>
+        })}
+      
+    </Row>
+  </Checkbox.Group>
+      </div>
+      <div className="filter-container" >
+        <div style={{ borderBottom: '1px solid #E9E9E9' }}>
+          <Checkbox
+            indeterminate={this.state.indeterminate_cat}
+            onChange={this.onCheckAllChange}
+            checked={this.state.checkAll_cat}
+            name="checkAll_cat"
+          >
+            Categories
+          </Checkbox>
+        </div>
+        <br />
+        <Checkbox.Group style={{ width: '100%' }} value={this.state.checkedList_cat} onChange={this.onChange_cat}>
+    <Row>
+        {this.props.categories.map(e=>{
+            return <Col ><Checkbox value={e.id} >{e.attr1}</Checkbox></Col>
+        })}
+      
+    </Row>
+  </Checkbox.Group>
+      </div>
+    
+      </div>
         </Modal>
-                {/* <Sider
-          trigger={'dsfsdf'}
-          collapsible
-          collapsed={this.state.collapsed}
-          collapsedWidth={0}
-          onClick={()=>this.toggle()}
-          breakpoint={'xs'}
-        >
-          <div className="logo" />
-          <Menu theme="" mode="inline" defaultSelectedKeys={['1']}>
-            <Menu.Item key="1">
-              <Icon type="user" />
-              <span>nav 1</span>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <Icon type="video-camera" />
-              <span>nav 2</span>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <Icon type="upload" />
-              <span>nav 3</span>
-            </Menu.Item>
-          </Menu>
-        </Sider> */}
+            
                 <div className="row">
                     <Affix style={{ marginBottom: '15px' }} offsetTop={this.state.hideNav ? 100 : 155} offsetBottom={100} >
 
-                        <Button style={{ float: 'right' }} onClick={this.showModal} icon="filter">Filters</Button>
+                        <Button type="primary" style={{ float: 'right' }} onClick={this.showModal} icon="filter">Filters</Button>
                     </Affix>
                 </div>
                 <div className="row text-center" >
-                    {this.props.search.content.length > 0 ?
-                        <Pagination current={this.state.currentPage} defaultPageSize={20} size="small" style={{ marginBottom: '10px' }} total={this.props.search.totalElements} showTotal={() => { this.showTotal() }} onShowSizeChange={() => { this }} showSizeChanger showQuickJumper />
-                        : this.props.loading.default > 0 ? <Spin size="large" /> : <div> No items found </div>}
+                    {this.props.search.counts > 0 ?
+                        <Pagination current={this.state.currentPage} defaultPageSize={20} size="small" style={{ marginBottom: '10px' }} total={ Math.floor(  this.props.search.results.length / this.state.currentSize )} showTotal={(e) => { this.showTotal(e) }} onChange={(page,size) => {this.setState({currentPage:page,currentSize:size})  ; search_text !== '' ? this.props.searchByfilters(this.state.checkedList_cat,'',this.checkedList_lang,'',search_text,search_text,page,size) : this.props.location.state? this.props.searchByfilters(this.props.location.state.category,this.props.location.state.subcategory,'',this.props.location.state.type,page,size) : this.props.searchByfilters('','','','','',page,size) }} showSizeChanger showQuickJumper />
+                        :  this.props.loading.search === 1 || this.props.loading.searchbyfilters === 1? <Spin size="large" /> : <div> No items found </div>}
                 </div>
 
                 <div className="row" >
                     <div className="col-md-"  >
                         <ul className="list-group">
-                            {this.props.search.content.map(e => {
-                                return <Search_item key={e.id} name={e.nameE} image={e.image} desc={e.shortDescE} price={e.price} rate={e.totalRating / e.totalRaters} instructor={e.creator.firstName + ' ' + e.creator.lastName} id={e.id} />
+                            {this.props.search.results.map(e => {
+                                return <Search_item key={e.id} name={e.name_e} image={e.image} desc={e.short_desc_e} price={e.price} raters={e.total_raters} rate={e.total_rating} category={e.categories.length>0?e.categories[0]:''} creation_date={e.creation_date} id={e.id} />
                             })}
 
                         </ul>
                     </div>
                 </div>
                 <div className="row text-center" >
-                    {this.props.search.content.length > 0 ?
-                        <Pagination size="small" current={this.state.currentPage} defaultPageSize={20} total={this.props.search.totalElements} showTotal={() => { this.showTotal() }} showSizeChanger showQuickJumper />
+                    {this.props.search.counts > 0 ?
+                        <Pagination size="small" current={this.state.currentPage} defaultPageSize={20} total={ Math.floor(  this.props.search.results.length / this.state.currentSize )} showTotal={(e) => { this.showTotal(e) }} onChange={(page,size) => {this.setState({currentPage:page,currentSize:size})  ; search_text !== '' ? this.props.searchByfilters(this.state.checkedList_cat,'',this.checkedList_lang,'',search_text,search_text,page,size) : this.props.location.state? this.props.searchByfilters(this.props.location.state.category,this.props.location.state.subcategory,'',this.props.location.state.type,page,size) : this.props.searchByfilters('','','','','',page,size) }}showSizeChanger showQuickJumper />
                         : <div> </div>}                </div>
             </div>
         );
     }
 }
 function mapStateToProps(state) {
-    console.log(state)
-    return { search: state.search, loading: state.loadingBar };
+    return { search: state.search, loading: state.loadingBar,categories:state.header.categories };
 }
 
 
 
-export default connect(mapStateToProps, { search1 })(search);
+export default connect(mapStateToProps, { search1,getLanguages,searchByfilters })(search);

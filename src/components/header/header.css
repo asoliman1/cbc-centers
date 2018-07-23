@@ -92,3 +92,10 @@
   a:hover{
     color: #e34b11 !important;
   }
+
+  .ant-menu.ant-menu-sub.ant-menu-vertical {
+      min-height: 100px;
+      max-height: 300px;
+      overflow: scroll;
+      padding: 10px
+  }

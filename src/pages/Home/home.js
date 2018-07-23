@@ -2,96 +2,159 @@ import React, { Component } from 'react';
 import './home.css';
 import Shop_card from '../../components/shop_card/shop_card';
 import Courses_type from '../../components/courses_type/courses_type';
-import { Tabs, Card, Carousel,Col, Row } from 'antd';
+import { Tabs, Card, Carousel, Col, Row ,Button} from 'antd';
 import { connect } from 'react-redux';
-import { homeCatItems, homeNewCourses, homeOffCourses, homePopCourses, homeRatCourses, homeCatList, homeEventNotif, homeSlider } from '../../actions'
-import { Link } from 'react-router-dom';
-import range from 'lodash/range';
 
+import {
+    homeCatItems,
+    homeNewCourses,
+    homeOffCourses,
+    homePopCourses,
+    homeRatCourses,
+    homeCatList,
+    homeEventNotif,
+    homeSlider,
+    searchByfilters
+} from '../../actions'
 const TabPane = Tabs.TabPane;
-
-function callback(key) {
-    console.log(key);
-}
 
 class home extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { categories: [], slider: [] }
-
+        this.callback = this.callback.bind(this)
     }
 
     componentWillMount() {
-        this.props.homeCatList();
-        this.props.homeSlider();
-        this.props.homeEventNotif();
-        this.props.homePopCourses('0', '4');
-        this.props.homeOffCourses('0', '4');
-        this.props.homeRatCourses('0', '4');
-        this.props.homeNewCourses('0', '4');
-
-        console.log(this.props)
+        window.scrollTo(0, 0)
     }
 
     componentDidMount() {
+        // this.props.homeSlider();
+        // this.props.homeEventNotif();
+        this.props.homePopCourses('1', '4');
+        this.props.homeOffCourses('1', '4');
+        this.props.homeRatCourses('1', '4');
+        this.props.homeNewCourses('1', '4');
+    }
+
+    callback(key) {
+        this.props.homeCatList(key)
     }
 
 
     render() {
-        // window.scrollTo(0, 0)
+
         return (
             <div>
-
                 <div>
-                    {this.props.loading.homeslider === 1 ?
-                        <Row gutter={8} justify="center" >
-                            <Card loading={true} bordered={false}>Card content</Card>
-                        </Row> :
-                        <Carousel autoplay>
-                            <div><h3>1</h3></div>
-                            <div><h3>2</h3></div>
-                            <div><h3>3</h3></div>
-                            <div><h3>4</h3></div>
+                        <Carousel className="animated fadeIn" autoplay>
+                            <div><img src="./images/banner1.jpg" /></div>
+                            <div><img src="./images/banner2.jpg" /></div>
+                            <div><img src="./images/banner3.jpg" /></div>
+                            <div><img src="./images/banner4.jpg" /></div>
+                            <div><img src="./images/banner5.jpg" /></div>
                         </Carousel>
-                    }
 
                     <div className="aboutf">
                         <div className="container">
                             <h3 className="tittlef-agileits-w3layouts">Top most popular courses</h3>
                             <p className="paragraphf"></p>
                         </div>
-                        {/* <div style={{ marginBottom: 16 }}>
-                        </div> */}
 
-                        {this.props.loading.homecat === 1 ?
-                            <Row gutter={16}>
-                                <Col span={8}>
-                                    <Card loading={true} bordered={false}>Card content</Card>
-                                </Col>
-                                <Col span={8}>
-                                    <Card loading={true} bordered={false}>Card content</Card>
-                                </Col>
-                                <Col span={8}>
-                                    <Card loading={true} bordered={false}>Card content</Card>
-                                </Col>
-                            </Row>
-                            :
 
-                            <Tabs onChange={callback} animated={true} tabBarStyle={{ display: 'flex', justifyContent: 'space-around' }} tabBarGutter={100} size="large" type="card">
-                                {this.props.home.categories.map(e => {
-                                    return <TabPane tab={e.aname} key={e.id} >     <div className="tab-pane"  >
-                                        <div className="main-topicsf">
-                                            {e.courses.map(e1 => {
-                                                return <Courses_type course={e1} id={e1.id} key={e1.id} name={e1.nameE} image={e1.image} desc={e1.shortDescE} text={true} />
-                                            })}
+
+                        <Tabs onChange={this.callback} animated={true} tabBarStyle={{ display: 'flex', justifyContent: 'space-around' }} tabBarGutter={110} size="large" type="card">
+                            {this.props.categories.map(e => {
+                                return <TabPane tab={e.attr1} key={e.id} >
+
+                                    {this.props.loading.homecat === 1 ?
+                                        <Row style={{ marginLeft:'60px',marginRight:'60px' }} gutter={16}>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                        </Row>
+                                        :
+
+                                        <div style={{ marginLeft:'60px',marginRight:'60px' }} >
+                                            {this.props.home.category_items.results.length > 0 ? this.props.home.category_items.results.map(e1 => {
+                                                return <Courses_type course={e1} id={e1.id} key={e1.id} name={e1.name_e} image={e1.image} desc={e1.short_desc_e} text={true} />
+                                            }) : <div className="animated fadeIn" style={{ fontSize: '20px', fontVariant: 'petite-caps', padding: '16px' }} > No courses found </div>}
                                             <div className="clearfix"> </div>
                                         </div>
-                                    </div>  </TabPane>
-                                })}
+                                    } </TabPane>
+                            })}
 
-                            </Tabs>
-                        }
+                        </Tabs>
+
+                    </div>
+                    <div id="new_courses" className="materialsf-section">
+                        <div className="container">
+                            <h3 className="tittlef-agileits-w3layouts white-clrf">New Courses</h3>
+                            <div className="carousel slide materialf-slider" id="myCarousel4">
+                                <div className="carousel-inner" >
+                                    {this.props.loading.homenewcourses === 1 ?
+                                        <Row style={{ padding: '16px' }} gutter={16}>
+                                            <Col span={6}>
+                                                <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                        </Row>
+                                        :
+                                        this.props.courses.new.results.map((e, i) => {
+                                            return <div key={i} className={i === 0 ? "item active" : "item"} style={{ background: 'none' }} >
+                                                <ul className="thumbnails">
+                                                    {e.map(e1 => {
+                                                        return <Shop_card course={e1} key={e1.id} name={e1.name_e} raters={e1.totalRaters} image={e1.image} desc={e1.short_desc_e} price={e1.price} rate={e1.total_rating / e1.total_raters} instructor={''} id={e1.id} />
+                                                    })}
+                                                </ul>
+                                            </div>
+                                        })}
+                                               <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.searchByfilters('','','','','','',1,20,'new');this.props.history.push('/search') }}> More ... </a>
+
+                                </div>
+                                <nav>
+                                    <ul className="control-box pager">
+                                        <li>
+                                            <a data-slide="prev" href="#myCarousel4" className="">
+                                                <i className="glyphicon glyphicon-chevron-left"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a data-slide="next" href="#myCarousel4" className="">
+                                                <i className="glyphicon glyphicon-chevron-right"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <div className="clearfix"> </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="popular_courses" className="materialsf-section">
@@ -99,28 +162,37 @@ class home extends Component {
                             <h3 className="tittlef-agileits-w3layouts white-clrf">Popular Courses</h3>
                             <div className="carousel slide materialf-slider" id="myCarousel1">
                                 <div className="carousel-inner" >
+                                    {this.props.loading.homepopcourses === 1 ?
+                                        <Row style={{ padding: '16px' }} gutter={16}>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                        </Row>
+                                        :
+                                        this.props.courses.popular.results.map((e, i) => {
+                                            return <div key={i} className={i === 0 ? "item active" : "item"} style={{ background: 'none' }} >
+                                                <ul className="thumbnails">
+                                                    {e.map(e1 => {
+                                                        return <Shop_card course={e1} key={e1.id} name={e1.name_e} raters={e1.totalRaters} image={e1.image} desc={e1.short_desc_e} price={e1.price} rate={e1.total_rating / e1.total_raters} instructor={''} id={e1.id} />
+                                                    })}
+                                                </ul>
+                                            </div>
+                                        })}
+                                               <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.searchByfilters('','','','','','',1,20,'popular');this.props.history.push('/search') }} > More ... </a>
 
-                                    <div className={"item active"} style={{ background: 'none' }} >
-                                        <ul className="thumbnails">
-                                            {this.props.loading.homepopcourses === 1 ?
-                                                <Row gutter={16}>
-                                                    <Col span={8}>
-                                                        <Card loading={true} bordered={false}>Card content</Card>
-                                                    </Col>
-                                                    <Col span={8}>
-                                                        <Card loading={true} bordered={false}>Card content</Card>
-                                                    </Col>
-                                                    <Col span={8}>
-                                                        <Card loading={true} bordered={false}>Card content</Card>
-                                                    </Col>
-                                                </Row>
-                                                :
-                                                this.props.courses.popular.content.map(e => {
-                                                    return <Shop_card course={e} key={e.id} name={e.nameE} raters={e.totalRaters} image={e.image} desc={e.shortDescE} price={e.price} rate={e.totalRating / e.totalRaters} instructor={e.creator.firstName + ' ' + e.creator.lastName} id={e.id} />
-                                                })}
-
-                                        </ul>
-                                    </div>
                                 </div>
                                 <nav>
                                     <ul className="control-box pager">
@@ -146,26 +218,39 @@ class home extends Component {
                             <h3 className="tittlef-agileits-w3layouts white-clrf">Offered Courses</h3>
                             <div className="carousel slide materialf-slider" id="myCarousel2">
                                 <div className="carousel-inner" >
-                                    <div className="item active" style={{ background: 'none' }} >
-                                        <ul className="thumbnails">
-                                            {this.props.loading.homeoffcourses === 1 ?
-                                                <Row gutter={16}>
-                                                    <Col span={8}>
-                                                        <Card loading={true} bordered={false}>Card content</Card>
-                                                    </Col>
-                                                    <Col span={8}>
-                                                        <Card loading={true} bordered={false}>Card content</Card>
-                                                    </Col>
-                                                    <Col span={8}>
-                                                        <Card loading={true} bordered={false}>Card content</Card>
-                                                    </Col>
-                                                </Row>
-                                                :
-                                                this.props.courses.offers.content.map(e => {
-                                                    return <Shop_card key={e.id} raters={e.totalRaters} name={e.nameE} image={e.image} desc={e.shortDescE} price={e.price} rate={e.totalRating / e.totalRaters} instructor={e.creator.firstName + ' ' + e.creator.lastName} id={e.id} />
-                                                })}
-                                        </ul>
-                                    </div>
+                                    {this.props.loading.homeoffcourses === 1 ?
+                                        <Row style={{ padding: '16px' }} gutter={16}>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                        </Row>
+                                        :
+                                        this.props.courses.offers.results.map((e, i) => {
+                                            return <div key={i} className={i === 0 ? "item active" : "item"} style={{ background: 'none' }} >
+                                                <ul className="thumbnails">
+                                                    {e.map(e1 => {
+                                                        return <Shop_card course={e1} key={e1.id} name={e1.name_e} raters={e1.totalRaters} image={e1.image} desc={e1.short_desc_e} price={e1.price} rate={e1.total_rating / e1.total_raters} instructor={''} id={e1.id} />
+                                                    })}
+                                                </ul>
+                                            </div>
+                                        })
+
+                                    }
+                                               <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.searchByfilters('','','','','','',1,20,'popular');this.props.history.push('/search') }}> More ... </a>
+
                                 </div>
                                 <nav>
                                     <ul className="control-box pager">
@@ -191,25 +276,37 @@ class home extends Component {
                             <h3 className="tittlef-agileits-w3layouts white-clrf">Rated Courses</h3>
                             <div className="carousel slide materialf-slider" id="myCarousel3">
                                 <div className="carousel-inner" >
-                                    <div className="item active" style={{ background: 'none' }} >
-                                        <ul className="thumbnails">
-                                            {this.props.loading.homeoffcourses === 1 ? <Row gutter={16}>
-                                                <Col span={8}>
-                                                    <Card loading={true} bordered={false}>Card content</Card>
-                                                </Col>
-                                                <Col span={8}>
-                                                    <Card loading={true} bordered={false}>Card content</Card>
-                                                </Col>
-                                                <Col span={8}>
-                                                    <Card loading={true} bordered={false}>Card content</Card>
-                                                </Col>
-                                            </Row> :
-                                                this.props.courses.rated.content.map(e => {
-                                                    return <Shop_card key={e.id} name={e.nameE} raters={e.totalRaters} image={e.image} desc={e.shortDescE} price={e.price} rate={e.totalRating / e.totalRaters} instructor={e.creator.firstName + ' ' + e.creator.lastName} id={e.id} />
-                                                })}
-
-                                        </ul>
-                                    </div>
+                                    {this.props.loading.homeratedcourses === 1 ?
+                                        <Row style={{ padding: '16px' }} gutter={16}>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                            <Col span={6}>
+                                            <div className='image-loading' ></div>
+                                                <Card loading={true} bordered={false}>Card content</Card>
+                                            </Col>
+                                        </Row>
+                                        :
+                                        this.props.courses.rated.results.map((e, i) => {
+                                            return <div key={i} className={i === 0 ? "item active" : "item"} style={{ background: 'none' }} >
+                                                <ul className="thumbnails">
+                                                    {e.map(e1 => {
+                                                        return <Shop_card course={e1} key={e1.id} name={e1.name_e} raters={e1.totalRaters} image={e1.image} desc={e1.short_desc_e} price={e1.price} rate={e1.total_rating / e1.total_raters} instructor={''} id={e1.id} />
+                                                    })}
+                                                </ul>
+                                            </div>
+                                        })
+                                    }
+                                               <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.searchByfilters('','','','','','',1,20,'rated');this.props.history.push('/search') }}> More ... </a>
 
                                 </div>
                                 <nav>
@@ -306,8 +403,18 @@ class home extends Component {
 }
 
 function mapStateToProps(state) {
-    return { home: state.home, courses: state.courses, loading: state.loadingBar };
+    return { home: state.home, courses: state.courses, loading: state.loadingBar, categories: state.header.categories };
 }
 
 
-export default connect(mapStateToProps, { homeCatItems, homeCatList, homeEventNotif, homeSlider, homeNewCourses, homeOffCourses, homePopCourses, homeRatCourses })(home);
+export default connect(mapStateToProps, {
+    homeCatItems,
+    homeCatList,
+    homeEventNotif,
+    homeSlider,
+    homeNewCourses,
+    homeOffCourses,
+    homePopCourses,
+    homeRatCourses,
+    searchByfilters
+})(home);

@@ -8,20 +8,8 @@ class terms_conditions extends Component {
 			<div>
 				<div className="innerf-banner">
 				</div>
-				<div className="services-agile-breadcrumb">
-					<div className="inner_breadcrumb">
-						<ul className="short_ls">
-							<li>
-								<Link to="/home" >Home</Link>
-								<span>| |</span>
-							</li>
-							<li>Terms and Conditions</li>
-						</ul>
-					</div>
-				</div>
 
-
-				<section className="terms-of-use">
+				<section className="terms-of-use animated fadeIn">
 					<div className="terms">
 						<div className="container">
 							<h3 className="mm-head">Terms and Conditions</h3>

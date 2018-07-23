@@ -3,10 +3,34 @@ a{
     cursor: pointer;
 }
 .main{
-    margin-top: 148px;
+    margin-top: 140px;
+}
+.ant-back-top-content{
+    background-color: rgb(4,186,254,0.7) !important;
+}
+.ant-back-top{
+    right: 20px !important;
 }
 @media only screen and (max-width: 600px) {
   .main{
-      margin-top: 95px;
+      margin-top: 110px;
   }
 }
+
+.container {
+    -ms-overflow-style: none;  
+    overflow: -moz-scrollbars-none; 
+}
+.container::-webkit-scrollbar { 
+    display: none; 
+}
+.ant-modal-mask{
+    z-index: 10000 !important;
+}
+.ant-modal-wrap {
+    z-index: 10000 !important;
+}
+
+ .btn-light{
+     background: unset !important;
+ }

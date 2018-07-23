@@ -6,22 +6,62 @@ import Course_faqs from '../../components/course_faqs/course_faqs';
 import May_like from '../../components/may_like/may_like';
 import Course_week from '../../components/course_week/course_week';
 import How_works from '../../components/how_works/how_works';
+import {connect} from 'react-redux';
+import {getCourseRounds,addShopCart,courseModules,courseDesc,courseDetails,courseInstr} from '../../actions/index';
+import { Collapse, Rate } from 'antd';
+import { Row, Col } from 'antd';
+import { Menu ,Anchor} from 'antd';
+
+const Link1 = Anchor.Link;
+const SubMenu = Menu.SubMenu;
+const Panel = Collapse.Panel;
 class course_main extends Component {
 constructor(props) {
 	super(props);
 	console.log(this.props)
+	this.state={round:{},hideNav:false,widthNav:0}
+}
+
+componentWillMount(){
+	window.scrollTo(0, 0)
+	window.addEventListener("resize", this.resize.bind(this));
+	this.resize()
+}
+resize() {
+	this.setState({ hideNav: window.innerWidth <= 800,widthNav:window.innerWidth });
+}
+componentDidMount(){
+	this.props.courseDetails(this.props.match.params.id)
+	this.props.getCourseRounds(this.props.match.params.id)
+	this.props.courseModules(this.props.match.params.id)
+	this.props.courseDesc(this.props.match.params.id)
+	this.props.courseInstr(this.props.match.params.id)
+
+	console.log(this.props)
+
 }
 
 	render() {
-		window.scrollTo(0, 0)
 		return (
 			<div>
-				<div className="minner_page_mainsmk minner_page_mainsmk_2">
-					<div className="float-right">
-						<h3 className="mtittle">{this.props.location.state?this.props.location.state.nameE:'Course Name'}</h3>
-						<p> {this.props.location.state?this.props.location.state.shortDescE:'Short Describtion'} </p>
+				<div className="minner_page_mainsmk ">
+				{this.props.loading.courseDetails===0?
+					<div className="float-right ">
+						<h3 className="mtittle animated bounceInLeft">{this.props.course.name_e}</h3>
+						<p className="animated bounceInLeft" > {this.props.course.short_desc_e} </p>
+						<Rate className="animated bounceInLeft" value={this.props.course.total_rating} disabled={true} />
 					</div>
-					<div className="col-sm-3 nav-links">
+					:''}
+					
+				</div>
+				
+					{/* <div className="container"> */}
+					
+					<Row >
+
+						<Col>
+						{this.props.loading.courseDetails===0?
+						<div className="col-sm-3 nav-links animated fadeIn" style={{top:this.state.hideNav?'-60px':'-170px'}} >
 						<nav className='navbar navbar-default mtextmk-nav'>
 
 							<div className='navbar-header'>
@@ -32,114 +72,77 @@ constructor(props) {
 									<span className='icon-bar'></span>
 								</button>
 							</div>
-							<div className='collapse navbar-collapse'>
+							<div className='collapse navbar-collapse' style={{background:'#04bafe'}}>
 								<ul>
 									<li>
-										<a href="#intro" className="scroll">
+										<a className="scroll">
 											<div className="course-image">
-												<img className="imagedropshadow" src="https://blog.stylingandroid.com/wp-content/themes/lontano-pro/images/no-image-slide.png" /> <br />
-												<span>	{this.props.location.state?this.props.location.state.nameE:'Course Name'} </span>
+												<img className="imagedropshadow" src={this.props.course.image?this.props.course.image:'/images/error.jpg'}  /> <br />
+												<span>	{this.props.course.name_e} </span>
 											</div>
 										</a>
 
 									</li>
-									<li>
-										<a className="scroll">Introduction</a>
-									</li>
-									<li>
-										<a className="scroll">Syllabus</a>
-									</li>
-									<li>
-										<a className="scroll">How It Works</a>
-									</li>
-									<li>
-										<a className="scroll">Instructors</a>
-									</li>
-									<li>
-										<a className="scroll">Faqs</a>
-									</li>
-									<li>
-										<Link to="/enrollment" className="scroll">Enroll</Link>
-									</li>
-									<li>
-										<a className="scroll">Course Fee</a>
-									</li>
-									<li>
-										<Link to="/course_details" >View More</Link>
-									</li>
+									<Anchor bounds={50} offsetTop={120} style={{marginLeft:'0',background:'#04bafe',fontSize:'16px'}} showInkInFixed >
+									<Link1  title="Introduction" href="#intro" />
+									<Link1  title="Syllabus" href="#syllabus" />
+									<Link1 title="How It Works" href="#how" />
+									<Link1 title="Instructors" href="#instr" />
+									<Link1 title="Faqs" href="#faqs" />
+									<Link1 title="Enroll" href="#rounds" />
+									<Link1 title="Rounds" href="#rounds" />
+									</Anchor>
 								</ul>
 							</div>
 						</nav>
-					</div>
-				</div>
-
-				<div className="mcontent-course">
-					<div className="container">
-
-						<div className="col-sm-9 mmain-right-textmk-content" id="intro">
-							<div className="mheading-mainsmk">
+					</div> 
+						:''}
+						</Col>
+					
+    <Col xs={20} sm={18} md={16} lg={15} xl={15} style={{paddingTop:'20px'}}  > 
+						{/* <div className="col-sm-9 mmain-right-textmk-content" id="intro"> */}
+							<div className="mheading-mainsmk animated fadeIn" style={{paddingLeft:'15%'}} id="intro" >
 								<h4 className="tittle-course">About this Course :</h4>
+								
 								<ul>
-									<li>
-										<i className="fa fa-long-arrow-right" aria-hidden="true"></i>Sed ut perspiciatis unde omnis iste natus doloremque laudantium</li>
-									<li>
-										<i className="fa fa-long-arrow-right" aria-hidden="true"></i>Quis iure reprehenderit qui in ea voluptate velit esse quam</li>
-									<li>
-										<i className="fa fa-long-arrow-right" aria-hidden="true"></i>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-							sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
+									{this.props.desc.length===0&&this.props.loading.coursedec===0?<div>No Data</div>:''}
+								{this.props.desc.map(e=>{
+									return <li key={e.id} >
+									<i className="fa fa-long-arrow-right" aria-hidden="true"></i>{e.title_e} <br/>
+									<p> {e.description_e} </p>
+									
+									</li>
+								})}
 								</ul>
-								<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
-									eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.Sit voluptatem accusantium
-						doloremque laudantium totam rem aperiam.</p>
-								<Link to="/course_details" className="mbutton-course">Some More</Link>
+							
+								{/* <Link to="/course_details" className="mbutton-course">Some More</Link> */}
 							</div>
-							<div className="mwho-we-textmks" id="syllabus">
+							
+							<div className="mwho-we-textmks" style={{paddingLeft:'15%'}} id="syllabus">
 								<h4 className="tittle-course">Syllabus</h4>
 								<div className="who-right-mainsmkits">
-									<div className="panel-group textmk_panel_group_faq" id="accordion" role="tablist" aria-multiselectable="true">
-										<div className="panel panel-default">
-											<div className="panel-heading" role="tab" id="headingOne">
-												<h4 className="panel-title asd">
-													<a className="pa_italic" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
-														aria-controls="collapseOne">
-														<span className="glyphicon glyphicon-plus" aria-hidden="true"></span>
-														<i className="glyphicon glyphicon-minus" aria-hidden="true"></i>Week 1
-										</a>
-												</h4>
-											</div>
-											<Course_week heading="headingOne" collapse="collapseOne" active={true} />
-										</div>
-										<div className="panel panel-default">
-											<div className="panel-heading" role="tab" id="headingTwo">
-												<h4 className="panel-title asd">
-													<a className="pa_italic collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
-														aria-controls="collapseTwo">
-														<span className="glyphicon glyphicon-plus" aria-hidden="true"></span>
-														<i className="glyphicon glyphicon-minus" aria-hidden="true"></i>Week 2
-										</a>
-												</h4>
-											</div>
-											<Course_week heading="headingTwo" collapse="collapseTwo" />
+								{this.props.modules.length===0&&this.props.loading.coursemodules===0?<div>No Data</div>:''}
 
-										</div>
-										<div className="panel panel-default">
-											<div className="panel-heading" role="tab" id="headingThree">
-												<h4 className="panel-title asd">
-													<a className="pa_italic collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false"
-														aria-controls="collapseThree">
-														<span className="glyphicon glyphicon-plus" aria-hidden="true"></span>
-														<i className="glyphicon glyphicon-minus" aria-hidden="true"></i>Week 3
-										</a>
-												</h4>
-											</div>
-											<Course_week heading="headingThree" collapse="collapseThree" />
+								<Collapse accordion>
 
-										</div>
-									</div>
+										{this.props.modules.map((e,i)=>{
+											return 	<Panel header={"Week "+e.week_number} key={e.id}>
+												<ul>
+													<li style={{wordBreak:'break-all'}} >- {e.text_e}</li>
+													<li>- <a href={e.field_url} > Visit tutorial</a></li>
+													<li>- Duration : {e.duration}</li>
+												</ul>
+											
+										  </Panel>
+										})}
+									
+									
+									
+									</Collapse>
 								</div>
 								<div className="clearfix"> </div>
 							</div>
-							<div className="mservice-grids" id="how">
+							<div className="mservice-grids" style={{paddingLeft:'15%'}}  id="how">
 								<h4 className="tittle-course">How It Works</h4>
 
 								<How_works />
@@ -149,22 +152,16 @@ constructor(props) {
 
 
 							</div>
-							<div className="minner_sec_info_mmstyle_mainsmk" id="instru">
+							<div className="minner_sec_info_mmstyle_mainsmk" style={{paddingLeft:'15%'}} id="instru">
 								<h4 className="tittle-course">Instructors</h4>
-								<Course_instructor />
-								<Course_instructor />
+							
+								<Course_instructor details={this.props.instructors} />
 
-								<Course_instructor />
-
-								<div className="clearfix"></div>
-								<Course_instructor />
-
-								<Course_instructor />
 
 								<div className="clearfix"></div>
 
 							</div>
-							<div className="mfaq-mmmainsmk" id="faqs">
+							<div className="mfaq-mmmainsmk" style={{paddingLeft:'15%'}}  id="faqs">
 								<h4 className="tittle-course">Faqs</h4>
 								<ul className="faq">
 									<Course_faqs />
@@ -172,17 +169,24 @@ constructor(props) {
 									<Course_faqs />
 									<Course_faqs />
 									<Course_faqs />
-									<Course_faqs />
-									<Course_faqs />
-									<Course_faqs />
 								</ul>
 							</div>
-						</div>
-					</div>
-				</div>
-				<div className="mmainsmk-content-date" id="course_fee">
+							
+						{/* </div> */}
+						
+						<div className="clearfix"></div>
+
+					{/* </div> */}
+					</Col>
+  </Row>
+  <div id="rounds" >
+  {this.props.rounds.length===0&&this.props.loading.getCourseRounds===0?<div>No Data</div>:''}
+
+				{this.props.rounds.map(e=>{
+					return <div className="mmainsmk-content-date" key={e.id} style={{marginBottom:'20px'}} id="course_fee">
 					<div className="container">
 						<div className="col-sm-3 textmk-sub-time2">
+						
 						</div>
 						<div className="col-sm-9 textmk-sub-time">
 							<div className="col-md-4 date-course-grid">
@@ -202,15 +206,22 @@ constructor(props) {
 							<div className="col-md-4 date-course-grid">
 								<div className="grids-mainsmk-duration">
 									<h6>Price</h6>
-									<h4>$8,300</h4>
+									<h4>{e.price}$</h4>
 									<p>Know More</p>
 								</div>
 							</div>
+						
 							<div className="clearfix"></div>
 						</div>
 						<div className="clearfix"></div>
 					</div>
+					<div style={{textAlign:'center',marginLeft:'80px',marginTop:'50px',fontSize:'30px'}} > 
+					<a  style={{color:'white'}} onClick={()=>{this.setState({round:e});this.props.addShopCart(e.price,this.props.location.state.course.id,e.id)}} > Enroll </a>
+						
+						 </div>
 				</div>
+				})}
+			</div>	
 				<div className="mexperience-textmkayouts">
 					<div className="container">
 						<div className="col-sm-3 textmk-sub-time2">
@@ -225,7 +236,9 @@ constructor(props) {
 						</div>
 						<div className='clearfix'></div>
 					</div>
+					
 				</div>
+				{/* </div> */}
 
 
 			</div>
@@ -233,4 +246,8 @@ constructor(props) {
 	}
 }
 
-export default course_main;
+function mapStateToProps(state){
+	return {rounds:state.shop_cart.rounds,modules:state.course_details.modules,desc:state.course_details.describtion,course:state.course_details.course,instructors:state.course_details.instructors,loading:state.loadingBar}
+}
+
+export default connect(mapStateToProps,{getCourseRounds,addShopCart,courseModules,courseDesc,courseDetails,courseInstr}) (course_main);

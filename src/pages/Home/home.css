@@ -36,7 +36,48 @@
       width: auto;
 }
 
+.ant-tabs.ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
+ background: unset !important;
+ border: 0 !important;
+  }
+  .ant-tabs.ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active {
+    border-bottom: 1px ridge #035ea4 !important;
+    color: #1890ff !important;
+    padding-bottom: 1px;
+  }
+
 .materialsf-section{
     margin-bottom: 20px;
-    padding:10px;
+}
+@-webkit-keyframes card-loading {
+    0%,
+    100% {
+      background-position: 0 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  @keyframes card-loading {
+    0%,
+    100% {
+      background-position: 0 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+.image-loading{
+    background: -webkit-gradient(linear, left top, right top, from(rgba(207, 216, 220, 0.4)), color-stop(rgba(207, 216, 220, 0.8)), to(rgba(207, 216, 220, 0.4)));
+    background: -webkit-linear-gradient(left, rgba(207, 216, 220, 0.4), rgba(207, 216, 220, 0.8), rgba(207, 216, 220, 0.4));
+    background: linear-gradient(90deg, rgba(207, 216, 220, 0.4), rgba(207, 216, 220, 0.8), rgba(207, 216, 220, 0.4));
+    -webkit-animation: card-loading 1.4s ease infinite;
+            animation: card-loading 1.4s ease infinite;
+    background-size: 600% 600%;
+    height: 255px;
+}
+
+.ant-carousel .slick-dots li.slick-active button{
+    background: #035ea4 !important;
 }

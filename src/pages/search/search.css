@@ -69,7 +69,14 @@ height: 70px;
 
 @media only screen and (max-width: 600px) {
     .search-page{
-        padding: 20px 20px 2px 2px;
+        padding: 15px
     }
    
+   }
+
+   .filter-container{
+       padding:10px;
+   }
+   .modal-filters{
+       overflow: auto;
    }
