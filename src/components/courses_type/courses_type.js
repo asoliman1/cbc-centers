@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, Icon } from 'antd';
 import './courses_type.css';
+import { Translate } from '../../../node_modules/react-localize-redux';
 const { Meta } = Card;
 
 
@@ -9,7 +10,6 @@ class Courses_type extends Component {
     constructor(props) {
         super(props);
         this.state = { open: false }
-        console.log(this.props)
     }
 
     closeModal() {
@@ -18,12 +18,12 @@ class Courses_type extends Component {
     render() {
         return (
             <div className="animated fadeIn" >
-                <div className="col-md-3 col-sm-6 tabsf-w3-agileits-grids">
-                    <Card hoverable loading={this.props.loading}
-                        cover={<img alt="example" src={this.props.image?this.props.image:'./images/error.jpg'} />}
-                        actions={[<Button type="primary" > <Link style={{color:'white'}} to={{pathname:`courses/${this.props.id}`,state:this.props.course}} > More Details <Icon type="ellipsis" /> </Link> </Button>]}
+                <div className="col-md-3 col-sm-6 tabsf-w3-agileits-grids" style={{float:this.props.lang==='ar'?'right':''}} >
+                    <Card hoverable loading={this.props.loading} 
+                        cover={<Link to={{pathname:`courses/${this.props.id}`}} ><img alt="example" src={this.props.image?this.props.image:'./images/error.jpg'} onError={(e) => { e.target.src = './images/error.jpg' }} /> </Link>}
+                        actions={[<Button type="primary" > <Link style={{color:'white'}} to={{pathname:`courses/${this.props.id}`,state:this.props.course}} > <Translate id="more"/> <Icon type="ellipsis" /> </Link> </Button>]}
                     >
-                        <Meta
+                        <Meta style={{float:this.props.lang==='ar'?'right':''}}
                             title={this.props.name}
                             description={this.props.desc}
                         />

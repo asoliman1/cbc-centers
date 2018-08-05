@@ -9,7 +9,7 @@ function Login_Register(state = initialize_state.login_register, action) {
         case REGISTER_FAILED:
             return { ...state, register: action.data };
             case LOGIN_SUCCESSFULL:
-            return { ...state, register: {errors:[]} };
+            return { ...state, login: {errors:[]} };
             case REGISTER_SUCCESSFULL:
             return { ...state, register: {errors:[]} };
         default:

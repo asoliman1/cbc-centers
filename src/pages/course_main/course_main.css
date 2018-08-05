@@ -11,7 +11,7 @@
     -webkit-box-shadow: 1px 1px 5px #999;
     box-shadow: 1px 1px 5px #999;
     border-radius: 6px;
-    height: 90px;
+    height: 150px;
     margin-bottom: 10px;
 }
 a:hover img.imagedropshadow {
@@ -32,3 +32,23 @@ a:hover img.imagedropshadow {
     word-break: break-all;
 }
 
+.anchor-items a{
+    color: white !important;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.anchor-items .ant-anchor-link-active > .ant-anchor-link-title{
+
+    }
+
+    .ant-menu-vertical > .ant-menu-item, .ant-menu-vertical-left > .ant-menu-item, .ant-menu-vertical-right > .ant-menu-item, .ant-menu-inline > .ant-menu-item, .ant-menu-vertical > .ant-menu-submenu > .ant-menu-submenu-title, .ant-menu-vertical-left > .ant-menu-submenu > .ant-menu-submenu-title, .ant-menu-vertical-right > .ant-menu-submenu > .ant-menu-submenu-title, .ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title{
+        line-height: 30px !important;
+        height: 30px !important;
+    }
+
+.anchor-items .ant-anchor-link-active {
+    background: #035ea4;
+    margin-left: 3px;
+    border-radius: 7px;
+}

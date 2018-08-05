@@ -1,6 +1,6 @@
 import { httpService } from "../helpers/http_service";
 import { showLoading, hideLoading, resetLoading } from "react-redux-loading-bar";
-import {  notification } from 'antd';
+import {  notification ,Modal } from 'antd';
 import store from '../helpers/store';
 
 export const GET_MENU_CATEGORIES = 'GET_MENU_CATEGORIES';
@@ -47,9 +47,14 @@ export const GET_COURSE_DESCRIBTION = 'GET_COURSE_DESCRIBTION';
 export const SEARCH_BY_FILTERS = 'SEARCH_BY_FILTERS';
 export const GET_COURSE_INSTRUCTORS = 'GET_COURSE_INSTRUCTORS';
 export const GET_LANGUAGES = 'GET_LANGUAGES';
+export const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE';
+export const CONTACT_US = 'CONTACT_US';
+export const REMEMBER_ME = 'REMEMBER_ME';
+export const HOME_WISHLIST = 'HOME_WISHLIST';
+export const SHARE = 'SHARE'
 const openNotificationWithIcon = (type,title,message) => {
   notification.config({
-      placement: 'bottomRight',
+      placement: store.getState().language.code==='ar'?'bottomLeft': 'bottomRight',
       bottom: 20,
       duration: 3,
     });
@@ -58,6 +63,14 @@ const openNotificationWithIcon = (type,title,message) => {
     description: message
   });
 };
+
+function successModal(title,content) {
+  const modal = Modal.success({
+    title: title,
+    content: content,
+  });
+  setTimeout(() => modal.destroy(), 4000);
+}
 
 export function search(text, page, size) {
   return function (dispatch) {
@@ -69,12 +82,12 @@ export function search(text, page, size) {
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
-      console.log(error);
+      // console.log(error);
     });
   };
 }
 
-export function searchByfilters(category,sub_category,language,type,text, page, size) {
+export function searchByfilters(category='',sub_category='',language='',type='',text='', page='1', size='10') {
   return function (dispatch) {
     dispatch(showLoading())
     dispatch(showLoading('searchbyfilters'))
@@ -84,10 +97,12 @@ export function searchByfilters(category,sub_category,language,type,text, page, 
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
-      console.log(error);
+      // console.log(error);
     });
   };
 }
+
+
 
 export function menuCat() {
   return function (dispatch) {
@@ -100,7 +115,7 @@ export function menuCat() {
       dispatch(homeCatList(store.getState().header.categories[0].id))
     }).catch(error => {
       dispatch(resetLoading())
-      console.log(error);
+      // console.log(error);
     });
   };
 }
@@ -115,8 +130,14 @@ export function homeSlider() {
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
-      console.log(error);
+      // console.log(error);
     });
+  };
+}
+
+export function rememberMe(status) {
+  return function (dispatch) {
+      dispatch(loadSuccess(REMEMBER_ME,status));
   };
 }
 
@@ -130,7 +151,7 @@ export function homeEventNotif() {
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
-      console.log(error);
+      // console.log(error);
     });
   };
 }
@@ -145,7 +166,7 @@ export function homeCatList(category) {
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
-      console.log(error);
+      // console.log(error);
     });
   };
 }
@@ -160,7 +181,7 @@ export function homeCatItems(id, page, size) {
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
-      console.log(error);
+      // console.log(error);
     });
   };
 
@@ -176,7 +197,7 @@ export function courseModules(id) {
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
-      console.log(error);
+      // console.log(error);
     });
   };
 
@@ -192,7 +213,7 @@ export function courseDesc(id) {
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
-      console.log(error);
+      // console.log(error);
     });
   };
 
@@ -208,7 +229,7 @@ export function homeRatCourses(page, size) {
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
-      console.log(error);
+      // console.log(error);
     });
   };
 }
@@ -223,7 +244,7 @@ export function homeOffCourses(page, size) {
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
-      console.log(error);
+      // console.log(error);
     });
   };
 }
@@ -238,7 +259,7 @@ export function homeNewCourses(page, size) {
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
-      console.log(error);
+      // console.log(error);
     });
   };
 }
@@ -253,7 +274,7 @@ export function homePopCourses(page, size) {
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
-      console.log(error);
+      // console.log(error);
     });
   };
 }
@@ -267,9 +288,9 @@ export function addWishList(course) {
       dispatch(loadSuccess(ADD_TO_USER_WISHLIST, data.data));
       dispatch(hideLoading('addWishList'))
       dispatch(hideLoading())
-      openNotificationWithIcon('success','Course added to wishlist','')
+      openNotificationWithIcon('success',store.getState().language.code === 'ar'?'تم اضافه الكورس':'Course added to wishlist','')
     }).catch(error => {
-      console.log(error.response);
+      // console.log(error.response);
       openNotificationWithIcon('error','Error','')
       dispatch(resetLoading())
       dispatch(resetLoading('addWishList'))
@@ -294,34 +315,32 @@ export function addShopCart(price,course,round) {
       openNotificationWithIcon('error','Error','')
       dispatch(resetLoading())
       dispatch(resetLoading('addShopCart'))
-      console.log(error.response);
+      // console.log(error.response);
     });
   }else{
-    openNotificationWithIcon('error','Error','Please sign in')
+    openNotificationWithIcon('error',store.getState().language.code === 'ar'?'خطآ':'Error',store.getState().language.code === 'ar'?'برجاء تسجيل الدخول':'Please sign in')
   }
   };
 }
+
 
 export function Register(username,email,password) {
   return function (dispatch) {
     dispatch(showLoading())
     dispatch(showLoading('Register'))
     return httpService.Register(username,email,password).then(data => {
-      localStorage.setItem('api_token',data.data.user.token);
       localStorage.setItem('user_id',data.data.user.id);
-      dispatch(loadSuccess(REGISTER_SUCCESSFULL, data.data));
-      dispatch(loadSuccess(GET_PROFILE,data.data.user));
+      dispatch(createShopCart())
+      localStorage.removeItem('user_id');
       dispatch(hideLoading('Register'))
       dispatch(hideLoading())
-      if(!store.getState().shop_cart.shop_cart.id){
-        dispatch(createShopCart())
-      } 
-      openNotificationWithIcon('success','Registeration Successfull','')
+      successModal('Registeration Successful',store.getState().language.code === 'ar'?'من فضلك راجع البريد الالكتروني':'Please check your email')
+      // openNotificationWithIcon('success','Registeration Successfull Please Check your email','')
     }).catch(error => {
       dispatch(loadSuccess(REGISTER_FAILED, error.response.data));
       dispatch(resetLoading())
       dispatch(hideLoading('Register'))
-      console.log(error.response);
+      // console.log(error.response);
     });
   };
 }
@@ -331,21 +350,25 @@ export function Login(email,password) {
     dispatch(showLoading())
     dispatch(showLoading('Login'))
     return httpService.Login(email,password).then(data => {
+      if(store.getState().Authentication.remember_me){ 
       localStorage.setItem('api_token',data.data.token);
       localStorage.setItem('user_id',data.data.user.id);
+      }else{
+        sessionStorage.setItem('api_token',data.data.token);
+        sessionStorage.setItem('user_id',data.data.user.id);
+      }
       dispatch(loadSuccess(LOGIN_SUCCESSFULL, data.data));
       dispatch(loadSuccess(GET_PROFILE,data.data.user));
+      dispatch(homeWishlist())
         dispatch(hideLoading('Login'))
         dispatch(hideLoading())
-        if(!store.getState().shop_cart.shop_cart.id){
-          dispatch(createShopCart())
-        } 
-      openNotificationWithIcon('success','Login Successfull','')
+       dispatch(shopCarts())
+      openNotificationWithIcon('success',store.getState().language.code === 'ar'? 'تم التسجيل بنجاح' :'Login Successfull','')
     }).catch(error => {
       dispatch(loadSuccess(LOGIN_FAILED,error.response?error.response.data:{error:['Error']}))
       dispatch(resetLoading())
       dispatch(hideLoading('Login'))
-      console.log(error.response);
+      // console.log(error.response);
     });
   };
 }
@@ -355,14 +378,14 @@ export function editProfile(user) {
   return function (dispatch) {
     dispatch(showLoading())
     dispatch(showLoading('editprofile'))
-    return httpService.editProfile(store.getState().Authentication.user_id,user).then(data => {
+    return httpService.editProfile(store.getState().Authentication.user_id,store.getState().Authentication.token,user).then(data => {
       dispatch(loadSuccess(EDIT_PROFILE, data.data));
       dispatch(hideLoading('editprofile'))
       dispatch(hideLoading())
-      openNotificationWithIcon('success','Profile updated Successfully','')      
+      openNotificationWithIcon('success',store.getState().language.code === 'ar'?'تم تعديل الحساب بنجاح':'Profile updated Successfully','')      
     }).catch(error => {
       dispatch(resetLoading())      
-      console.log(error.response);
+      // console.log(error.response);
       openNotificationWithIcon('error','Error',error.response.data)
     });
   };
@@ -378,7 +401,7 @@ export function courseEnroll(course,round) {
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
-      console.log(error.response);
+      // console.log(error.response);
     });
   };
 }
@@ -397,10 +420,10 @@ export function courseEnrollAll(){
     dispatch(hideLoading('courseEnrollall'))
     dispatch(hideLoading())
     dispatch(loadSuccess(ENROLLMENT_SUCCESSFULL,{content:[],size:0,total_price:0}))
-    openNotificationWithIcon('success','You enrolled successfully','')      
+    openNotificationWithIcon('success',store.getState().language.code === 'ar'?'تم الالتحاق بنجاح':'You enrolled successfully','')      
     dispatch(createShopCart())
   }else{
-    openNotificationWithIcon('error','Please add courses to shop cart','')      
+    openNotificationWithIcon('error',store.getState().language.code === 'ar'?'برجاء اضافه كورسات لسله المشتريات':'Please add courses to shop cart','')      
   }
 }
 }
@@ -413,12 +436,12 @@ export function doPayment(ref_no,course,round,cart) {
       dispatch(loadSuccess(DO_PAYMENT, data.data));
       dispatch(hideLoading('doPayment'))
       dispatch(hideLoading())
-      openNotificationWithIcon('success','Your payment is successfull','')      
+      openNotificationWithIcon('success',store.getState().language.code === 'ar'?'تمت عمليه الدفع بنجاح':'Your payment is successfull','')      
     }).catch(error => {
-      openNotificationWithIcon('error','Your payment  failed','')      
+      openNotificationWithIcon('error',store.getState().language.code === 'ar'?'لم تتم عمليه الدفع':'Your payment  failed','')      
       dispatch(resetLoading())
 
-      console.log(error.response);
+      // console.log(error.response);
     });
   };
 }
@@ -429,13 +452,13 @@ export function createShopCart() {
     if(!id||typeof id === 'undefined'){ 
     dispatch(showLoading())
     dispatch(showLoading('createshopcart'))
-    return httpService.createShopCart(store.getState().Authentication.user_id).then(data => {
+    return httpService.createShopCart(localStorage.getItem('user_id')).then(data => {
       dispatch(loadSuccess(CREATE_SHOPCART, data.data));
       dispatch(hideLoading('createshopcart'))
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
-      console.log(error.response);
+      // console.log(error.response);
     });
   }else{
     dispatch(CREATE_SHOPCART,{id:id});
@@ -453,7 +476,7 @@ export function unactivateShopCart(cart_id) {
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
-      console.log(error.response);
+      // console.log(error.response);
     });
   };
 }
@@ -462,13 +485,29 @@ export function wishList(page,size) {
   return function (dispatch) {
     dispatch(showLoading())
     dispatch(showLoading('wishList'))
-    return httpService.wishList(localStorage.getItem('user_id'),page,size).then(data => {
-      dispatch(loadSuccess(GET_USER_WISHLIST, data.data.slice(0,30)));
+    return httpService.wishList(store.getState().Authentication.user_id,page,size).then(data => {
+      dispatch(loadSuccess(GET_USER_WISHLIST, data.data));
       dispatch(hideLoading('wishList'))
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
-      console.log(error.response);
+      // console.log(error.response);
+    });
+  };
+}
+
+export function share(email,course) {
+  return function (dispatch) {
+    dispatch(showLoading())
+    dispatch(showLoading('share'))
+    return httpService.share(email,course).then(data => {
+      dispatch(loadSuccess(SHARE, data.data));
+      dispatch(hideLoading('share'))
+      dispatch(hideLoading())
+      openNotificationWithIcon('success',store.getState().language.code==='ar'?'تم نشر الكورس':'Course shared ')
+    }).catch(error => {
+      dispatch(resetLoading())
+      // console.log(error.response);
     });
   };
 }
@@ -478,14 +517,14 @@ export function shopCarts() {
   return function (dispatch) {
     dispatch(showLoading())
     dispatch(showLoading('shopcarts'))
-    return httpService.shopCarts(localStorage.getItem('user_id')).then(data => {
+    return httpService.shopCarts(store.getState().Authentication.user_id).then(data => {
       dispatch(loadSuccess(GET_USER_SHOPCARTS, data.data));
       dispatch(hideLoading('shopcarts'))
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
 
-      console.log(error.response);
+      // console.log(error.response);
     });
   };
 }
@@ -498,11 +537,11 @@ export function removeWishlist(id) {
       dispatch(loadSuccess(REMOVE_ITEM_FROM_WISHLIST, id));
       dispatch(hideLoading('removeWishlist'))
       dispatch(hideLoading())
-      openNotificationWithIcon('success','Course removed from your wishlist','')      
+      openNotificationWithIcon('success',store.getState().language.code === 'ar'?'تم حذف الكورس':'Course removed from your wishlist','')      
     }).catch(error => {
       dispatch(resetLoading())
 
-      console.log(error.response);
+      // console.log(error.response);
 
     });
   };
@@ -516,11 +555,11 @@ export function removeShopItem(id,index) {
       dispatch(loadSuccess(REMOVE_ITEM_FROM_SHOPCART, {id:id,index:index}));
       dispatch(hideLoading('removeWishlist'))
       dispatch(hideLoading())
-      openNotificationWithIcon('success','Course removed from your shop cart','')      
+      openNotificationWithIcon('success',store.getState().language.code === 'ar'?'تم حذف الكورس':'Course removed from your shop cart','')      
     }).catch(error => {
       dispatch(resetLoading())
 
-      console.log(error.response);
+      // console.log(error.response);
 
     });
   };
@@ -537,7 +576,7 @@ export function checkEnrollment(page, size) {
     }).catch(error => {
       dispatch(resetLoading())
 
-      console.log(error.response);
+      // console.log(error.response);
     });
   };
 }
@@ -553,7 +592,7 @@ export function courseDetails(id) {
     }).catch(error => {
       dispatch(resetLoading())
 
-      console.log(error.response);
+      // console.log(error.response);
     });
   };
 }
@@ -569,7 +608,7 @@ export function getLanguages() {
     }).catch(error => {
       dispatch(resetLoading())
 
-      console.log(error.response);
+      // console.log(error.response);
     });
   };
 }
@@ -578,14 +617,14 @@ export function courseInstr(id) {
   return function (dispatch) {
     dispatch(showLoading())
     dispatch(showLoading('courseinstructor'))
-    return httpService.courseDetails(id).then(data => {
+    return httpService.courseInstr(id).then(data => {
       dispatch(loadSuccess(GET_COURSE_INSTRUCTORS, data.data));
       dispatch(hideLoading('courseinstructor'))
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
 
-      console.log(error.response);
+      // console.log(error.response);
     });
   };
 }
@@ -601,7 +640,7 @@ export function Tags(page, size) {
     }).catch(error => {
       dispatch(resetLoading())
 
-      console.log(error.response);
+      // console.log(error.response);
     });
   };
 }
@@ -610,14 +649,14 @@ export function userEnrollments(page, size) {
   return function (dispatch) {
     dispatch(showLoading())
     dispatch(showLoading('userEnrollments'))
-    return httpService.userEnrollments('POPULAR', page, size).then(data => {
+    return httpService.userEnrollments(store.getState().Authentication.user_id).then(data => {
       dispatch(loadSuccess(GET_USER_ENROLLMENTS, data.data));
       dispatch(hideLoading('userEnrollments'))
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
 
-      console.log(error.response);
+      // console.log(error.response);
     });
   };
 }
@@ -626,14 +665,14 @@ export function userProfile() {
   return function (dispatch) {
     dispatch(showLoading())
     dispatch(showLoading('userProfile'))
-    return httpService.userProfile(store.getState().Authentication.user_id).then(data => {
+    return httpService.userProfile(store.getState().Authentication.user_id,store.getState().Authentication.token).then(data => {
       dispatch(loadSuccess(GET_PROFILE, data.data));
       dispatch(hideLoading('userProfile'))
       dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
 
-      console.log(error.response);
+      // console.log(error.response);
     });
   };
 }
@@ -649,7 +688,7 @@ export function searchCourseByTags(page, size) {
     }).catch(error => {
       dispatch(resetLoading())
 
-      console.log(error.response);
+      // console.log(error.response);
     });
   };
 }
@@ -665,7 +704,7 @@ export function coursesByCategory(page, size) {
     }).catch(error => {
       dispatch(resetLoading())
 
-      console.log(error.response);
+      // console.log(error.response);
     });
   };
 }
@@ -683,22 +722,63 @@ export function getCourseRounds(id) {
     }).catch(error => {
       dispatch(resetLoading())
 
-      console.log(error.response);
+      // console.log(error.response);
     });
+  };
+}
+
+
+export function homeWishlist() {
+  return function (dispatch) {
+    dispatch(showLoading())
+    dispatch(showLoading('homeWishlist'))
+    return httpService.homeWishlist(store.getState().Authentication.user_id).then(data => {
+      dispatch(loadSuccess(HOME_WISHLIST, data.data));
+      dispatch(hideLoading('homeWishlist'))
+      dispatch(hideLoading())
+    }).catch(error => {
+      dispatch(resetLoading())
+      // console.log(error.response);
+    });
+  };
+}
+
+
+export function contactUs(name,email,telephone,subject,message){
+  return function (dispatch) {
+    dispatch(showLoading())
+    dispatch(showLoading('contactus'))
+    return httpService.contactUs(name,email,telephone,subject,message).then(data => {
+      dispatch(loadSuccess(CONTACT_US, data.data));
+      dispatch(hideLoading('contactus'))
+      dispatch(hideLoading())
+    openNotificationWithIcon('success',store.getState().language.code === 'ar'?'تمت العمليه بنجاح':'Process sent Successfully','')
+
+    }).catch(error => {
+      dispatch(resetLoading())
+
+      // console.log(error.response);
+    });
+  };
+}
+
+export function changeLang(lang) {
+  return function (dispatch) {
+    dispatch(loadSuccess(CHANGE_LANGUAGE,{language:lang}))
   };
 }
 
 export function checkAuth() {
   return function (dispatch) {
-    var token = localStorage.getItem('api_token');
-    var user_id = localStorage.getItem('user_id');
-  
+    var token = localStorage.getItem('api_token') || sessionStorage.getItem('api_token') ;
+    var user_id = localStorage.getItem('user_id') || sessionStorage.getItem('user_id');
     var status = !token || token === '' || typeof token === 'undefined' ? false : true;
     dispatch(loadSuccess(CHECK_AUTHENTICATION, { token: token, status: status,user_id:user_id }))
+    if(status){    
     if(typeof store.getState().shop_cart.shop_cart.id === 'undefined'|| !store.getState().shop_cart.shop_cart.id){
-      if(status){ 
-      dispatch(createShopCart())
+      dispatch(shopCarts())
       }
+      dispatch(homeWishlist())
     }
   }
 }
@@ -709,6 +789,7 @@ export function Logout() {
     localStorage.removeItem('api_token')
     localStorage.removeItem('user_id')
     localStorage.removeItem('shopcart_id')
+    sessionStorage.clear()
     dispatch(loadSuccess(CREATE_SHOPCART,{}))
     dispatch(loadSuccess(LOGOUT, {}))
     dispatch(hideLoading())

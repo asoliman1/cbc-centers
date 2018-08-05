@@ -15,8 +15,10 @@ class Search_item extends Component {
     constructor(props) {
         super(props);
         this.state = { rating: 3.3, liked: false }
-        console.log(this.props)
-        
+    }
+
+    componentDidMount(){
+        this.checkLike()
     }
 
     onChange = (e) => {
@@ -26,6 +28,11 @@ class Search_item extends Component {
         this.hide()
         this.props.addShopCart(e.target.value.price,this.props.id,e.target.value.id)
     }
+    checkLike(){
+        if(   this.props.wishlist.filter(e=>e.course===this.props.id).length > 0 ){
+            this.setState({liked:true})
+        }
+       }
 
     hide = () => {
         this.setState({
@@ -57,7 +64,7 @@ class Search_item extends Component {
             <div>
                 {/* onClick={(e) => { this.addShopCart(e) }} */}
                 <RadioGroup onChange={this.onChange} value={this.state.value}>
-                    {rounds.splice(0,4).map(e => {
+                    {rounds.map(e => {
                         return <div style={{padding:'6px'}} ><Radio className="animated fadeIn" style={radioStyle} value={e}> <span style={{whiteSpace:'nowrap',width:'120px',overflow:'hidden',float:'right'}} > {e.name_e} </span></Radio> 
                             {e.start_date } - {e.end_date} <br/>
                             {e.price} $
@@ -73,8 +80,8 @@ class Search_item extends Component {
                 <li className="list-group-item" style={{ borderLeft: '6px solid black', width: '80%', margin: 'auto', marginBottom: '20px' }} >
                     <div className="media">
                         <div className="media-left">
-                          <Link to={{pathname:`/course_main/${this.props.id}`}} >
-                                <img className="media-object img-rounded" height="140px" width="140px" src={this.props.image?this.props.image:'./images/error.jpg'} alt={this.props.name} />
+                          <Link to={{pathname:`/courses/${this.props.id}`}} >
+                                <img className="media-object img-rounded" height="140px" width="140px" src={this.props.image?this.props.image:'./images/error.jpg'} onError={(e) => { e.target.src = './images/error.jpg' }} alt={this.props.name} />
                            </Link>
                         </div>
                         <div className="media-body">
@@ -83,7 +90,7 @@ class Search_item extends Component {
                             <h4 className="media-heading lead">{this.props.name}</h4>
                             </Link>
                             <div className="row" >
-                          <Link to={{pathname:`/course_main/${this.props.id}`}} >
+                          <Link to={{pathname:`/courses/${this.props.id}`}} >
                                 <div className="col-md-8">
                                     <p style={{marginBottom:'5px'}} >{this.props.desc}</p>
                                     <span className="ant-rate-text"> {category_name.attr1} </span> <br/>
@@ -127,7 +134,7 @@ class Search_item extends Component {
 }
 
 function mapStateToProps(state){
-    return {rounds:state.shop_cart.rounds,loading:state.loadingBar,categories:state.header.categories}
+    return {rounds:state.shop_cart.rounds,loading:state.loadingBar,categories:state.header.categories,wishlist:state.wishlist.mini}
 }
 
 export default connect(mapStateToProps,{ addShopCart,

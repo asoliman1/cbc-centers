@@ -10,7 +10,7 @@ import Wish_item from '../../components/wish_item/wish_item';
 class wish extends Component {
     constructor(props) {
         super(props);
-
+        this.props.wishList('1', '100')
     }
 
     componentWillMount() {
@@ -18,13 +18,12 @@ class wish extends Component {
     }
 
     componentDidMount() {
-        this.props.wishList('1', '100')
     }
 
     render() {
 
         return (
-            <div className="page-wishlist">
+            <div className="page-wishlist" style={{direction:this.props.language==='ar'?'rtl':''}} >
                 {this.props.loading.wishList === 0 && this.props.wishlist.content.length === 0 ? <div style={{ textAlign: 'center', fontSize: '15px' }} > No items found </div> : ''}
                 <ul>
                     {this.props.loading.wishList === 1 ?
@@ -44,7 +43,7 @@ class wish extends Component {
                         </div>
                         :
                         this.props.wishlist.content.map(e => {
-                            return <Wish_item key={e.id} id={e.id} course={e.course} x={e.course_details} />
+                            return <Wish_item key={e.id} lang={this.props.language} id={e.id} course={e.course} x={e.course_details} />
                         })}
                 </ul>
             </div>
@@ -53,7 +52,7 @@ class wish extends Component {
 }
 
 function mapStateToProps(state) {
-    return { wishlist: state.wishlist, loading: state.loadingBar };
+    return { wishlist: state.wishlist, loading: state.loadingBar,language:state.language.code };
 }
 
 

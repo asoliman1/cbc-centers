@@ -34,3 +34,7 @@ a{
  .btn-light{
      background: unset !important;
  }
+
+ .ant-input::placeholder{
+     padding: 10px !important;
+ }

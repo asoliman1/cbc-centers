@@ -94,8 +94,9 @@
   }
 
   .ant-menu.ant-menu-sub.ant-menu-vertical {
-      min-height: 100px;
-      max-height: 300px;
-      overflow: scroll;
-      padding: 10px
+      padding-left: 10px;
+      padding-right: 10px;
   }
+  /* ::-webkit-scrollbar {
+    display: none;
+    } */

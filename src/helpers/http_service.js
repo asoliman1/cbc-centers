@@ -13,7 +13,7 @@ function menuCat() {
 }
 
 function search(text, page, size) {
-    return Axios.get(`${api_url}/course/?name_e__icontains=${text}&page=${page}&page_size=${size}`);
+    return Axios.get(`${api_url}/course/?tag=${text}&page=${page}&page_size=${size}`);
 }
 
 function homeSlider() {
@@ -58,8 +58,8 @@ function obtainToken() {
     return Axios.post(`${api_url}/user/obtain_token`);
 }
 
-function editProfile(id,obj) {
-    return Axios.put(`${api_url}/user/${id}/`,obj,{headers:{'Authorization':'bearer '+localStorage.getItem('api_token')}} );
+function editProfile(id,token,obj) {
+    return Axios.put(`${api_url}/user/${id}/`,obj,{headers:{'Authorization':'bearer '+token}} );
 }
 
 function courseEnroll(user, course , round) {
@@ -67,7 +67,7 @@ function courseEnroll(user, course , round) {
 }
 
 function doPayment(enroll_id, user, course,round,ref_no) {
-    return Axios.put(`${api_url}/userenrollment/${enroll_id}/`, { "user": user, "course": course, "round": round, "status": "192","payment_reference_no":ref_no });
+    return Axios.put(`${api_url}/userenrollment/${enroll_id}/`, { "user": user, "course": course, "round": round, "status": "192","payment_reference_number":ref_no });
 }
 
 function wishList(user, page, size) {
@@ -106,8 +106,8 @@ function notification_cart_counts() {
     return Axios.get(`${api_url}/`);
 }
 
-function userProfile(id) {
-    return Axios.get(`${api_url}/user/${id}`,{headers:{'Authorization':'bearer '+localStorage.getItem('api_token')}});
+function userProfile(id,token) {
+    return Axios.get(`${api_url}/user/${id}`,{headers:{'Authorization':'bearer '+token}});
 }
 
 function getCourseRounds(id) {
@@ -151,7 +151,16 @@ function getLanguages(){
     return Axios.get(`${api_url}/lookups/?lookup=CRS_LNGG`);
 }
 
-function searchByfilters(category,sub_category,language,location,text_a,text_e, page, size,type){
+function contactUs(name,email,telephone,subject,message){
+    return Axios.post(`${api_url}/contactus/`,{"name":name,"email":email,"telephone":telephone,"subject":subject,"message":message,"status":"220","creation_date":new Date().toJSON().slice(0, 10)})
+}
+
+function homeWishlist(user){
+    return Axios.get(`${api_url}/coursewishlistmini/?user=${user}`)
+}
+
+
+function searchByfilters(category,sub_category,language,location,text, page, size,type){
     switch (type){
         case 'popular':
         type= '-popularity'
@@ -168,10 +177,17 @@ function searchByfilters(category,sub_category,language,location,text_a,text_e, 
          
         default : type = ""
     }
-    return Axios.get(`${api_url}/course/?category__in=${category}&coursecategories__subcategory=${sub_category}&language__in=${language}&name_a__icontains=${text_a}&name_e__icontains=${text_e}&page_size=${size}&page=${page}&location=${location}&ordering=${type}`);
+    return Axios.get(`${api_url}/course/?category__in=${category}&coursecategories__subcategory=${sub_category}&language__in=${language}&name_a__icontains=${text}&name_e__icontains=${text}&page_size=${size}&page=${page}&location=${location}&ordering=${type}`);
+}
+
+function share(email,course){
+    return Axios.get(`${api_url}/share/`,{"email":email,"id":course})
 }
 
 export const httpService = {
+    share,
+    homeWishlist,
+    contactUs,
     getLanguages,
     courseInstr,
     searchByfilters,

@@ -38,22 +38,21 @@ class search extends Component {
         window.scroll(0, 0);
         window.addEventListener("resize", this.resize.bind(this));
         this.resize();
-
-        if (this.props.location.search === '') {
-            if (this.props.history.location.pathname === '/search') {
+        if ( typeof this.props.location.state !== 'undefined' ) {
+                if(this.props.location.state.all)
                 this.props.searchByfilters('','','','','',1,20)
-            } else {
-                this.this.props.history.goBack()
-            }
+                else{
+            this.props.searchByfilters(this.props.location.state.categories,this.props.location.state.sub_categories,'',this.props.location.state.type,'','1','20')
+                }
         } else {
             this.props.search1(this.props.location.search.replace('?', ''), 1, 20)
-        }
+        } 
         
     }
 
+
     componentDidMount(){
         this.props.getLanguages();
-        console.log(this.props)
     }
 
     resize() {
@@ -89,7 +88,7 @@ class search extends Component {
           });
         }, 2000);
 
-this.props.searchByfilters(this.state.checkedList_cat.toString(),'',this.state.checkedList_lang.toString(),'',this.props.location.search.replace('?', ''),1,20)        
+this.props.searchByfilters(this.state.checkedList_cat.toString(),'',this.state.checkedList_lang.toString(),this.props.location.state.type,this.props.location.search.replace('?', ''),'1','20')        
       }
 
       handleCancel = () => {
@@ -182,7 +181,7 @@ this.props.searchByfilters(this.state.checkedList_cat.toString(),'',this.state.c
         <Checkbox.Group style={{ width: '100%' }} value={this.state.checkedList_cat} onChange={this.onChange_cat}>
     <Row>
         {this.props.categories.map(e=>{
-            return <Col ><Checkbox value={e.id} >{e.attr1}</Checkbox></Col>
+            return <Col key={e.id} ><Checkbox value={e.id} >{e.attr1}</Checkbox></Col>
         })}
       
     </Row>
@@ -200,7 +199,7 @@ this.props.searchByfilters(this.state.checkedList_cat.toString(),'',this.state.c
                 </div>
                 <div className="row text-center" >
                     {this.props.search.counts > 0 ?
-                        <Pagination current={this.state.currentPage} defaultPageSize={20} size="small" style={{ marginBottom: '10px' }} total={ Math.floor(  this.props.search.results.length / this.state.currentSize )} showTotal={(e) => { this.showTotal(e) }} onChange={(page,size) => {this.setState({currentPage:page,currentSize:size})  ; search_text !== '' ? this.props.searchByfilters(this.state.checkedList_cat,'',this.checkedList_lang,'',search_text,search_text,page,size) : this.props.location.state? this.props.searchByfilters(this.props.location.state.category,this.props.location.state.subcategory,'',this.props.location.state.type,page,size) : this.props.searchByfilters('','','','','',page,size) }} showSizeChanger showQuickJumper />
+                        <Pagination size="small" current={this.state.currentPage} defaultPageSize={20} total={ Math.floor(  this.props.search.results.length / this.state.currentSize )} showTotal={(e) => { this.showTotal(e) }} onChange={(page,size) => {this.setState({currentPage:page,currentSize:size})  ; search_text !== '' ? this.props.searchByfilters(this.state.checkedList_cat.length === 0? this.props.location.state.categories :this.state.checkedList_cat ,this.props.location.state.sub_categories,this.checkedList_lang,'',search_text,page,size) : this.props.location.state? this.props.searchByfilters(this.props.location.state.category,this.props.location.state.subcategory,'',this.props.location.state.type,page,size) : this.props.searchByfilters('','','','','',page,size) }}showSizeChanger showQuickJumper />
                         :  this.props.loading.search === 1 || this.props.loading.searchbyfilters === 1? <Spin size="large" /> : <div> No items found </div>}
                 </div>
 
@@ -216,7 +215,7 @@ this.props.searchByfilters(this.state.checkedList_cat.toString(),'',this.state.c
                 </div>
                 <div className="row text-center" >
                     {this.props.search.counts > 0 ?
-                        <Pagination size="small" current={this.state.currentPage} defaultPageSize={20} total={ Math.floor(  this.props.search.results.length / this.state.currentSize )} showTotal={(e) => { this.showTotal(e) }} onChange={(page,size) => {this.setState({currentPage:page,currentSize:size})  ; search_text !== '' ? this.props.searchByfilters(this.state.checkedList_cat,'',this.checkedList_lang,'',search_text,search_text,page,size) : this.props.location.state? this.props.searchByfilters(this.props.location.state.category,this.props.location.state.subcategory,'',this.props.location.state.type,page,size) : this.props.searchByfilters('','','','','',page,size) }}showSizeChanger showQuickJumper />
+                        <Pagination size="small" current={this.state.currentPage} defaultPageSize={20} total={ Math.floor(  this.props.search.results.length / this.state.currentSize )} showTotal={(e) => { this.showTotal(e) }} onChange={(page,size) => {this.setState({currentPage:page,currentSize:size})  ; search_text !== '' ? this.props.searchByfilters(this.state.checkedList_cat.length === 0? this.props.location.state.categories :this.state.checkedList_cat ,this.props.location.state.sub_categories,this.checkedList_lang,'',search_text,page,size) : this.props.location.state? this.props.searchByfilters(this.props.location.state.category,this.props.location.state.subcategory,'',this.props.location.state.type,page,size) : this.props.searchByfilters('','','','','',page,size) }}showSizeChanger showQuickJumper />
                         : <div> </div>}                </div>
             </div>
         );

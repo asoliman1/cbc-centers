@@ -1,4 +1,4 @@
-import { GET_USER_WISHLIST, ADD_TO_USER_WISHLIST, REMOVE_ITEM_FROM_WISHLIST } from '../actions';
+import { GET_USER_WISHLIST, ADD_TO_USER_WISHLIST, REMOVE_ITEM_FROM_WISHLIST,HOME_WISHLIST } from '../actions';
 import initialize_state from '../helpers/initialize_state';
 
 
@@ -12,7 +12,8 @@ function wishlist(state = initialize_state.wishlist, action) {
         case REMOVE_ITEM_FROM_WISHLIST:
             size = state.size - 1;
             return { ...state, size: size, content: [...state.content.filter(e=>e.id!==action.data)] }
-      
+        case HOME_WISHLIST:
+            return { ...state, mini:action.data.results }
         default:
             return state
     }

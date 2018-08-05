@@ -1,46 +1,70 @@
 import React, { Component } from 'react';
-
+import {connect} from 'react-redux';
+import {contactUs} from '../../actions/index';
+import {Icon} from 'antd'
+import {Translate} from 'react-localize-redux';
+const initial = {};
 class contact extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {}
+        this.onChangeInput = this.onChangeInput.bind(this);
+    }
+
+    componentWillMount(){
+		window.scrollTo(0,0)                
+    }
+
+    componentDidMount(){
+
+    }
+
+    onChangeInput(e){
+        this.setState({[e.target.name]:e.target.value});
+    }
+    
     render() {
-		window.scrollTo(0,0)        
         return (
             <div>
-            <div className="mail">
+            <div className="mail" style={{direction:this.props.language === 'ar' ? 'rtl' : ''}} >
             <div className="container">
-                <h3 className="tittlef-agileits-w3layouts">Contact Us</h3>
+                <h3 className="tittlef-agileits-w3layouts"> <Translate id="contact.us" /> </h3>
                 <div className="shopf-sear-headinfo_mail_grids">
-                    <div className="col-md-7 contctf_mail_grid_right">
-                        <h3 className="sub-w3ls-headf" style={{color:'black'}} >Please fill this form to contact with us.</h3>
-                        <form action="#" method="post">
+                    <div className="col-md-7 contctf_mail_grid_right" style={{float:this.props.language === 'ar' ? 'right' : ''}} >
+                        <h3 className="sub-w3ls-headf" style={{color:'black'}} > <Translate id="contact.rule" /> </h3>
+                        <form onReset={()=>{this.setState({name:'',email:'',telephone:'',message:'',subject:''})}} onSubmit={(e)=>{e.preventDefault();this.props.contactUs(this.state.name,this.state.email,this.state.telephone,this.state.subject,this.state.message)}}  >
                             <div className="inputf_left">
-                                <input type="text" name="Name" placeholder="Name" required />
+                                <input type="text" name="name" placeholder={this.props.language==='ar'?'الاسم':'Name'} value={this.state.name} onChange={this.onChangeInput} required />
                             </div>
                             <div className="inputf_right">
-                                <input type="email" name="Email" placeholder="Email" required />
+                                <input type="email" name="email" placeholder={this.props.language==='ar'?'البريد الالكتروني':'Email'} value={this.state.email} onChange={this.onChangeInput} required />
                             </div>
                             <div className="clearfix"> </div>
                             <div className="inputf_left">
-                                <input type="text" name="Telephone" placeholder="Telephone" required />
+                                <input type="text" name="telephone" placeholder={this.props.language==='ar'?'الجوال':'Telephone'} value={this.state.telephone} onChange={this.onChangeInput} required />
                             </div>
                             <div className="inputf_right">
-                                <input type="text" name="Subject" placeholder="Subject" required />
+                                <input type="text" name="subject" placeholder={this.props.language==='ar'?'عنوان الرساله':'Subject'} value={this.state.subject} onChange={this.onChangeInput} required />
                             </div>
                             <div className="clearfix"> </div>
                             <div className="inputf">
-                                <textarea name="Message" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Message...';}" required="">Message...</textarea>
+                                <textarea name="message" placeholder={this.props.language==='ar'?'الرساله':'Message ...'} required value={this.state.message} onChange={this.onChangeInput} ></textarea>
                             </div>
-                            <input type="submit" value="Submit" />
-                            <input type="reset" value="Clear"/>
+                            {this.props.loading.contactus===1?
+                            <div style={{textAlign:'left'}} > <Icon type="loading" style={{fontSize: 20, color:'blue'}} spin />  </div>
+                            :<input type="submit" value={this.props.language==='ar'?'ارسل':'Send'} /> }
+                            <input type="reset" value={this.props.language==='ar'?'حذف':'Clear'}/>
                         </form>
                     </div>
-                    <div className="col-md-5 contactf-left">
-                        <h3 className="sub-w3ls-headf" style={{color:'black'}} >Contact Info</h3>
+                    <div className="col-md-5 contactf-left" style={{float:this.props.language === 'ar' ? 'left' : ''}} >
+                        <h3 className="sub-w3ls-headf" style={{color:'black'}} > <Translate id="contact.info" /> </h3>
                         <div className="visit">
                             <div className="col-md-2 col-sm-2 col-xs-2 contact-icon-sidef">
                                 <span className="fa fa-home" aria-hidden="true"></span>
                             </div>
                             <div className="col-md-10 col-sm-10 col-xs-10 contact-text-shopf-sear-headinf0">
-                                <h4>Visit us</h4>
+                                <h4> <Translate id="contact.visit" /> </h4>
                                 <p>Cologne, Ehrenfeld Gutenbergstr. 50823 Cologne, Germany</p>
                             </div>
                             <div className="clearfix"></div>
@@ -50,7 +74,7 @@ class contact extends Component {
                                 <span className="fa fa-envelope" aria-hidden="true"></span>
                             </div>
                             <div className="col-md-10 col-sm-10 col-xs-10 contact-text-shopf-sear-headinf0">
-                                <h4>Mail us</h4>
+                                <h4> <Translate id="contact.mail" /> </h4>
                                 <p><a href="mailto:info@example.com">info@example.com</a></p>
                             </div>
                             <div className="clearfix"></div>
@@ -60,7 +84,7 @@ class contact extends Component {
                                 <span className="fa fa-mobile" aria-hidden="true"></span>
                             </div>
                             <div className="col-md-10 col-sm-10 col-xs-10 contact-text-shopf-sear-headinf0">
-                                <h4>Call us</h4>
+                                <h4> <Translate id="contact.call" /> </h4>
                                 <p>+18044261149</p>
                             </div>
                             <div className="clearfix"></div>
@@ -70,7 +94,7 @@ class contact extends Component {
                                 <span className="fa fa-clock-o" aria-hidden="true"></span>
                             </div>
                             <div className="col-md-10 col-sm-10 col-xs-10 contact-text-shopf-sear-headinf0">
-                                <h4>Work hours</h4>
+                                <h4> <Translate id="contact.working" /> </h4>
                                 <p>Mon-Sat 09:00 AM - 05:00PM</p>
                             </div>
                             <div className="clearfix"></div>
@@ -86,10 +110,10 @@ class contact extends Component {
     
         <div className="locatnf-section">
             <div className="container-fluid">
-                <h3 className="tittlef-agileits-w3layouts">various locations</h3>
+                <h3 className="tittlef-agileits-w3layouts"> <Translate id="contact.locations" /> </h3>
                 <div className="locationsf-main">
                     <div className="locationsf-inn">
-                        <div className="locatnf-grids m1">
+                        <div className="locatnf-grids m1" style={{direction:this.props.language==='ar'?'rtl':''}} >
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10171.143717162497!2d-73.99510450880028!3d40.72023723426282!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2590485a57bab%3A0xc30a1a20d5c453f4!2sD%C5%8C%2C+Cookie+Dough+Confections!5e0!3m2!1sen!2sin!4v1512641855744"></iframe>
                             <h3 className="sub-w3ls-headf">Location1</h3>
                             <div className="add-left">
@@ -98,7 +122,7 @@ class contact extends Component {
                                 <p className="paragraphf"><span>Email : </span><a href="mailto:info@example.com">info@example.com</a></p>
                             </div>
                         </div>
-                        <div className="locatnf-grids m2">
+                        <div className="locatnf-grids m2" style={{direction:this.props.language==='ar'?'rtl':''}} >
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20335.70063503884!2d-73.99748627450514!3d40.741786138002865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c258fecf664df5%3A0x33d224a0d5dacca2!2sRockefeller+Center!5e0!3m2!1sen!2sin!4v1512641910229"></iframe>
                             <h3 className="sub-w3ls-headf">Location2</h3>
                             <div className="add-left">
@@ -109,7 +133,7 @@ class contact extends Component {
                         </div>
                     </div>
                     <div className="locationsf-inn">
-                        <div className="locatnf-grids m3">
+                        <div className="locatnf-grids m3" style={{direction:this.props.language==='ar'?'rtl':''}} >
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d86077.10926901785!2d-73.97583160860489!3d40.8209002394618!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x80a26a8cc62f2aa5!2sCity+Ice+Pavilion!5e0!3m2!1sen!2sin!4v1512641992727"></iframe>
                             <h3 className="sub-w3ls-headf">Location3</h3>
                             <div className="add-left">
@@ -118,7 +142,7 @@ class contact extends Component {
                                 <p className="paragraphf"><span>Email : </span><a href="mailto:info@example.com">info@example.com</a></p>
                             </div>
                         </div>
-                        <div className="locatnf-grids m4">
+                        <div className="locatnf-grids m4" style={{direction:this.props.language==='ar'?'rtl':''}} >
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d47576.40355278206!2d-71.45619986572248!3d41.81698718199209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e4451158a3cc03%3A0x3b88861277135d60!2sProvidence+Biltmore!5e0!3m2!1sen!2sin!4v1512642068206"></iframe>
                             <h3 className="sub-w3ls-headf">Location4</h3>
                             <div className="add-left">
@@ -136,5 +160,7 @@ class contact extends Component {
         );
     }
 }
-
-export default contact;
+function mapStateToProps(state){
+    return {loading:state.loadingBar,language:state.language.code}
+}
+export default connect(mapStateToProps,{contactUs}) (contact);

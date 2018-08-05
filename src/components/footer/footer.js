@@ -4,6 +4,7 @@ import './footer.css';
 import {connect} from 'react-redux';
 import {searchByfilters,shopCarts,wishList} from '../../actions/index'
 import Signup_news from '../signup_news_letter/signup_news';
+import { Translate } from '../../../node_modules/react-localize-redux';
 class Footer extends Component {
 	
 	render() {
@@ -18,22 +19,22 @@ class Footer extends Component {
 							<h2>
 								<a href="/home" >CBC Centers</a>
 							</h2>
-							<p className="paragraphf">Providing best courses at affordable prices.</p>
+							<p className="paragraphf"> <Translate id="footer.desc" /> </p>
 						</div>
 						<div className="col-md-4 footer_w3layouts_gridf">
 							<nav>
 								<ul className="footer_w3layouts_gridf_list">
 									<li>
 										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<Link to="/search" >Courses</Link>
+										<Link to={{pathname:'/search',state:{all:true}}} ><Translate id="header.courses" /></Link>
 									</li>
 									<li>
 										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<Link to="/wish">Wishlist</Link>
+										<Link to="/wish"><Translate id="header.my.wish.list" /></Link>
 									</li>
 									<li>
 										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<Link to="/checkout" >Shopcart</Link>
+										<Link to="/checkout" ><Translate id="header.shopcart" /></Link>
 									</li>
 								</ul>
 							</nav>
@@ -44,22 +45,22 @@ class Footer extends Component {
 
 									<li>
 										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<Link to="/about">About</Link>
+										<Link to="/about"><Translate id="header.about" /></Link>
 									</li>
 									<li>
 										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<Link to="/terms">Terms & Conditions</Link>
+										<Link to="/terms"> <Translate id="footer.terms" /> </Link>
 									</li>
 									<li>
 										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<Link to="/contact">Contact</Link>
+										<Link to="/contact"> <Translate id="header.contact" /> </Link>
 									</li>
 								</ul>
 							</nav>
 						</div>
 						<div className="clearfix"> </div>
 						<div className="w3ls-fsocial-grid">
-							<h3 className="sub-w3ls-headf">Follow Us</h3>
+							<h3 className="sub-w3ls-headf"> <Translate id="footer.follow.us" /> </h3>
 							<div className="social-ficons">
 								<ul>
 									<li>
@@ -85,7 +86,7 @@ class Footer extends Component {
 							<p>
 								<span className="fa fa-map-marker" aria-hidden="true"></span>Ehrenfeld Gutenbergstr. Cologne, Germany.</p>
 						</div>
-						<p>© 2018 CBC Centers. All rights reserved 
+						<p><Translate id="footer.copy.right" />
 						</p>
 						<div className="clearfix"> </div>
 					</div>

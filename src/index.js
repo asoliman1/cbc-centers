@@ -6,6 +6,7 @@ import Footer from './components/footer/footer';
 import Header from './components/header/header';
 import ModalSwitch from './pages/modal_switch/modal_switch';
 import { Provider } from 'react-redux';
+import { LocalizeProvider } from "react-localize-redux";
 import store from './helpers/store';
 import './index.css';
 import 'antd/dist/antd.css';
@@ -27,15 +28,15 @@ import './css/index.css'
 import ar_EG from 'antd/lib/locale-provider/ar_EG';
 import en_US from 'antd/lib/locale-provider/en_US'
 import moment from 'moment';
-// import 'moment/locale/ar-sa';
 
 
-// moment.locale('ar')
 store.dispatch(checkAuth())
+
 
 ReactDOM.render(
 <Provider store={store} >
-<LocaleProvider locale={en_US} >
+<LocalizeProvider >
+<LocaleProvider locale={localStorage.getItem('language')==='ar'?ar_EG:en_US} >
   <Router>
     <div>
       <Route  component={Header} />
@@ -47,6 +48,7 @@ ReactDOM.render(
     </div>
   </Router>
   </LocaleProvider>
+  </LocalizeProvider>
   </Provider>
 
   , document.getElementById('root'));

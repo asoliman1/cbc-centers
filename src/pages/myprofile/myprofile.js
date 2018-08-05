@@ -1,25 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { userProfile,editProfile } from '../../actions/index';
+import { userProfile, editProfile } from '../../actions/index';
 import './myprofile.css';
-import { Row, Col, Card, Icon, Button, Switch, List, Input, Tooltip, Tag, Timeline, Divider,DatePicker } from 'antd';
+import { Row, Col, Card, Icon, Button, Switch, List, Input, Tooltip, Tag, Timeline, Divider, DatePicker } from 'antd';
 import moment from 'moment';
+import { Translate } from 'react-localize-redux';
+import { Upload, message } from 'antd';
+
+   
+
+function beforeUpload(file) {
+    const isJPG = file.type === 'image/jpeg';
+    if (!isJPG) {
+        message.error('You can only upload JPG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+        message.error('Image must smaller than 2MB!');
+    }
+    return isJPG && isLt2M;
+}
 const { Meta } = Card;
 const { TextArea } = Input;
 
-
-const tabList = [{
-    key: 'tab1',
-    tab: 'Profile',
-}
-// , {
-//     key: 'tab2',
-//     tab: 'Courses',
-// }, {
-//     key: 'tab3',
-//     tab: 'Activities',
-// }
-];
 
 
 
@@ -36,22 +39,29 @@ class myprofile extends Component {
             tags: ['Tag 1', 'Tag 2', 'Tag 3'],
             inputVisible: false,
             inputValue: '',
-            user:{}
+            user: {},
+            hideNav: false,
+            loading: false,
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
     }
 
-    componentWillMount(){
+    componentWillMount() {
         window.scroll(0, 0)
-        let user ={last_name:'sds',first_name:'asa'};
-        user = (({first_name})=>({first_name}))(user)
-        console.log(user)
+        let user = { last_name: 'sds', first_name: 'asa' };
+        user = (({ first_name }) => ({ first_name }))(user)
+        window.addEventListener("resize", this.resize.bind(this));
+        this.resize();
+    }
+
+
+    resize() {
+        this.setState({ hideNav: window.innerWidth <= 900 });
 
     }
     handleClose = (removedTag) => {
         const tags = this.state.tags.filter(tag => tag !== removedTag);
-        console.log(tags);
         this.setState({ tags });
     }
 
@@ -61,7 +71,7 @@ class myprofile extends Component {
 
     handleInputChange = (e) => {
         let obj = this.state.user;
-         obj[e.target.name] = e.target.value;
+        obj[e.target.name] = e.target.value;
         this.setState({ user: obj });
     }
 
@@ -72,7 +82,6 @@ class myprofile extends Component {
         if (inputValue && tags.indexOf(inputValue) === -1) {
             tags = [...tags, inputValue];
         }
-        console.log(tags);
         this.setState({
             tags,
             inputVisible: false,
@@ -85,36 +94,78 @@ class myprofile extends Component {
     componentDidMount() {
         this.props.userProfile()
     }
-    handleDateChange(e,d_string){
-        console.log(e,d_string)
+    handleDateChange(e, d_string) {
+        console.log(e, d_string)
         let user = this.state.user;
-        user['birth_date']=d_string
-        user['_birth_date']=e
-        this.setState({user:user})
+        user['birth_date'] = d_string
+        user['_birth_date'] = e
+        this.setState({ user: user })
     }
 
     onChange(checked) {
-        console.log(checked)
         this.setState({ edit: checked });
     }
 
     onTabChange = (key, type) => {
-        console.log(key, type);
         this.setState({ [type]: key });
     }
 
-    Save(){
+    Save() {
         this.props.editProfile(this.state.user);
-        this.setState({edit:false})
+        setTimeout(()=>{
+            this.setState({ edit: false })
+        },1500)
     }
 
-    componentWillReceiveProps(){
-        let user = (({first_name,last_name,birth_date,skype,facebook,youtube,google,email,gender,linkedin,location,mobile,phone})=>({first_name,last_name,birth_date,skype,facebook,youtube,google,email,gender,linkedin,location,mobile,phone}))(this.props.profile)
-        this.setState({user:user})
+    componentWillReceiveProps() {
+        let user = (({ first_name, last_name, birth_date, skype, facebook, youtube, google, email, gender, linkedin, location, mobile, phone }) => ({ first_name, last_name, birth_date, skype, facebook, youtube, google, email, gender, linkedin, location, mobile, phone }))(this.props.profile)
+        this.setState({ user: user })
     }
+
+    handleImageChange = (info) => {
+        console.log(info)
+        if (info.file.status === 'uploading') {
+            this.setState({ loading: true });
+            return;
+        }
+        if (info.file.status === 'done') {
+            // Get this url from response in real world.
+             this.setState({
+                loading: false,
+            });
+        }
+    }
+
+    uploadPic(e){
+        const reader = new FileReader();
+        reader.addEventListener('load', () => {
+            this.props.editProfile({image:reader.result})
+            });
+        reader.readAsDataURL(e.file);
+    }
+
 
 
     render() {
+        
+        const uploadButton = (
+            <div>
+                <Icon type={this.state.loading ? 'loading' : 'plus'} />
+                <div className="ant-upload-text">Upload</div>
+            </div>
+        );
+        const tabList = [{
+            key: 'tab1',
+            tab: this.props.language === 'ar' ? 'الحساب الشخصي' : 'Profile',
+        }
+            // , {
+            //     key: 'tab2',
+            //     tab: 'Courses',
+            // }, {
+            //     key: 'tab3',
+            //     tab: 'Activities',
+            // }
+        ];
         const { tags, inputVisible, inputValue } = this.state;
 
         const data = [
@@ -122,48 +173,48 @@ class myprofile extends Component {
             {
                 title: <div>  <Icon style={{ fontSize: 23 }} type="mail" /> </div>,
                 value: this.props.profile.email,
-                placeholder:'Email',
-                input:'email'
+                placeholder: 'Email',
+                input: 'email'
 
             },
             {
                 title: <div>  <Icon style={{ fontSize: 23 }} type="github" /> </div>,
                 value: this.props.profile.github,
-                placeholder:'Github',
-                input : 'github'
+                placeholder: 'Github',
+                input: 'github'
             },
             {
                 title: <div>  <Icon style={{ fontSize: 23, color: '#3B5998' }} type="facebook" /> </div>,
                 value: this.props.profile.facebook,
-                placeholder:'Facebook',
-                input:'facebook'
+                placeholder: 'Facebook',
+                input: 'facebook'
 
             },
             {
                 title: <div>  <Icon style={{ fontSize: 23, color: '#0077B5' }} type="linkedin" /> </div>,
                 value: this.props.profile.linkedin,
-                placeholder:'LinkedIn',
-                input:'linkedin'
+                placeholder: 'LinkedIn',
+                input: 'linkedin'
 
             },
             {
                 title: <div>  <Icon style={{ fontSize: 23, color: '#FF0000' }} type="youtube" /> </div>,
                 value: this.props.profile.youtube,
-                placeholder:'Youtube',
-                input:'youtube'
+                placeholder: 'Youtube',
+                input: 'youtube'
 
             },
             {
                 title: <div>  <Icon style={{ fontSize: 23, color: '#db3236' }} type="google-plus" /> </div>,
                 value: this.props.profile.google,
-                placeholder : 'Google Plus',
-                input:'google'
+                placeholder: 'Google Plus',
+                input: 'google'
             },
             {
                 title: <div>  <Icon style={{ fontSize: 23, color: '#00AFF0' }} type="skype" /> </div>,
                 value: this.props.profile.skype,
-                placeholder:'Skype',
-                input:'skype'
+                placeholder: 'Skype',
+                input: 'skype'
             },
 
         ];
@@ -193,83 +244,69 @@ class myprofile extends Component {
 
         const data2 = [
             {
-                title: 'Firstname :',
+                title: this.props.language === 'ar' ? " الآسم الاول :" : "First name :",
                 value: this.props.profile.first_name,
-                input:'first_name'
+                input: 'first_name'
             },
             {
-                title: 'Lastname :',
+                title: this.props.language === 'ar' ? " الآسم الاخير :" : "Last name :",
                 value: this.props.profile.last_name,
-                input:'last_name'
+                input: 'last_name'
             },
             {
-                title: 'Birthdate :',
-                value: moment(this.props.profile.birth_date,dateFormat) ,
-                input:'birth_date'
+                title: this.props.language === 'ar' ? " تاريخ الميلاد :" : "Birthdate :",
+                value: this.props.profile.birth_date ? moment(this.props.profile.birth_date ? this.props.profile.birth_date : '', dateFormat) : '',
+                input: 'birth_date'
             },
             {
-                title: 'Phone :',
+                title: this.props.language === 'ar' ? " الهاتف :" : "Phone :",
                 value: this.props.profile.phone,
-                input:'phone'
+                input: 'phone'
 
             },
             {
-                title: 'Mobile :',
+                title: this.props.language === 'ar' ? " الجوال :" : "Mobile :",
                 value: this.props.profile.mobile,
-                input:'mobile'
+                input: 'mobile'
 
             },
             {
-                title: 'Location :',
+                title: this.props.language === 'ar' ? " العنوان :" : "Location :",
                 value: this.props.profile.location,
-                input:'location'
+                input: 'location'
 
             },
         ];
 
         const contentList = {
             tab1: <div>
-                <Switch  onChange={(e) => this.onChange(e)} style={{ float: 'right' }}  unCheckedChildren={<Icon type="edit" />} />
+                <div style={{ float: 'right',marginBottom:'20px' }}>   <Switch checked={this.state.edit} onChange={(e) => this.onChange(e)} style={{ float: 'right', marginLeft: 5, }} unCheckedChildren={<Icon type="edit" />} /> <Translate id="profile.edit" /> </div>
 
-                <Divider><h3> <Icon type="user" /> ABOUT </h3> </Divider>
+                <Divider><h3> <Icon type="user" /> <Translate id="profile.about" /> </h3> </Divider>
                 <Row style={{ padding: '10px' }} >
                     <List split style={{ padding: '16px' }} bordered
                         grid={{ gutter: 16, xs: 1, sm: 2, md: 3, lg: 4, xl: 3, xxl: 3 }}
                         dataSource={data2}
                         renderItem={item => (
                             <List.Item>
-                                {this.state.edit ? <div> {item.title}{item.input==='birth_date'?<div> <DatePicker  onChange={this.handleDateChange} defaultValue={item.value} value={this.state.user['_birth_date']} /></div>: <Input  onChange={this.handleInputChange} value={this.state.user[item.input]} name={item.input} /> }</div> : <div> {item.title}  {item.input==='birth_date'?moment(item.value).format('MMMM Do YYYY'):item.value}  </div>}
+                                {this.state.edit ? <div> {item.title}{item.input === 'birth_date' ? <div> <DatePicker onChange={this.handleDateChange} defaultValue={item.value} value={this.state.user['_birth_date']} /></div> : <Input onChange={this.handleInputChange} value={this.state.user[item.input]} name={item.input} />}</div> : <div> {item.title}  {item.input === 'birth_date' ? moment(item.value).format('MMMM Do YYYY') : item.value}  </div>}
                             </List.Item>
                         )}
                     />
                 </Row>
-                <Divider style={{ marginTop: 16 }} ><h3> <Icon type="fork" /> Social </h3> </Divider>
+                <Divider style={{ marginTop: 16 }} ><h3> <Icon type="fork" /> <Translate id="profile.social" /> </h3> </Divider>
                 <Row style={{ padding: '10px' }} >
                     <List split style={{ padding: '16px' }} bordered
                         grid={{ gutter: 16, xs: 1, sm: 2, md: 3, lg: 4, xl: 3, xxl: 3 }}
                         dataSource={data}
                         renderItem={item => (
                             <List.Item>
-                                {this.state.edit ? <div> {item.title} <Input placeholder={item.placeholder}  defaultValue={item.value}  onChange={this.handleInputChange} value={this.state.user[item.input]} name={item.input} /> </div> : <div> {item.title}  {item.value}  </div>}
+                                {this.state.edit ? <div> {item.title} <Input placeholder={item.placeholder} defaultValue={item.value} onChange={this.handleInputChange} value={this.state.user[item.input]} name={item.input} /> </div> : <div> {item.title}  {item.value}  </div>}
                             </List.Item>
                         )}
                     />
                 </Row>
-                <Divider style={{ marginTop: 16 }} ><h3> <Icon type="profile" /> Details </h3> </Divider>
-                <Row style={{ padding: '10px' }} >
-                    {this.state.edit ? <div>
-                        <TextArea placeholder="BIO" style={{ marginBottom: 20 }} autosize />
-                        <TextArea placeholder="About" autosize />
-                    </div> : <div>
-                            <List
-                                bordered
-                                dataSource={['Bio : i am ahmed ', 'About : i am ahmed']}
-                                renderItem={item => (<List.Item>{item}</List.Item>)}
-                            />
 
-                        </div>}
-
-                </Row>
                 {/* <Divider style={{ marginTop: 16 }} ><h3> <Icon type="heart" /> Interests </h3> </Divider> */}
                 {/* <Row style={{ padding: '10px' }} >
                     <div>
@@ -304,7 +341,7 @@ class myprofile extends Component {
                         )}
                     </div>
                 </Row> */}
-                <div style={{ textAlign: 'center' }} > <Button style={{ background: '#e34b11', color: 'white' }} onClick={()=>{this.Save()}} >Save {this.props.loading.editprofile===1?<Icon type="loading" style={{color:'white'}} />: <Icon type="save" />} </Button></div></div>,
+                <div style={{ textAlign: 'center' }}  > {this.state.edit ? <Button style={{ background: '#e34b11', color: 'white' }} onClick={() => { this.Save() }} ><Translate id="profile.save" /> {this.props.loading.editprofile === 1 ? <Icon type="loading" style={{ color: 'white' }} /> : <Icon type="save" />} </Button> : ''}</div></div>,
             // tab2: <div>    <List
             //     grid={{ gutter: 16, xs: 1, sm: 2, md: 3, lg: 4, xl: 3, xxl: 3 }}
             //     dataSource={data1}
@@ -325,18 +362,35 @@ class myprofile extends Component {
             // </div>
         };
         return (
-            <div className="myprofile-page" >
+            <div className="myprofile-page animated fadeIn" style={{ direction: this.props.language === 'ar' ? 'rtl' : '' }} >
                 <Row gutter={6} >
-                    <Col xs={25} sm={25} md={6} lg={5} xl={5} style={{ display: 'flex', justifyContent: 'space-around' }}  >  <Card
+                    <Col xs={25} sm={25} md={6} lg={5} xl={5} style={{ display: 'flex', justifyContent: 'space-around', float: this.props.language === 'ar' && !this.state.hideNav ? 'right' : '' }}  >  <Card
 
                         hoverable
                         style={{ borderBottom: '3px solid #035ea4', marginBottom: '16px' }}
-                        cover={<img alt={this.props.profile.username} src={this.props.profile.image?this.props.profile.image:'./images/error.jpg'} />}
+                        cover={
+                        
+                     <img alt={this.props.profile.username} src={this.props.profile.image} onError={(e) => { e.target.src = './images/error.jpg' }}  /> }
+                    
                     >
                         <Meta
-                            title={this.props.profile.username}
-                            description={'Created at : '+this.props.profile.creation_time}
-                        />
+                            title={<div>
+                                  <Upload 
+                                      name="image"
+                                      showUploadList={false}
+                                      customRequest={(e)=>{this.uploadPic(e)}}
+                                      beforeUpload={beforeUpload}
+                                      onChange={this.handleImageChange}>
+    <Button style={{border:0}} >
+      <Icon type="upload" /> {this.props.language === 'ar' ? 'تعديل الصرره' :'Edit Profile Picture'}
+    </Button>
+  </Upload> <br/> <br/>
+                                    {this.props.profile.username} 
+
+                            </div>}
+                            description={'Created at : ' + this.props.profile.creation_time}
+                            
+                            />
 
                     </Card> </Col>
                     <Col xs={25} sm={25} md={18} lg={19} xl={19} style={{ padding: '10px' }} >
@@ -356,7 +410,7 @@ class myprofile extends Component {
 }
 
 function mapStateToProps(state) {
-    return { profile: state.profile, loading: state.loadingBar };
+    return { profile: state.profile, loading: state.loadingBar, language: state.language.code };
 }
 
-export default connect(mapStateToProps, { userProfile,editProfile })(myprofile);
+export default connect(mapStateToProps, { userProfile, editProfile })(myprofile);

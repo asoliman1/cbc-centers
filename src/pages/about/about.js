@@ -4,6 +4,7 @@ import './about.css';
 import CountUp from 'react-countup';
 import Instructor from '../../components/instructor/instructor';
 import Reviews from '../../components/reviews/reviews';
+import { Translate } from "react-localize-redux";
 
 class about extends Component {
 	constructor(props) {
@@ -18,7 +19,7 @@ class about extends Component {
 			
 				<div className="about-ftop-inn">
 					<div className="container">
-						<h3 className="tittlef-agileits-w3layouts">About Us</h3>
+						<h3 className="tittlef-agileits-w3layouts"> <Translate id="header.config"  /> About Us</h3>
 						<div className="abt-img">
 							<h3 className="sub-w3ls-headf white-clrf">Shortly about CBC Centers Coaching Sessions.</h3>
 						</div>

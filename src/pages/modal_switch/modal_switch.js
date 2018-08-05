@@ -16,6 +16,9 @@ import course_details from "../course_details/course_details";
 import notifications from "../notifications/notifications";
 import store from '../../helpers/store';
 import myprofile from '../myprofile/myprofile';
+import { renderToStaticMarkup } from "react-dom/server";
+import { withLocalize } from "react-localize-redux";
+import translations from "../../translations.json";
 
 const NoMatch = ({ location }) => (
     <div style={{ textAlign: 'center', padding: '50px' }} >
@@ -39,11 +42,29 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 );
 
 class ModalSwitch extends React.Component {
+    constructor(props) {
+        super(props);
+        this.props.initialize({
+            languages: [
+              { name: "عربي", code: "ar" },
+              { name: "English", code: "en" }
+            ],
+            translation: translations,
+            options: { renderToStaticMarkup }
+          });
+          this.props.setActiveLanguage(localStorage.getItem('language')||'en')
+          if(localStorage.getItem('language')==='ar'){
+            require('moment/locale/ar-sa')
+          }else{
+            require('moment/locale/en-au');
+          }
+          
+    }
+    
 
     previousLocation = this.props.location;
 
     componentWillUpdate(nextProps) {
-        console.log(nextProps)
         const { location } = this.props;
         // set previousLocation if props.location is not modal
         if (
@@ -98,4 +119,4 @@ class ModalSwitch extends React.Component {
 
 
 
-export default ModalSwitch
+export default withLocalize( ModalSwitch )

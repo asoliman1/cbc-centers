@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import './header.css';
-import { Layout, Menu, Icon, Tooltip, Input, Button, Anchor, Badge,Avatar, Popconfirm, message } from 'antd';
+import { Layout, Menu, Icon, Tooltip, Input, Button, Anchor, Badge, Avatar, Popconfirm, message } from 'antd';
 import { connect } from 'react-redux';
 import LoadingBar from 'react-redux-loading-bar'
-import { menuCat, search, checkAuth, Logout,searchByfilters,userProfile } from '../../actions';
+import { menuCat, search, checkAuth, Logout, searchByfilters, userProfile } from '../../actions';
 import { stack as Menu1 } from 'react-burger-menu'
+import LanguageToggle from '../language_toggle/language_toggle';
+import { Translate } from "react-localize-redux";
 
 const { Content, Footer, Sider } = Layout;
 const Search = Input.Search;
@@ -18,7 +20,7 @@ const Link1 = Anchor.Link;
 class Header extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { current: 'mail', isOpen: false, hideNav: true }
+		this.state = { current: 'mail', isOpen: false, hideNav: true, search_value: '' }
 
 	}
 	componentWillMount() {
@@ -29,12 +31,12 @@ class Header extends Component {
 	}
 	resize() {
 		this.setState({ hideNav: window.innerWidth <= 600 });
-		
+
 	}
 
 	componentDidMount() {
-		if(this.props.Authentication.status)
-		this.props.userProfile()
+		if (this.props.Authentication.status)
+			this.props.userProfile()
 	}
 
 	handleChange(e) {
@@ -43,16 +45,16 @@ class Header extends Component {
 	}
 
 	handleSearch(value) {
-		if (value === '' || typeof value === 'undefined') {
-
-		} else {
-			this.props.search(value, 1, 20);
-			this.props.history.push({ pathname: '/search', search: value });
+		if (this.props.location.pathname === '/search') {
+			this.props.history.replace({ pathname: '/search', search: value });
+			window.location.reload(true)
 		}
+		else
+			this.props.history.push({ pathname: '/search', search: value });
+
 	}
 
 	handleClick = (e) => {
-		console.log('click ', e);
 		this.setState({
 			current: e.key,
 		});
@@ -83,15 +85,15 @@ class Header extends Component {
 				break;
 		}
 
-		if(e.keyPath[2]==='item_1'){
-			this.props.searchByfilters('',e.key,'','','','',1,20,'');
-			this.props.history.push({pathname:'/search'})
+		if (e.keyPath[2] === 'item_1') {
+			this.props.history.push({ pathname: '/search', state: { sub_categories: e.key } })
 		}
 	}
 
 
 	render() {
-		const text = 'Are you sure you want to logout?';
+
+		const text = <Translate id="header.popConfirm.logout" />;
 
 		return (
 			<header>
@@ -103,22 +105,26 @@ class Header extends Component {
 
 					<div className="header_topw3layouts_bar">
 						<div className="container">
-							{this.state.hideNav ? <div style={{ display: 'flex', justifyContent: 'space-between' }} > <Button className="menu-button" type="ghost" onClick={() => { this.setState({ isOpen: !this.state.isOpen }) }}  >	<Icon style={{ fontSize: '17px', color: 'white', fontWeight: 'bold' }} type="bars" /> </Button>
-								<div className="logof-w3-agile">
+							{this.state.hideNav ? <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: this.props.language === 'ar' ? 'row-reverse' : '' }} > <Button className="menu-button" type="ghost" onClick={() => { this.setState({ isOpen: !this.state.isOpen }) }}  >	<Icon style={{ fontSize: '17px', color: 'white', fontWeight: 'bold' }} type="bars" /> </Button>
+								<div className="logof-w3-agile"  >
 									<a onClick={() => { this.props.history.push('/home'); this.setState({ current: 'mail' }) }} > <img height="50px" src="/images/cbclogo.png" /> </a>
-								</div>
-								<div className="header_right">
-									{this.props.Authentication.status ?<div>
-										<Link to={{pathname:'/profile'}} >	{!this.props.profile.image? 
-									<Avatar style={{ color: 'white', backgroundColor: '#e34b11',marginRight:'5px' }}> {this.props.profile.username?this.props.profile.username.toLocaleUpperCase().charAt(0):''} </Avatar> : <Avatar style={{marginRight:'5px'}} src={this.props.profile.image} /> }</Link>  
-										  <Popconfirm placement="bottomRight" title={text} onConfirm={()=>{this.props.Logout(); this.props.history.push('/home'); message.info('Logged out');}} okText="Yes" cancelText="No">
-									 <a className="log"  >							
-									Logout</a> </Popconfirm> </div> : <Link to={{ pathname: '/login_signup', state: { modal: true } }} className="log" >Login</Link>}
-								</div>
-							</div>  : ''}
 
-							<div className="header_agileits_left">
+								</div>
+								<div className="header_right" style={{ float: this.props.language === 'ar' ? 'left' : 'right' }} >
+									{this.props.Authentication.status ? <div>
+										<Link to={{ pathname: '/profile' }} >	{!this.props.profile.image ?
+											<Avatar style={{ color: 'white', backgroundColor: '#e34b11', marginRight: '5px' }}> {this.props.profile.username ? this.props.profile.username.toLocaleUpperCase().charAt(0) : ''} </Avatar> : <Avatar style={{ marginRight: '5px' }} src={this.props.profile.image} />}</Link>
+										<Popconfirm placement="bottomRight" title={text} onConfirm={() => { this.props.Logout(); this.props.history.push('/home'); message.info('Logged out'); }} okText="Yes" cancelText="No">
+											<a className="log"  >
+												<Translate id="header.logout" /></a> </Popconfirm> </div> : <Link to={{ pathname: '/login_signup', state: { modal: true } }} className="log" ><Translate id="header.login" /></Link>}
+								</div>
+							</div> : ''}
+
+							<div className="header_agileits_left" style={{ float: this.props.language === 'ar' ? 'right' : 'left' }} >
 								<ul>
+									<li>
+										<LanguageToggle />
+									</li>
 									<li>
 										<i className="fa fa-phone" aria-hidden="true"></i> +(010) 221 918 811</li>
 									<li>
@@ -128,15 +134,15 @@ class Header extends Component {
 								</ul>
 							</div>
 							{!this.state.hideNav ?
-								<div className="header_right">
-									{this.props.Authentication.status ?<div>
-										<Link to={{pathname:'/profile'}} >	{!this.props.profile.image? 
-									<Avatar style={{ color: 'white', backgroundColor: '#e34b11',marginRight:'5px' }}> {this.props.profile.username?this.props.profile.username.toLocaleUpperCase().charAt(0):''} </Avatar> : <Avatar style={{marginRight:'5px'}} src={this.props.profile.image} /> }		</Link> 
-										  <Popconfirm placement="bottomRight" title={text} onConfirm={()=>{this.props.Logout(); this.props.history.push('/home'); message.info('Logged out');}} okText="Yes" cancelText="No">
-									 <a className="log"  >							
-									Logout</a> </Popconfirm> </div>: <Link to={{ pathname: '/login_signup', state: { modal: true } }} className="log" >Login</Link>}
+								<div className="header_right" style={{ float: this.props.language === 'ar' ? 'left' : 'right' }} >
+									{this.props.Authentication.status ? <div>
+										<Link to={{ pathname: '/profile' }} >	{!this.props.profile.image ?
+											<Avatar style={{ color: 'white', backgroundColor: '#e34b11', marginRight: '5px' }}> {this.props.profile.username ? this.props.profile.username.toLocaleUpperCase().charAt(0) : ''} </Avatar> : <Avatar style={{ marginRight: '5px' }} src={this.props.profile.image} />}		</Link>
+										<Popconfirm placement="bottomRight" title={text} onConfirm={() => { this.props.Logout(); this.props.history.push('/home'); }} okText={<Translate id="button.ok" />} cancelText={<Translate id="button.no" />}>
+											<a className="log"  >
+												<Translate id="header.logout" />  </a> </Popconfirm> </div> : <Link to={{ pathname: '/login_signup', state: { modal: true } }} className="log" ><Translate id="header.login" /></Link>}
 
-									 							
+
 								</div>
 								: ''}
 
@@ -146,24 +152,25 @@ class Header extends Component {
 					</div>
 					<div className="header-middle">
 						{!this.state.hideNav ?
-							<div className="logof-w3-agile">
+							<div className="logof-w3-agile" style={{ float: this.props.language === 'ar' ? 'right' : 'left', marginRight: this.props.language === 'ar' ? '50px' : '20px', marginLeft: this.props.language === 'ar' ? '20px' : '' }} >
 								<a onClick={() => { this.props.history.push('/home'); this.setState({ current: 'mail' }) }} > <img height="50px" src="/images/cbclogo.png" /> </a>
 							</div>
 							: ''}
 						<div className="container">
 
-							<div className="searchf-w3-agileits-headr">
-								<Tooltip placement="right" title={'Enter text to search'}>
-									<Search
-										placeholder="input search text"
-										onSearch={(value) => { this.handleSearch(value) }}
-										enterButton
-									/>
-								</Tooltip>
+							<div className=" animated fadeIn" style={{ display: 'inline-flex', direction: this.props.language === 'ar' ? 'rtl' : 'ltr', float: this.props.language === 'ar' ? 'right' : 'left', padding: 7, width: '80%' }} >
+								<Search
+									placeholder={this.props.language === 'ar' ? 'ادخل كلمه للبحث' : 'Search text'}
+									onSearch={value => this.handleSearch(value)}
+									enterButton
+
+								/>
+								{/* <Button type="primary" onClick={() => { this.handleSearch(this.state.search_value) }} > <Icon type="search" /> </Button> */}
+
 
 							</div>
 							{this.props.Authentication.status ?
-								<div className="cart-mainf"  >
+								<div className="cart-mainf" style={{ float: this.props.language === 'ar' ? 'left' : 'right' }} >
 									<Link to="/checkout">
 										<button className="btn s" >
 											<i className="fa fa-shopping-cart fa-2x" > {this.props.shopcarts.size > 0 ? <span className="badge" > {this.props.shopcarts.size} </span> : ''} </i>
@@ -179,7 +186,7 @@ class Header extends Component {
 
 						</div>
 					</div>
-					<Menu1 isOpen={this.state.isOpen} burgerButtonClassName="burgerbutton" >
+					<Menu1 right={this.props.language === 'ar'} isOpen={this.state.isOpen} burgerButtonClassName="burgerbutton" >
 						<Menu
 							onClick={this.handleClick}
 							selectedKeys={[this.state.current]}
@@ -187,30 +194,32 @@ class Header extends Component {
 							style={{ color: 'black' }}
 						>
 
-							<SubMenu title={<span>Courses</span>}>
+							<SubMenu title={<span><Translate id="header.courses" /></span>}>
 								<Anchor bounds={100} offsetTop={150} showInkInFixed={true} affix={false}>
 
-									<div onClick={() => { this.setState({ isOpen: !this.state.isOpen }) }} > <Link1 href="/home#offered_courses" title="Offered Courses" /> </div>
-									<div onClick={() => { this.setState({ isOpen: !this.state.isOpen }) }} > <Link1 href="/home#popular_courses" title="Popular Courses" />  </div>
-									<div onClick={() => { this.setState({ isOpen: !this.state.isOpen }) }} > <Link1 href="/home#rated_courses" title="Rated Courses" />  </div>
+									<div onClick={() => { this.setState({ isOpen: !this.state.isOpen }) }} > <Link1 href="/home#offered_courses" title={<Translate id="header.courses.offered" />} /> </div>
+									<div onClick={() => { this.setState({ isOpen: !this.state.isOpen }) }} > <Link1 href="/home#popular_courses" title={<Translate id="header.courses.popular" />} />  </div>
+									<div onClick={() => { this.setState({ isOpen: !this.state.isOpen }) }} > <Link1 href="/home#rated_courses" title={<Translate id="header.courses.rated" />} />  </div>
+									<div onClick={() => { this.setState({ isOpen: !this.state.isOpen }) }} > <Link1 href="/home#new_courses" title={<Translate id="header.courses.new" />} />  </div>
 
 								</Anchor>
 
 							</SubMenu>
 
-							<SubMenu title={<span>Categories <Icon type="arrow-down" /></span>}>
+							<SubMenu title={<span><Translate id="header.categories" /> </span>}>
+
 								{this.props.header.categories.map(e => {
-									return e.subcategories.length > 0 ? <SubMenu  key={e.id} title={<span> {e.attr1} </span>} >
-										{e.subcategories.map(e1 => { return <Menu.Item key={e1.id} >{e1.attr1}</Menu.Item> })}
-									</SubMenu> : <Menu.Item key={e.id} >{e.attr1}</Menu.Item>
+									return e.subcategories.length > 0 ? <SubMenu key={e.id} title={<span onClick={() => { this.props.history.push({ pathname: '/search', state: { categories: e.id } }) }}  > {this.props.language === 'ar' ? e.attr2 : e.attr1} </span>} >
+										{e.subcategories.map(e1 => { return <Menu.Item key={e1.id} >{this.props.language === 'ar' ? e1.attr2 : e1.attr1}</Menu.Item> })}
+									</SubMenu> : <Menu.Item key={e.id}  >{this.props.language === 'ar' ? e.attr2 : e.attr1}</Menu.Item>
 								})}
 							</SubMenu>
 
-							{this.props.Authentication.status ? <SubMenu title={<span>My Profile</span>}>
-								<Menu.Item key="profile">Profile</Menu.Item>
-								<Menu.Item key="wishlist">WishList</Menu.Item>
-								<Menu.Item key="enrollments">Enrollments</Menu.Item>
-								{/* <Menu.Item key="notifications">Notifications</Menu.Item> */}
+							{this.props.Authentication.status ? <SubMenu title={<span><Translate id="header.my.account" /></span>}>
+								<Menu.Item key="profile"><Translate id="header.my.profile" /></Menu.Item>
+								<Menu.Item key="wishlist"><Translate id="header.my.wish.list" /></Menu.Item>
+								<Menu.Item key="enrollments"><Translate id="header.my.courses" /></Menu.Item>
+								{/* <Menu.Item key="notifications"><Translate id="header.notifications" /></Menu.Item> */}
 							</SubMenu>
 
 
@@ -218,22 +227,21 @@ class Header extends Component {
 							{/* <Menu.Item key="notifications">
 								<Badge dot count={100}>
 									<a style={{ color: 'black' }} >
-										<Icon type="notification" /> Notifications </a>
+										<Icon type="notification" /> <Translate id="header.notifications" /> </a>
 								</Badge>
 							</Menu.Item> */}
 							<Menu.Item key="checkout">
 								<Badge overflowCount={10} count={this.props.shopcarts.size}>
-
-									<Icon type="shopping-cart" />Shop Cart
+									<Icon type="shopping-cart" />  <Translate id="header.shopcart" />
 								</Badge>
 
 							</Menu.Item>
 							<Menu.Item key="about">
-								<Icon type="mail" />About
-      				  </Menu.Item>
+								<Icon type="mail" />  <Translate id="header.about" />
+							</Menu.Item>
 							<Menu.Item key="contact">
-								<Icon type="message" />Contact
-      				  </Menu.Item>
+								<Icon type="mobile" />  <Translate id="header.contact" />
+							</Menu.Item>
 						</Menu>
 					</Menu1>
 
@@ -242,41 +250,41 @@ class Header extends Component {
 							onClick={this.handleClick}
 							selectedKeys={[this.state.current]}
 							mode="horizontal"
-							style={{ color: 'white', display: 'flex', justifyContent: 'space-around', backgroundColor: '#090c2d' }}
+							style={{ color: 'white', display: 'flex', justifyContent: 'space-around', backgroundColor: '#090c2d', direction: this.props.language === 'ar' ? 'rtl' : 'ltr' }}
 						>
 
-							<SubMenu title={<span>Courses <Icon type="arrow-down" /></span>}>
+							<SubMenu   title={<span><Translate id="header.courses" /> <Icon type="arrow-down" /></span>}>
 								<Anchor bounds={100} offsetTop={150} showInkInFixed={true} affix={false}>
-									<Link1 href="/home#popular_courses" title="Popular Courses" />
-									<Link1 href="/home#offered_courses" title="Offered Courses" />
-									<Link1 href="/home#rated_courses" title="Rated Courses" />
-
+									<Link1 href="/home#new_courses" title={<Translate id="header.courses.new" />} />
+									<Link1 href="/home#popular_courses" title={<Translate id="header.courses.popular" />} />
+									<Link1 href="/home#offered_courses" title={<Translate id="header.courses.offered" />} />
+									<Link1 href="/home#rated_courses" title={<Translate id="header.courses.rated" />} />
 								</Anchor>
 
 							</SubMenu>
 
-							<SubMenu title={<span>Categories <Icon type="arrow-down" /></span>}>
-							
+							<SubMenu title={<span  ><Translate id="header.categories" /> <Icon type="arrow-down" /></span>}>
+
 								{this.props.header.categories.map(e => {
-									return e.subcategories.length > 0 ? <SubMenu key={e.id} title={<span> {e.attr1} </span>} >
-										{e.subcategories.map(e1 => { return <Menu.Item key={e1.id} >{e1.attr1}</Menu.Item> })}
-									</SubMenu> : <Menu.Item key={e.id}  >{e.attr1}</Menu.Item>
+									return e.subcategories.length > 0 ? <SubMenu key={e.id} title={<span onClick={() => { this.props.history.push({ pathname: '/search', state: { categories: e.id } }) }} > {this.props.language === 'ar' ? e.attr2 : e.attr1} </span>} >
+										{e.subcategories.map(e1 => { return <Menu.Item key={e1.id} >{this.props.language === 'ar' ? e1.attr2 : e1.attr1}</Menu.Item> })}
+									</SubMenu> : <Menu.Item key={e.id}  >{this.props.language === 'ar' ? e.attr2 : e.attr1}</Menu.Item>
 								})}
 							</SubMenu>
 
-							{this.props.Authentication.status ? <SubMenu title={<span>My Profile <Icon type="arrow-down" /></span>}>
-								<Menu.Item key="profile"><Icon type="user" /> Profile</Menu.Item>
-								<Menu.Item key="wishlist"><Icon type="heart" /> WishList</Menu.Item>
-								<Menu.Item key="enrollments"><Icon type="database" /> Enrollments</Menu.Item>
-								{/* <Menu.Item key="notifications"><Icon type="notification" /> Notifications</Menu.Item> */}
+							{this.props.Authentication.status ? <SubMenu title={<span><Translate id="header.my.account" /> <Icon type="arrow-down" /></span>}>
+								<Menu.Item key="profile"><Icon type="user" /> <Translate id="header.my.profile" /></Menu.Item>
+								<Menu.Item key="wishlist"><Icon type="heart" /> <Translate id="header.my.wish.list" /></Menu.Item>
+								<Menu.Item key="enrollments"><Icon type="database" /> <Translate id="header.my.courses" /></Menu.Item>
+								{/* <Menu.Item key="notifications"><Icon type="notification" /> <Translate id="header.notifications" /></Menu.Item> */}
 							</SubMenu> : ''}
 
 							<Menu.Item key="about">
-								<Icon type="mail" />About
-      				  </Menu.Item>
+								<Translate id="header.about" />  <Icon type="mail" />
+							</Menu.Item>
 							<Menu.Item key="contact">
-								<Icon type="mail" />Contact
-      				  </Menu.Item>
+								<Translate id="header.contact" />  <Icon type="mobile" />
+							</Menu.Item>
 						</Menu>
 						: ''}
 
@@ -292,10 +300,11 @@ function mapStateToProps(state) {
 		header: state.header,
 		Authentication: state.Authentication,
 		shopcarts: state.shop_carts,
-		loading:state.loadingBar,
-		profile:state.profile
+		loading: state.loadingBar,
+		profile: state.profile,
+		language: state.language.code
 	};
 }
 
 
-export default connect(mapStateToProps, { menuCat, search, checkAuth, Logout,searchByfilters,userProfile })(Header);
+export default connect(mapStateToProps, { menuCat, search, checkAuth, Logout, searchByfilters, userProfile })(Header);

@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import './course_instructor.css';
 import {Rate} from 'antd';
+
 class Course_instructor extends Component {
     constructor(props) {
         super(props);
-        
+        console.log(props)
     }
     
     render() {
         return (
-            <div className="col mteam_grid_info">
-            <img src={this.props.details.image?this.props.details.image:'/images/error.jpg'} onError={(e) => { e.target.src = '/images/error.jpg' }} className="img-responsive" />
-            <h3>{this.props.details.name_e}</h3>
-            <p style={{wordBreak:'break-all'}} >{this.props.details.short_desc_e}</p>
+            <div className="col-md-2 col-sm-1 col-xs-1 col-lg-3  mteam_grid_info" style={{float:this.props.lang==='ar'?'right':''}} >
+            <img src={this.props.details.instructor_details.image?'http://167.99.244.62:8000'+this.props.details.instructor_details.image:'/images/error.jpg'} onError={(e) => { e.target.src = '/images/error.jpg' }} className="img-responsive" />
+            <h3>{this.props.lang==='ar'?this.props.details.title_a+"/ "+this.props.details.instructor_details.name_a:this.props.details.title_e+"/ "+this.props.details.instructor_details.name_e}</h3>
+            <p style={{whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipse'}} >{this.props.lang==='ar'?this.props.details.text_a:this.props.details.text_e}</p>
 
-            <Rate value={this.props.details.total_rating} disabled={true} />
+            <Rate value={this.props.total_rating} disabled={true} />
             <div className="team_icons">
                 <ul>
                     <li>

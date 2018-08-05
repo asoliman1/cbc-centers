@@ -1,0 +1,1227 @@
+  {
+    "header.hello": [
+      "أهلا،",
+      "Hello,"
+    ],
+    "header.logout": [
+      "خروج",
+      "Logout"
+    ],
+    "header.login": [
+      "الدخول",
+      "LOGIN"
+    ],
+    "header.popConfirm.logout": [
+      "تآكيد الخروج",
+      "Are you sure you want to logout"
+    ],
+    "more": [
+      "المزيد",
+      "More"
+    ],
+    "header.config": [
+      "الإعداد",
+      "Config"
+    ],
+    "home.title.popular": [
+      "الكورسات ذات الشعبية",
+      "Top most popular courses"
+    ],
+    "home.title.new": [
+      "الكورسات الجديدة",
+      "New Courses"
+    ],
+    "home.title.rated": [
+      "الكورسات ذات التقييم العالي",
+      "Rated courses"
+    ],
+    "home.title.offered": [
+      " الكورسات التي بيها عرض",
+      "Offered courses"
+    ],
+    "header.notifications": [
+      "التنبيهات",
+      "Notifications"
+    ],
+    "header.courses.offered": [
+      "الكورسات التي عليها عرض",
+      "Notifications"
+    ],
+    "header.shopcart": [
+      "سله المشتريات",
+      "Shop Cart"
+    ],
+    "header.courses.popular": [
+      "الكورسات الاكتر شعبيه",
+      "Popular Courses"
+    ],
+    "header.courses.new": [
+      "الكورسات الجديده",
+      "New Courses"
+    ],
+    "header.courses.rated": [
+      "الكورسات الاكثر تقييماًَ",
+      "Rated Courses"
+    ],
+    "header.categories": [
+      "الاقسام",
+      "Categories"
+    ],
+    "header.home": [
+      "الرئيسية",
+      "Home"
+    ],
+    "header.about": [
+      "تعرف علينا",
+      "About"
+    ],
+    "header.contact": [
+      "تواصل معنا",
+      "Contact"
+    ],
+
+    "header.register": [
+      "مستخدم جديد",
+      "REGISTER"
+    ],
+    "header.register.title": [
+      "مستخدم جديد",
+      "Create an account"
+    ],
+    "paid": [
+      "مدفوعه",
+      "Paid"
+    ],
+    "invalid": [
+      "خطأ في الدفع",
+      "Invalid"
+    ],
+    "unpaid": [
+      "غير مدفوعه",
+      "Unpaid"
+    ],
+    "under_validation": [
+      "تحت المراجعه",
+      "Under validation"
+    ],
+    "header.login.title": [
+      " تسجيل الدخول",
+      "Login to your account"
+    ],
+    "header.enterprise": [
+      "مؤسسة",
+      "Enterprise"
+    ],
+    "header.courses": [
+      "الكورسات",
+      "Courses"
+    ],
+    "header.my.account": [
+      "حسابي",
+      "My Account"
+    ],
+    "header.my.profile": [
+      "ملفي",
+      "My Profile"
+    ],
+    "header.my.courses": [
+      "كورساتي",
+      "My Courses"
+    ],
+    "header.settings": [
+      "الإعدادات",
+      "Settings"
+    ],
+    "header.privacy": [
+      "الخصوصية",
+      "Privacy"
+    ],
+    "header.notifications": [
+      "التنبيهات",
+      "Notifications"
+    ],
+    "header.my.wish.list": [
+      "قائمة المفضلة",
+      "My Wish List"
+    ],
+    "header.admin": [
+      "أدمن",
+      "Admin"
+    ],
+    "footer.copy.right": [
+      "2018 CBC مراكز. كل الحقوق محفوظة | تصميم",
+      "2018 CBC Centers. All Rights Reserved | Design By "
+    ],
+    "footer.desc": [
+      "توفير أفضل الدورات بأسعار جيدة",
+      "Providing best courses at affordable prices"
+    ],
+    "footer.mars.ms": [
+      " Mars MS",
+      " Mars MS"
+    ],
+    "footer.terms": [
+      " الآحكام و الشروط",
+      " Terms & Conditions"
+    ],
+    "footer.follow.us": [
+      "تابعنا علي",
+      "Follow us on"
+    ],
+    "PROCESSING": [
+      "تتم المعالجة",
+      "Processing"
+    ],
+    "LOADING": [
+      "تحت التحميل",
+      "Loading"
+    ],
+    "CHECKING": [
+      "يتم التأكد",
+      "Checking"
+    ],
+    "months.january": [
+      "يناير",
+      "January"
+    ],
+    "months.february": [
+      "فبراير",
+      "February"
+    ],
+    "months.march": [
+      "مارس",
+      "March"
+    ],
+    "months.april": [
+      "أبريل",
+      "April"
+    ],
+    "months.may": [
+      "مايو",
+      "May"
+    ],
+    "months.june": [
+      "يونيو",
+      "June"
+    ],
+    "months.july": [
+      "يوليو",
+      "July"
+    ],
+    "months.august": [
+      "أغسطس",
+      "August"
+    ],
+    "months.september": [
+      "سبتمبر",
+      "September"
+    ],
+    "months.october": [
+      "أكتوبر",
+      "October"
+    ],
+    "months.november": [
+      "نوفمبر",
+      "November"
+    ],
+    "months.december": [
+      "ديسمبر",
+      "December"
+    ],
+    "week.friday": [
+      "الجمعة",
+      "Friday"
+    ],
+    "week.saturday": [
+      "السبت",
+      "Saturday"
+    ],
+    "week.sunday": [
+      "الأحد",
+      "Sunday"
+    ],
+    "week.monday": [
+      "الأثنين",
+      "Monday"
+    ],
+    "week.thuesday": [
+      "الثلاثاء",
+      "Tuesday"
+    ],
+    "week.wednesday": [
+      "الأربعاء",
+      "Wednesday"
+    ],
+    "week.thursday": [
+      "الخميس",
+      "Thursday"
+    ],
+    "language.arabic": [
+      "عربي",
+      "عربي"
+    ],
+    "language.english": [
+      "English",
+      "English"
+    ],
+    "date.to": [
+      "إلي",
+      "To"
+    ],
+    "date.from": [
+      "من",
+      "From"
+    ],
+    "currency.sr ": [
+      " ر س",
+      "SR"
+    ],
+    "search.placeholder": [
+      "ادخل كلمه للبحث",
+      "Input text"
+    ],
+    "no.result.please.search": [
+      "لا بيانات للعرض، قم بأدخال أو تغيير تفاصيل البحث، ثم البحث مرة أخري",
+      "No records, Change search criteria and search again!"
+    ],
+    "msg.successful": [
+      "عملية ناجحة",
+      "Successful"
+    ],
+    "msg.error": [
+      "خطأ",
+      "Error"
+    ],
+    "msg.invalid.value": [
+      "القيمة خطأ.",
+      "invalid value."
+    ],
+    "msg.required": [
+      "مطلوب.",
+      "required."
+    ],
+    "msg.required2": [
+      "مطلوبة.",
+      "required."
+    ],
+    "msg.under.processing": [
+      " قيد التنفيذ ...",
+      "Under Processing ..."
+    ],
+    "msg.old.passwords.incorrect": [
+      "كلمات السر القديمة خطأ",
+      " Incorrect Old Passwords"
+    ],
+    "msg.passwords.not.match": [
+      "كلمات السر الجديدة وتأكيداتها غير متوافقة",
+      "New Password Confirmation not matched"
+    ],
+    "msg.passwords.changed": [
+      "تم تغيير كلمات السر",
+      "Password Changed"
+    ],
+    "msg.login.invalid.email": [
+      "البريد غير مقبول",
+      "Invalid Email"
+    ],
+    "msg.login.invalid.password": [
+      "كلمة السر غير مقبولة",
+      "Invalid Password"
+    ],
+    "msg.login.invalid.credentials": [
+      "بيانات الدخول غير مقبولة",
+      "Invalid Credentials"
+    ],
+    "msg.valid.payment": [
+      "هل الرقم المرجعي صالح؟",
+      "Is the reference number Valid?"
+    ],
+    "msg.edit.profile": [
+      "تعديل البيانات",
+      "Edit Profile "
+    ],
+    "msg.course.cancel.request.sent": [
+      "طلبك لإلغاء الدورة تم إرسالة للدعم الفني، سوف نتواصل معك قريبا. اسم الدورة:",
+      "Your cancel request has been sent to the support team, we will contact you soon. Round name:"
+    ],
+    "msg.course.cancel.request.error": [
+      "خطأ في إرسال طلب الإلغاء. برجاء المحالة فيما بعد",
+      "Error in sending cancel request, please try again later"
+    ],
+    "msg.course.reschedule.request.sent": [
+      "طلبك لجدولة الدورة تم إرسالة للدعم الفني، سوف نتواصل معك قريبا. اسم الدورة:",
+      "Your reschedule request has been sent to the support team, we will contact you soon. Round name:"
+    ],
+    "msg.course.reschedule.request.error": [
+      "خطأ في إرسال طلب الجدولة. برجاء المحالة فيما بعد",
+      "Error in sending reschedule request, please try again later"
+    ],
+    "menu.dashboard": [
+      "الإحصائيات",
+      "Dashboard"
+    ],
+    "menu.sysconfig": [
+      "إعدادات النظام",
+      "System Config"
+    ],
+    "menu.sysconfig.users": [
+      "إدارة المستخدمين",
+      "Users Management"
+    ],
+    "menu.sysconfig.auth": [
+      "إدارة الصلاحيات",
+      "Authorities Management"
+    ],
+    "menu.dataconfig": [
+      "إعدادات البيانات",
+      "Data Config"
+    ],
+    "menu.dataconfig.basic": [
+      "البيانات الأساسية",
+      "Basic Data"
+    ],
+    "menu.dataconfig.companies": [
+      "الموديلات",
+      "Companies"
+    ],
+    "menu.dataconfig.sellingtype": [
+      "نوع البيع",
+      "Selling Types"
+    ],
+    "menu.dataconfig.cartemplates": [
+      "نماذج السيارات",
+      "Car Templates"
+    ],
+    "menu.dataconfig.taxes": [
+      "الضرائب",
+      "Taxes"
+    ],
+    "menu.context.update.lists": [
+      "مزامنة القوائم",
+      "Update Lists"
+    ],
+    "menu.all.categories": [
+      "كل الأقسام",
+      "All Categories"
+    ],
+    "menu.specializations": [
+      "التخصصات",
+      "Specializations "
+    ],
+    "menu.new.courses": [
+      "الكورسات الجديده",
+      "New Courses"
+    ],
+    "menu.rated.courses": [
+      "الكورسات ذات التقييم العالي",
+      "Rated Courses"
+    ],
+    "menu.popular.courses": [
+      "الكورسات ذات الشعبية",
+      "Popular Courses"
+    ],
+    "menu.how.it.works": [
+      "كيف يعمل",
+      "How it works"
+    ],
+    "menu.language": [
+      "اللغه",
+      "Language"
+    ],
+    "menu.category": [
+      "الفئة",
+      "Category"
+    ],
+    "menu.gender": [
+      "الجنس",
+      "Gender"
+    ],
+    "menu.location": [
+      "الموقع",
+      "Location"
+    ],
+    "menu.admin.edit.courses": [
+      "ضبط الكورسات",
+      "Edit Courses"
+    ],
+    "menu.admin.validate.payment": [
+      "مراجعة الدفع",
+      "Validate Payment"
+    ],
+    "menu.admin.gallary": [
+      "ضبط الجاليري",
+      "Edit Gallery"
+    ],
+    "link.search.courses": [
+      "بحث عن كورس",
+      "Search Courses"
+    ],
+    "link.register": [
+      "التسجيل",
+      "Register"
+    ],
+    "link.login": [
+      "تسجيل الدخول",
+      "Login"
+    ],
+    "link.contact": [
+      "الإتصال بنا",
+      "Contact"
+    ],
+    "contact.us": [
+      "تواصل معنا",
+      "Contact Us"
+    ],
+    "contact.address": [
+      "الرياض",
+      "Riyadh, Saudi Arabia"
+    ],
+    "contact.rule" : [
+      "برجاء ملئ البيانات للتواصل معنا",
+      "Please fill this form to contact with us."
+    ],
+    "contact.get.connected": [
+      "كن على اتصال",
+      "Get Connected"
+    ],
+    "contact.full.name": [
+      "الاسم كامل",
+      "Full Name"
+    ],
+    "contact.email": [
+      "البريد الالكتروني",
+      "Email"
+    ],
+    "contact.info": [
+      " بيانات التواصل",
+      "Contact Info"
+    ],
+    "contact.mobile.number": [
+      "رقم الجوال",
+      "Mobile Number"
+    ],
+    "contact.message": [
+      "الرسالة",
+      "Message"
+    ],
+    "contact.visit": [
+      "زرنا علي",
+      "Visit us"
+    ],
+    "contact.call": [
+      " اتصل علي",
+      "Call us"
+    ],
+    "contact.mail": [
+      " ارسل علي",
+      "Mail us"
+    ],
+    "contact.working": [
+      " ساعات العمل",
+      "Working hours"
+    ],
+    "contact.locations": [
+      " اماكنا",
+      "Various Locations"
+    ],
+    "contact.button.send": [
+      "ارسل",
+      "Send"
+    ],
+    "button.save": [
+      "حفظ",
+      "Save"
+    ],
+    "button.cancel": [
+      "إلغاء",
+      "Cancel"
+    ],
+    "button.ok": [
+      "موافق",
+      "Ok"
+    ],
+    "button.yes": [
+      "نعم",
+      "Yes"
+    ],
+    "button.no": [
+      "لا",
+      "No"
+    ],
+    "button.print": [
+      "طباعة",
+      "Print"
+    ],
+    "button.edit": [
+      "تعديل",
+      "Edit"
+    ],
+    "buttom.new": [
+      "جديد",
+      "New"
+    ],
+    "button.search": [
+      "بحث",
+      "Search"
+    ],
+    "button.refresh": [
+      "تحديث",
+      "Refresh"
+    ],
+    "button.find.all": [
+      "بحث عن الكل",
+      "Find All"
+    ],
+    "button.enroll": [
+      "سجل",
+      "Course Enroll"
+    ],
+    "button.course.enroll": [
+      "سجل بالكورس",
+      "Enroll"
+    ],
+    "button.comment": [
+      "ملاحظات",
+      "Comment"
+    ],
+    "button.valid": [
+      "صحيح",
+      "Valid"
+    ],
+    "button.invalid": [
+      "غير صحيح",
+      "Invalid"
+    ],
+    "login.username": [
+      "اسم المستخدم",
+      "Username"
+    ],
+    "login.password": [
+      "كلمة السر",
+      "Password"
+    ],
+    "login.branch": [
+      "الفرع",
+      "Branch"
+    ],
+    "login.submit": [
+      "الدخول",
+      "Login"
+    ],
+    "login.error.e1": [
+      "خطأ في كلمة السر أو اسم المستخدم",
+      "Invalid Username or Password"
+    ],
+    "login.error.e2": [
+      "غير مصرح الدخول للفرع",
+      "Not authorized to enter the branch"
+    ],
+    "invalid.login": [
+      "دخول غير مسموح",
+      "Login is not allowed"
+    ],
+    "login.welcome.message": [
+      ". أهلا بك في CBC",
+      "Welcome to CBC Training Centers"
+    ],
+    "login.email": [
+      "البريد الالكتروني",
+      "Email"
+    ],
+    "login.remember.me": [
+      "تذكرني؟",
+      "Remember Me?"
+    ],
+    "login.reset.password": [
+      "اعادة تعيين كلمة السر",
+      "Reset Password"
+    ],
+    "login.signin": [
+      "تسجيل الدخول",
+      "Sign In"
+    ],
+    "login.signup": [
+      "التسجيل",
+      "Sign Up"
+    ],
+    "login.signup.free": [
+      "التسجيل مجانا",
+      "Sign Up for free"
+    ],
+    "login.have.no.account": [
+      "ليس لديك حساب ؟",
+      "Don't have an account"
+    ],
+    "login.have.account": [
+      "عندك حساب بالفعل",
+      "Already have an account"
+    ],
+    "login.now": [
+      "الان",
+      "now"
+    ],
+    "singup.first.name": [
+      "الاسم الاول",
+      "First Name"
+    ],
+    "singup.last.name": [
+      "اسم العائلة",
+      "Last Name"
+    ],
+    "singup.email": [
+      "البريد الالكتروني",
+      "Email"
+    ],
+    "singup.birth.date": [
+      "تاريخ الميلاد",
+      "Birth Date"
+    ],
+    "singup.mobile": [
+      "رقم الجوال",
+      "Mobile"
+    ],
+    "singup.phone": [
+      "هاتف ارضي",
+      "Phone(landline)"
+    ],
+    "singup.location": [
+      "المكان",
+      "Location"
+    ],
+    "singup.gender": [
+      "الجنس",
+      "Gender"
+    ],
+    "singup.last.job": [
+      "احدث وظيفة",
+      "Latest Job Title"
+    ],
+    "singup.last.company": [
+      "احدث شركة",
+      "Latest Job Company"
+    ],
+    "singup.password": [
+      "كلمة المرور",
+      "Password"
+    ],
+    "singup.con.password": [
+      "تأكيد كلمة المرور",
+      "Confirm Password"
+    ],
+    "site.gallary.photo.id": [
+      "رقم",
+      "Id"
+    ],
+    "site.gallary.photo.name": [
+      "الاسم",
+      "Name"
+    ],
+    "site.gallary.photo.type": [
+      "النوع",
+      "Type"
+    ],
+    "site.gallary.photo.valid.from.date": [
+      "صالحة من",
+      "Valid From"
+    ],
+    "site.gallary.photo.valid.to.date": [
+      "صالحة إلي",
+      "Valid To"
+    ],
+    "site.gallary.photo.image": [
+      "الصورة",
+      "Image"
+    ],
+    "site.gallary.photo.description": [
+      "الوصف",
+      "Description"
+    ],
+    "site.gallary.photo.images": [
+      "الصور",
+      "Images"
+    ],
+    "site.gallary.photo.click.edit": [
+      "اضغط لتعديل البيانات",
+      "Click to edit the photo details"
+    ],
+    "site.home.card.id": [
+      "رقم",
+      "Id"
+    ],
+    "site.home.card.title": [
+      "العنوان",
+      "Title"
+    ],
+    "site.home.card.valid.from.date": [
+      "صالحة من",
+      "Valid From"
+    ],
+    "site.home.card.valid.to.date": [
+      "صالحة إلي",
+      "Valid To"
+    ],
+    "site.home.card.image": [
+      "الصورة",
+      "Image"
+    ],
+    "site.home.card.text": [
+      "الكتابة",
+      "Text"
+    ],
+    "site.home.card.images": [
+      "الصور",
+      "Images"
+    ],
+    "site.home.card.click.edit": [
+      "اضغط لتعديل البيانات",
+      "Click to edit the home card details"
+    ],
+    "course.add.steps.course": [
+      " المعلومات الأساسية",
+      " Course Basic Information"
+    ],
+    "course.add.steps.logistics": [
+      " المعلومات اللوجستية",
+      " Logistics"
+    ],
+    "course.add.steps.image": [
+      " صورة الكورس",
+      " Course Image"
+    ],
+    "course.add.steps.details": [
+      " تفاضيل الكورس",
+      " Course Details"
+    ],
+    "course.name.english": [
+      "الاسم الإنجليزي",
+      "English Name"
+    ],
+    "course.name.arabic": [
+      "الاسم العربي",
+      "Arabic Name"
+    ],
+    "course.description.english": [
+      "الوصف الإنجليزي",
+      "Arabic Description"
+    ],
+    "course.description.arabic": [
+      "الوصف العربي",
+      "English Description"
+    ],
+    "course.level": [
+      "المستوي",
+      "Level"
+    ],
+    "course.status": [
+      "الحالة",
+      "Status"
+    ],
+    "course.language": [
+      "اللغة",
+      "Language"
+    ],
+    "course.priority": [
+      "الأهمية",
+      "Priority"
+    ],
+    "course.image": [
+      "الصورة",
+      "Image"
+    ],
+    "course.details": [
+      "التفاصيل",
+      "Details"
+    ],
+    "course.visible": [
+      "متاح",
+      "Visible"
+    ],
+    "course.location": [
+      "المكان",
+      "Location"
+    ],
+    "course.category": [
+      "النوع",
+      "Category"
+    ],
+    "course.sub.category": [
+      "النوع الثانوي",
+      "Sub-Category"
+    ],
+    "course.gender": [
+      "الجنس",
+      "Gender"
+    ],
+    "course.id": [
+      "الرقم",
+      "Id"
+    ],
+    "course.start.date": [
+      "بداية الكورس",
+      "Start Date"
+    ],
+    "course.end.date": [
+      "نهاية الكورس",
+      "End Date"
+    ],
+    "course.rounds": [
+      " الدورات",
+      "Rounds!"
+    ],
+    "course.add.new": [
+      "إضافة كورس جديد",
+      "Add New Course"
+    ],
+    "course.select.round": [
+      "اختار دورة",
+      "Select your round"
+    ],
+    "course.request.schedule": [
+      "طلب الجدولة",
+      "Request Schedule"
+    ],
+    "course.request.cancel": [
+      "طلب الإلغاء",
+      "Request Cancellation"
+    ],
+    "course.round.id": [
+      "رقم",
+      "Id"
+    ],
+    "course.round.name": [
+      "الاسم",
+      "Name"
+    ],
+    "course.round.description": [
+      "الوصف",
+      "Description"
+    ],
+    "course.round.start.date": [
+      "تاريخ البدأ",
+      "Start Date"
+    ],
+    "course.round.end.date": [
+      "تاريخ الإنتهاء",
+      "End Date"
+    ],
+    "course.round.status": [
+      "الحالة",
+      "Status"
+    ],
+    "course.round.priority": [
+      "الأهمية",
+      "Priority"
+    ],
+    "course.round.price": [
+      "السعر",
+      "Price"
+    ],
+    "course.round.currency": [
+      "العملة",
+      "Currency"
+    ],
+    "course.round.minimum.subs": [
+      "أقل عدد",
+      "Minimum Subscriptions"
+    ],
+    "course.round.maximum.subs": [
+      "أكثر عدد",
+      "Maximum Subscriptions"
+    ],
+    "course.round.gender": [
+      "الجنس",
+      "Gender"
+    ],
+    "course.round.course.name": [
+      "اسم الكورس",
+      "Course Name"
+    ],
+    "course.round.table.filter.name.desc": [
+      "بحث بالاسم/الوصف",
+      "Filter by Name/Desc."
+    ],
+    "course.round.table.order.by": [
+      "عرض الترتيب",
+      "Order by"
+    ],
+    "course.round.subs": [
+      "عدد المشتركين",
+      "Subscriptions"
+    ],
+    "course.round.period": [
+      "الفترة",
+      "Period"
+    ],
+    "course.round.add.new": [
+      "أضف دورة",
+      "Add New Round"
+    ],
+    "course.round.edit": [
+      "تعديل الدورة",
+      "Edit Course Round"
+    ],
+    "course.round.payment.date": [
+      "تاريخ السداد",
+      "Payment Date"
+    ],
+    "course.round.choose": [
+      "اختار دوره ",
+      "Choose round"
+    ],
+    "course.notfound": [
+      " لا يوجد كورسات",
+      "No courses found"
+    ],
+    "site.course.search.language": [
+      "اللغة",
+      "Language"
+    ],
+    "site.course.search.category": [
+      "النوع",
+      "Category"
+    ],
+    "site.course.search.gender": [
+      "الجنس",
+      "Gender"
+    ],
+    "site.course.search.location": [
+      "المكان",
+      "Location"
+    ],
+    "site.course.search.find.btn": [
+      "بحث جديد",
+      "Find Again"
+    ],
+    "site.course.details.select.your.round": [
+      "إختار دورتك",
+      "Select your round"
+    ],
+    "site.course.details.complete.your.payment": [
+      "إتمام عملية الدفع",
+      "Complete your payment"
+    ],
+    "site.course.details.selected.round": [
+      "الدورة المختارة",
+      "Selected Round"
+    ],
+    "site.course.details.bank.name": [
+      "اسم البنك",
+      "Bank Name"
+    ],
+    "site.course.details.account.owner": [
+      "اسم صاحب الحساب",
+      "Account Owner"
+    ],
+    "site.course.details.account.number": [
+      "رقم الحساب",
+      "Account Number"
+    ],
+    "site.course.details.due.date": [
+      "تاريخ الاستحقاق",
+      "Due Date"
+    ],
+    "site.course.details.complete.pay1": [
+      "لإكمال الدفع ، قم بتحويل رسوم الدورة",
+      "To complete the payment, transfer the course fee"
+    ],
+    "site.course.details.complete.pay2": [
+      " إلى تفاصيل الحساب المصرفي أعلاه ، ثم إضافة الرقم المرجعي للمعاملة في الحقل أدناه والضغط على الزر",
+      " to the above bank account details, then add the transaction reference number in the below field and press the button"
+    ],
+    "site.course.details.reference.number": [
+      "الرقم المرجعي",
+      "Reference Number"
+    ],
+    "site.course.details.no.rounds.please.wish": [
+      "لا يوجد دورات حاليا ولكن يمكنك إضافة الكورس لقائمة المفضلة حتي تصلك إخبار عند عقد الدورات",
+      "No rounds available for this course, You could add it to your wish to follow the updates."
+    ],
+    "site.course.details.payment.btn": [
+      "تم التحويل؛ إدخال الرقم المرجعي",
+      "Transfer done, Submit Reference!"
+    ],
+    "site.course.details.validate.payment": [
+      "التحقق من المدفوعات",
+      "Validate Payment"
+    ],
+    "site.about.us.t1": [
+      "ماذا عنا",
+      "About Us"
+    ],
+    "site.about.us.t2": [
+      "استمتع بالتعلم الشيق",
+      "Experience A Good Learning"
+    ],
+    "site.about.us.who.t1": [
+      "من نحن",
+      "Who We Are"
+    ],
+    "site.about.us.who.text": [
+      "هذه الجزئية تريد مزيد من الكتابة لوصف سي بي سي وتصورها",
+      "Need to add some description related to CBC. Need to add some description related to CBC. Need to add some description related to CBC. Need to add some description related to CBC. Need to add some description related to CBC. Need to add some description related to CBC. "
+    ],
+    "site.about.us.play.t1": [
+      "استرخي، تصفح، وتعلم",
+      "Relax, Explore And Learn"
+    ],
+    "site.about.us.play.t2": [
+      "استمتع بالتعلم الشيق",
+      "Experience A Good Learning"
+    ],
+    "site.about.us.play.text": [
+      "بعض التفاصيل الخاصة بطريقة التعلم",
+      "Some text here again for Advertisement"
+    ],
+    "site.about.us.play.mail.btn": [
+      "أكتب لنا",
+      "Mail us."
+    ],
+    "site.about.us.meet.t1": [
+      "قابل فريق العمل",
+      "Meet Our Staff"
+    ],
+    "site.about.us.meet.t2": [
+      "فريق العمل لدينا على درجة عالية من الكفاءة وفي خدمتك بأي وقت",
+      "A highly qualified staff is ready to help you at anytime"
+    ],
+    "course.details.about": [
+      " عن هذا الكورس",
+      "About this Course"
+    ],
+    "course.details.nodata": [
+      " لا يوجد معلومات ",
+      "No data"
+    ],
+    "duration": [
+      " الوقت ",
+      "Duration"
+    ],
+    "visit_tot": [
+      " اذهب الي ال ",
+      "Visit tutorial"
+    ],
+    "enroll": [
+      "سجل بالكورس",
+      "Enroll"
+    ],
+    "days": [
+      "ايام ",
+      "Days"
+    ],
+    "syllabus": [
+      "المنهج",
+      "Syllbus"
+    ],
+    "instructors": [
+      "المعلمين",
+      "Instructors"
+    ],
+    "profile.edit": [
+      "تعديل الحساب",
+      "Edit Profile"
+    ],
+    "faqs": [
+      "الآسئله المتكرره",
+      "Faqs"
+    ],
+    "introduction": [
+      "المقدمة",
+      "Introduction"
+    ],
+    "you.may.like": [
+      "يمكن ان يعجبك",
+      "You May Also Like"
+    ],
+    "course.duration": [
+      " مدة الكورس ",
+      "Course Duration"
+    ],
+    "course.timing": [
+      " المواعيد ",
+      "Timings"
+    ],
+    "course.per.day": [
+      " في اليوم ",
+      "Per Day"
+    ],
+    "onsite": [
+      " بالحضور ",
+      "On site"
+    ],
+    "firstname": [
+      " الآسم الاول ",
+      "First name"
+    ],
+    "lastname": [
+      " الآسم الاخير ",
+      "Last name"
+    ],
+    "mobile": [
+      "  الجوال ",
+      "Mobile"
+    ],
+    "birthdate": [
+      "  تاريخ الميلاد ",
+      "Birthdate"
+    ],
+    "location": [
+      " العنوان ",
+      "Location"
+    ],
+    "phone": [
+      " الهاتف ",
+      "Phone"
+    ],
+    "profile.about": [
+      " البيانات الشخصيه ",
+      "ABOUT"
+    ],
+    "profile.social": [
+      " بيانات التواصل الآجتماعي ",
+      "SOCIAL"
+    ],
+    "profile.details": [
+      "  بيانات اخري  ",
+      "DETAILS"
+    ],
+    "profile.save": [
+      "  تعديل  ",
+      "Save"
+    ],
+    "total.price":[
+      "اجمالي السعر",
+      "Total Price"
+    ],
+    "total":[
+      "اجمالي ",
+      "Total "
+    ],
+    "remove":[
+      "حذف",
+      "Remove"
+    ],
+    "checkout.title":[
+      "سله المشتريات تحتوي علي",
+      "Your shopping cart contains"
+    ],
+    "course":[
+      "كورس" ,
+      "Course"
+    ],
+    "sl.no":[
+      "رقم الكورس",
+      "SL NO."
+    ],
+    "enroll.all":[
+      "سجل",
+      "Enroll ALL"
+    ],
+    "checkout":[
+      "الدفع",
+      "Check out"
+    ],
+    "hours": [
+      "ساعات",
+      "Hours"
+    ]
+  }

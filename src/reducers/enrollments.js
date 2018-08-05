@@ -6,7 +6,6 @@ import {GET_USER_ENROLLMENTS,GET_COURSE_DETAILS} from '../actions/index'
     case GET_USER_ENROLLMENTS:
         return {...state,enrollments:action.data.results};
         case GET_COURSE_DETAILS :
-        console.log(state.enrollments)
             state.courses.push(action.data)
             return {...state,courses:state.courses}
         default:

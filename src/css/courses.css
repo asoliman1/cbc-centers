@@ -125,7 +125,7 @@ ul.short_ls li a {
 .mtextmk-nav.fixed-header {
     position: fixed;
     top: 160px;
-    width: 13.5%;
+    width: 23.3%;
 }
 
 
@@ -179,15 +179,7 @@ h4.tittle-course {
     letter-spacing: 1px;
     position: relative;
 }
-h4.tittle-course:after {
-    content: " ";
-    background: #ff3546;
-    width: 8%;
-    height: 2px;
-    position: absolute;
-    bottom: -36%;
-    left: 0;
-}
+
 .mheading-mainsmk ul li {
     display: block;
     letter-spacing: 1px;
@@ -380,10 +372,7 @@ a.mbutton-course2 i{
 }
 /*-- //how it works --*/
 
-/*-- instructors section --*/
-.mteam_grid_info:nth-child(3) {
-	margin-top: 5em;
-}
+
 .mteam_grid_info {
     text-align: center;
     padding: 30px;
@@ -437,9 +426,7 @@ a.mbutton-course2 i{
     text-align: center;
     border-radius: 50%;
 }
-.mteam_grid_info:nth-child(6) {
-    float: right;
-}
+
 /*-- //instructors section --*/
 
 /*-- faq section --*/
@@ -573,17 +560,17 @@ li.subitem1 p {
 /*--responsive--*/
 @media(max-width: 1680px){
     .mtextmk-nav.fixed-header {
-        width: 22%;
+        width: 24%;
     }
 }
 @media(max-width: 1600px){
     .mtextmk-nav.fixed-header {
-        width: 22%; 
+        width: 23%; 
     }
 }
 @media(max-width: 1440px){
     .mtextmk-nav.fixed-header {
-        width: 22%;
+        width: 23%;
     }
 }
 @media(max-width: 1366px){
@@ -703,13 +690,8 @@ li.subitem1 p {
         padding: 30px;
         width: 100%;
     }
-    .mteam_grid_info:nth-child(3){
-        margin: 2em 0;
-    }
-    .mteam_grid_info:nth-child(6) {
-        float: none;
-        margin: 2em 0;
-    }
+ 
+
     .mfaq-mmmainsmk .faq li {
         margin-top: 20px;
     }

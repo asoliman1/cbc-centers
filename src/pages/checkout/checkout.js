@@ -8,6 +8,7 @@ import {
 	courseEnrollAll
 } from '../../actions'
 import { Spin} from 'antd';
+import { Translate } from '../../../node_modules/react-localize-redux';
 
 
 class checkout extends Component {
@@ -27,24 +28,24 @@ class checkout extends Component {
 
 	render() {
 		return (
-			<div className="checkout-page" >
+			<div className="checkout-page" style={{direction:this.props.language==='ar'?'rtl':''}} >
 				<div className="innerf-pages">
 					<div className="container">
 					{this.props.loading.shopcarts===1 ? <div style={{textAlign:'center'}} >  <Spin size="large" /></div>:''}
 						<div className="privacy about">
-							<h3>Chec<span>kout</span></h3>
+							<h3> <Translate id="checkout" /> </h3>
 
 							<div className="checkout-right">
-								<h4>Your shopping cart contains: <span>{this.props.shopcarts.size} Courses</span></h4>
+								<h4><Translate id="checkout.title"/> : <span>{this.props.shopcarts.size} <Translate id="header.courses" /></span></h4>
 								{this.props.shopcarts.content.map((e, i) => {
-									return e.items.length > 0 ? <div key={e.id} > <h2 style={{ marginBottom: '10px' }} > Shop cart #{i + 1} </h2> <table style={{ marginBottom: '20px' }} className="timetable_sub">
+									return e.items.length > 0 ? <div key={e.id} > <h2 style={{ marginBottom: '10px' }} > <Translate id="header.shopcart"/> #{i + 1} </h2> <table style={{ marginBottom: '20px' }} className="timetable_sub">
 										<thead>
 											<tr>
-												<th>SL No.</th>
-												<th>Course</th>
-												<th>Course Name</th>
-												<th>Price</th>
-												<th>Remove</th>
+												<th><Translate id="sl.no" /></th>
+												<th><Translate id="course" /></th>
+												<th><Translate id="course.round.course.name" /></th>
+												<th><Translate id="course.round.price" /></th>
+												<th><Translate id="remove" /></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -53,7 +54,7 @@ class checkout extends Component {
 													<td className="invert"> {ind + 1} </td>
 													<td className="invert-image"><a ><img src={e1.course_details.image?e1.course_details.image:'./images/error.jpg'} onError={(e) => { e.target.src = './images/error.jpg' }} className="img-responsive" /></a></td>
 
-													<td className="invert">{e1.course_details.name_e}</td>
+													<td className="invert">{this.props.language==='ar'?e1.course_details.name_a:e1.course_details.name_e}</td>
 
 													<td className="invert">${e1.price}</td>
 													<td className="invert">
@@ -72,19 +73,19 @@ class checkout extends Component {
 							</div>
 							<div className="checkout-left">
 								<div className="col-md-4 checkout-left-basket">
-									<h4>Total Price</h4>
+									<h4> <Translate id="total.price" /> </h4>
 									<ul  >
 										{this.props.shopcarts.content.map(e => {
 											return e.items.length > 0 ?
 												e.items.map(e1 => {
-													return <li key={e1.course_details.name_e+'price'} >{e1.course_details.name_e} <i></i> <span>${e1.price}</span></li>
+													return <li key={e1.course_details.name_e+'price'} >{this.props.language==='ar'?e1.course_details.name_a:e1.course_details.name_e} <i></i> <span style={{float:this.props.language==='ar'?'left':'right'}} >${e1.price}</span></li>
 												})
 												: ''
 										})}
-										<li> Total : {this.props.shopcarts.total_price} </li>
+										<li> <Translate id="total" /> : {this.props.shopcarts.total_price} </li>
 									</ul>
 									<div className="checkout-right-basket">
-										<a onClick={()=>{this.props.courseEnrollAll()}} >Enroll Courses</a>
+										<a onClick={()=>{this.props.courseEnrollAll()}} ><Translate id="enroll.all"/></a>
 									</div>
 								</div>
 								<div className="col-md-8 address_form">
@@ -148,7 +149,7 @@ class checkout extends Component {
 }
 
 function mapStateToProps(state) {
-	return { shopcarts: state.shop_carts, loading: state.loadingBar }
+	return { shopcarts: state.shop_carts, loading: state.loadingBar,language:state.language.code }
 }
 
 export default connect(mapStateToProps, { removeShopItem, shopCarts,courseEnrollAll })(checkout);
