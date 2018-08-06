@@ -31,7 +31,7 @@ resize() {
 
 componentDidMount(){
 	this.props.courseDetails(this.props.match.params.id)
-	if(this.props.rounds.filter(e=>e.course===this.props.match.params.id).length===0)
+	if(this.props.rounds.filter(e=>e.course===this.props.match.params.id*1).length===0)
 	this.props.getCourseRounds(this.props.match.params.id)
 
 	this.props.courseModules(this.props.match.params.id)
