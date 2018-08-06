@@ -86,7 +86,12 @@ class Header extends Component {
 		}
 
 		if (e.keyPath[2] === 'item_1') {
-			this.props.history.push({ pathname: '/search', state: { sub_categories: e.key } })
+			if (this.props.location.pathname === '/search') {
+				this.props.history.replace({ pathname: '/search', state: { sub_categories: e.key }  });
+				window.location.reload(true)
+			}
+			else
+				this.props.history.push({ pathname: '/search', state: { sub_categories: e.key }  })
 		}
 	}
 
@@ -209,7 +214,15 @@ class Header extends Component {
 							<SubMenu title={<span><Translate id="header.categories" /> </span>}>
 
 								{this.props.header.categories.map(e => {
-									return e.subcategories.length > 0 ? <SubMenu key={e.id} title={<span onClick={() => { this.props.history.push({ pathname: '/search', state: { categories: e.id } }) }}  > {this.props.language === 'ar' ? e.attr2 : e.attr1} </span>} >
+									return e.subcategories.length > 0 ? <SubMenu key={e.id} title={<span onClick={() => {
+									
+									if (this.props.location.pathname === '/search') {
+										this.props.history.replace({ pathname: '/search', state: { categories: e.id }  });
+										window.location.reload(true)
+									}
+									else
+										this.props.history.push({ pathname: '/search', state: { categories: e.id }  });
+									}}  > {this.props.language === 'ar' ? e.attr2 : e.attr1} </span>} >
 										{e.subcategories.map(e1 => { return <Menu.Item key={e1.id} >{this.props.language === 'ar' ? e1.attr2 : e1.attr1}</Menu.Item> })}
 									</SubMenu> : <Menu.Item key={e.id}  >{this.props.language === 'ar' ? e.attr2 : e.attr1}</Menu.Item>
 								})}
@@ -266,7 +279,15 @@ class Header extends Component {
 							<SubMenu title={<span  ><Translate id="header.categories" /> <Icon type="arrow-down" /></span>}>
 
 								{this.props.header.categories.map(e => {
-									return e.subcategories.length > 0 ? <SubMenu key={e.id} title={<span onClick={() => { this.props.history.push({ pathname: '/search', state: { categories: e.id } }) }} > {this.props.language === 'ar' ? e.attr2 : e.attr1} </span>} >
+									return e.subcategories.length > 0 ? <SubMenu key={e.id} title={<span onClick={() => { 
+										if (this.props.location.pathname === '/search') {
+											this.props.history.replace({ pathname: '/search', state: { categories: e.id }  });
+											window.location.reload(true)
+										}
+										else
+											this.props.history.push({ pathname: '/search', state: { categories: e.id }  })
+										
+									 } } > {this.props.language === 'ar' ? e.attr2 : e.attr1} </span>} >
 										{e.subcategories.map(e1 => { return <Menu.Item key={e1.id} >{this.props.language === 'ar' ? e1.attr2 : e1.attr1}</Menu.Item> })}
 									</SubMenu> : <Menu.Item key={e.id}  >{this.props.language === 'ar' ? e.attr2 : e.attr1}</Menu.Item>
 								})}

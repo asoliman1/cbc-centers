@@ -31,23 +31,30 @@ resize() {
 
 componentDidMount(){
 	this.props.courseDetails(this.props.match.params.id)
+	if(this.props.rounds.filter(e=>e.course===this.props.match.params.id).length===0)
 	this.props.getCourseRounds(this.props.match.params.id)
+
 	this.props.courseModules(this.props.match.params.id)
 	this.props.courseDesc(this.props.match.params.id)
 	this.props.courseInstr(this.props.match.params.id)
+}
+componentWillReceiveProps(e){
 	this.checkLike()
 }
+
 checkLike(){
-	if(   this.props.wishlist.filter(e=>e.course===this.props.match.params.id).length > 0 ){
+	if(this.props.wishlist.filter(e=>e.course===this.props.match.params.id*1).length > 0 ){
 		this.setState({liked:true})
 	}
    }
+
 	render() {
 		const shareButtons = <div style={{padding:10}} > <Input name="email" type="email" style={{marginBottom:10}} onChange={(e)=>{this.setState({[e.target.name]:e.target.value})}} placeholder={this.props.language === 'ar' ? 'ايميل' :'Email'} />  <Button onClick={()=>{ if(this.state.email !=='')this.props.share(this.state.email,this.props.match.params.id) }} type="primary">
         <Icon type="share-alt" /> 
       </Button>
 </div>
-		
+
+
 		return (
 			<div>
 				<div className="minner_page_mainsmk ">
@@ -93,7 +100,7 @@ checkLike(){
 										<a className="scroll">
 										<div > 
 											
-											<Button onClick={()=>{this.props.addWishList(this.props.match.params.id);}} ><Icon style={{color:'red'}} type={this.state.liked?"heart":"heart-o"} /></Button>
+											<Button onClick={()=>{if(!this.props.auth.status){ this.props.history.push({pathname:'/login_signup',state:{modal:true}}) } else{this.props.addWishList(this.props.match.params.id);this.setState({liked:true})}}} ><Icon style={{color:'red'}} type={this.state.liked?"heart":"heart-o"} /></Button>
 											<Popover  placement={this.props.language==='ar'?'left':'right'} title="Share" content={shareButtons} >
 										
 											<Button  >
@@ -202,7 +209,7 @@ checkLike(){
   <div id="rounds" >
   {this.props.rounds.length===0&&this.props.loading.getCourseRounds===0?<div> <Translate id="course.rounds" /> </div>:''}
 
-				{this.props.rounds.map(e=>{
+				{this.props.rounds.filter(e=>e.course===this.props.match.params.id*1).map(e=>{
 					return <div className="mmainsmk-content-date" key={e.id} style={{marginBottom:'20px'}} id="course_fee">
 					<div className="container" style={{margin:this.props.language==='ar'?0:''}} >
 						<div className="col-sm-3 textmk-sub-time2">
@@ -211,8 +218,8 @@ checkLike(){
 						<div className="col-sm-9 textmk-sub-time">
 							<div className="col-md-4 date-course-grid">
 								<div className="grids-mainsmk-duration">
-									<h6> <Translate id="course.duration" /> </h6>
-									<h4> {new Date(e.start_date).getDate() + "/" + new Date(e.start_date).getMonth()} - {new Date(e.end_date).getDate() +"/"+ new Date(e.end_date).getMonth()}   {new Date(e.end_date).getFullYear()}</h4>
+									<h6 style={{whiteSpace:'nowrap'}} > <Translate id="course.duration" /> </h6>
+									<h4 style={{whiteSpace:'nowrap'}} > {new Date(e.start_date).getDate() + "/" + new Date(e.start_date).getMonth()} - {new Date(e.end_date).getDate() +"/"+ new Date(e.end_date).getMonth()}   {new Date(e.end_date).getFullYear()}</h4>
 									<p><Translate id="onsite" />, {moment(e.start_date).diff(moment(e.end_date),'days')} <Translate id="days" /></p>
 								</div>
 							</div>
@@ -236,7 +243,7 @@ checkLike(){
 						<div className="clearfix"></div>
 					</div>
 					<div style={{textAlign:'center',marginLeft:'80px',marginTop:'50px',fontSize:'30px'}} > 
-					<a  style={{color:'white'}} onClick={()=>{this.setState({round:e});this.props.addShopCart(e.price,e.course,e.id)}} > <Translate id="enroll" /> </a>
+					<a  style={{color:'white'}} onClick={()=>{if(!this.props.auth.status){ this.props.history.push({pathname:'/login_signup',state:{modal:true}}) } else {this.setState({round:e});this.props.addShopCart(e.price,e.course,e.id)} }} > <Translate id="enroll" /> </a>
 						
 						 </div>
 				</div>
@@ -267,7 +274,7 @@ checkLike(){
 }
 
 function mapStateToProps(state){
-	return {rounds:state.shop_cart.rounds,modules:state.course_details.modules,desc:state.course_details.describtion,course:state.course_details.course,instructors:state.course_details.instructors,loading:state.loadingBar,language:state.language.code,wishlist:state.wishlist.mini}
+	return {rounds:state.shop_cart.rounds,modules:state.course_details.modules,desc:state.course_details.describtion,course:state.course_details.course,instructors:state.course_details.instructors,loading:state.loadingBar,language:state.language.code,wishlist:state.wishlist.mini,auth:state.Authentication}
 }
 
 export default connect(mapStateToProps,{getCourseRounds,addShopCart,courseModules,courseDesc,courseDetails,courseInstr,addWishList,share}) (course_main);

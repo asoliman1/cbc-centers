@@ -2,3 +2,9 @@
     background: unset !important;
     border: 0 !important;
 }
+
+.small-img{
+    height: 10%;
+    width: 10%;
+    padding-top: 20px;
+}

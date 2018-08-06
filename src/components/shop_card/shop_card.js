@@ -9,6 +9,8 @@ import {
     removeWishlist,
     getCourseRounds
 } from '../../actions'
+import { withRouter } from "react-router-dom";
+
 import { Translate } from '../../../node_modules/react-localize-redux';
 const ButtonGroup = Button.Group;
 const RadioGroup = Radio.Group;
@@ -41,13 +43,13 @@ class Shop_card extends Component {
     }
 
     onChange = (e) => {
-        console.log('radio checked', e.target.value);
+        if(!this.props.auth.status){ this.props.history.push({pathname:'/login_signup',state:{modal:true}}) } else{
         this.setState({
             value: e.target.value,
         });
         this.hide()
-        console.log(e.target.value.price)
         this.props.addShopCart(e.target.value.price,this.props.id,e.target.value.id)
+    }
     }
 
     hide = () => {
@@ -77,8 +79,8 @@ class Shop_card extends Component {
             <div>
                 {/* onClick={(e) => { this.addShopCart(e) }} */}
                 <RadioGroup onChange={this.onChange} value={this.state.value}>
-                    {rounds.map(e => {
-                        return <div key={e.id} style={{padding:'6px'}} ><Radio className="animated fadeIn" style={radioStyle} value={e}> <span style={{whiteSpace:'nowrap',width:'120px',overflow:'hidden',float:'right'}} > {this.props.language==='ar'?e.name_a:e.name_e} </span></Radio> 
+                    {rounds.map((e,i) => {
+                        return <div key={i} style={{padding:'6px'}} ><Radio className="animated fadeIn" style={radioStyle} value={e}> <span style={{whiteSpace:'nowrap',width:'120px',overflow:'hidden',float:'right'}} > {this.props.language==='ar'?e.name_a:e.name_e} </span></Radio> 
                             {e.start_date } - {e.end_date} <br/>
                             {e.price} $
                         </div>
@@ -114,14 +116,14 @@ class Shop_card extends Component {
                             <div className="clearfix"> </div>
                         </div>
                         <Row justify="center" type="flex" >
-                            <ButtonGroup  >
+                            <ButtonGroup style={{display:'flex'}} >
                                 <Popover
                                     trigger="click"
                                     onVisibleChange={this.handleVisibleChange}
                                     content={content} visible={this.state.visible} title={<Translate id="course.round.choose" /> }>
                                     <Button className="hvr-bounce-in" style={{ borderColor: 'white' }}  > {this.state.loading_shop && this.props.loading.addShopCart === 1 ? <Icon type="loading" style={{ color: 'white' }} spin /> : <Icon style={{fontSize:'20px'}} type="shopping-cart" />}  </Button>
                                 </Popover>
-                                <Button className="hvr-bounce-in" style={{  borderColor: 'white' }} onClick={(e) => { this.addWishList(e);this.setState({liked:!this.state.liked}) }} > {this.state.loading_wish && this.props.loading.addWishList === 1 ? <Icon type="loading" style={{ color: 'red',fontSize:'20px' }} spin /> : <Icon style={{fontSize:'20px',color:'red'}} type={this.state.liked?"heart":"heart-o"} />}  </Button>
+                                <Button className="hvr-bounce-in" style={{  borderColor: 'white' }} onClick={(e) => {if(!this.props.auth.status){ this.props.history.push({pathname:'/login_signup',state:{modal:true}}) } else{this.addWishList(e);this.setState({liked:!this.state.liked}) }}} > {this.state.loading_wish && this.props.loading.addWishList === 1 ? <Icon type="loading" style={{ color: 'red',fontSize:'20px' }} spin /> : <Icon style={{fontSize:'20px',color:'red'}} type={this.state.liked?"heart":"heart-o"} />}  </Button>
                                 <Button className="hvr-bounce-in" style={{  borderColor: 'white' }} ><Link to={{ pathname: `/courses/${this.props.id}`, state: { course: this.props.course } }} >  <Icon style={{ fontWeight: 'bold',fontSize:'20px' }} type="ellipsis" /> </Link> </Button>
                             </ButtonGroup>
                         </Row>
@@ -142,4 +144,4 @@ export default connect(mapStateToProps, {
     addWishList,
     removeWishlist,
     getCourseRounds
-})(Shop_card);
+})(withRouter(Shop_card));

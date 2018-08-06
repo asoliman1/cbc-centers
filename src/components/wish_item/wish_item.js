@@ -21,7 +21,7 @@ class Wish_item extends Component {
                 <div className="row media" style={{padding:'10px'}} >
                     <div className="col media-left">
                         <Link to={{pathname:`/courses/${this.props.course}`}} >
-                            <img className="media-object img-circle" src={this.props.x.image?this.props.x.image:'./images/error.jpg'} onError={(e) => { e.target.src = './images/error.jpg' }}  alt={this.props.x.e_name} />
+                            <img className="media-object img-circle" src={this.props.x.image?"http://167.99.244.62:8000"+this.props.x.image:'./images/error.jpg'} onError={(e) => { e.target.src = './images/error.jpg' }}  alt={this.props.x.e_name} />
                         </Link>
                     </div>
                     <div className="col media-body" style={{padding:'10px'}}>

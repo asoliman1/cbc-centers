@@ -97,6 +97,10 @@
       padding-left: 10px;
       padding-right: 10px;
   }
+
+  .ant-input-search.ant-input-search-enter-button > .ant-input{
+    padding-right: 50px !important;
+  }
   /* ::-webkit-scrollbar {
     display: none;
     } */

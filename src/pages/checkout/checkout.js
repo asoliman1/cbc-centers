@@ -7,9 +7,10 @@ import {
 	shopCarts,
 	courseEnrollAll
 } from '../../actions'
-import { Spin} from 'antd';
+import { Spin,Modal, Button } from 'antd';
 import { Translate } from '../../../node_modules/react-localize-redux';
 
+var modal_ref = null
 
 class checkout extends Component {
 
@@ -25,6 +26,19 @@ class checkout extends Component {
 	componentDidMount() {
 		this.props.shopCarts()
 	}
+
+	goToprofile(){
+		modal_ref.destroy()
+		this.props.history.push('/profile')
+	}
+
+ error() {
+modal_ref=Modal.error({
+		okText:this.props.language==='ar'?'الغاء':'Cancel',
+		title: this.props.language==='ar'?'خطا':'Error',
+	  content:<div> {this.props.language==='ar'?'برجاء استكمال بيانات حسابك (الاسم الاول ، الاسم الاخير ، الجوال)':'Please complete your account details (first name, last name , mobile)'} <a onClick={()=>this.goToprofile()} >{this.props.language==='ar'?'اضغط هنا للذهاب لصفحه الحساب':'Press here to edit your profile'}</a> </div>,
+	});
+  }
 
 	render() {
 		return (
@@ -52,7 +66,7 @@ class checkout extends Component {
 											{e.items.map((e1, ind) => {
 												return <tr key={ind} className="rem1">
 													<td className="invert"> {ind + 1} </td>
-													<td className="invert-image"><a ><img src={e1.course_details.image?e1.course_details.image:'./images/error.jpg'} onError={(e) => { e.target.src = './images/error.jpg' }} className="img-responsive" /></a></td>
+													<td className="invert-image"><a ><img src={e1.course_details.image?'http://167.99.244.62:8000'+e1.course_details.image:'./images/error.jpg'} onError={(e) => { e.target.src = './images/error.jpg' }} className="img-responsive" /></a></td>
 
 													<td className="invert">{this.props.language==='ar'?e1.course_details.name_a:e1.course_details.name_e}</td>
 
@@ -85,7 +99,7 @@ class checkout extends Component {
 										<li> <Translate id="total" /> : {this.props.shopcarts.total_price} </li>
 									</ul>
 									<div className="checkout-right-basket">
-										<a onClick={()=>{this.props.courseEnrollAll()}} ><Translate id="enroll.all"/></a>
+										<a onClick={()=>{if(!this.props.profile.last_name||!this.props.profile.first_name||!this.props.profile.mobile) {this.error()}  else {this.props.courseEnrollAll();setTimeout(()=>{ this.props.history.push('/enrollments') },3000)}}} ><Translate id="enroll.all"/></a>
 									</div>
 								</div>
 								<div className="col-md-8 address_form">
@@ -149,7 +163,7 @@ class checkout extends Component {
 }
 
 function mapStateToProps(state) {
-	return { shopcarts: state.shop_carts, loading: state.loadingBar,language:state.language.code }
+	return { shopcarts: state.shop_carts, loading: state.loadingBar,language:state.language.code,profile:state.profile }
 }
 
 export default connect(mapStateToProps, { removeShopItem, shopCarts,courseEnrollAll })(checkout);

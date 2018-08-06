@@ -1,6 +1,6 @@
 import { httpService } from "../helpers/http_service";
 import { showLoading, hideLoading, resetLoading } from "react-redux-loading-bar";
-import {  notification ,Modal } from 'antd';
+import {  notification ,Modal, Alert } from 'antd';
 import store from '../helpers/store';
 
 export const GET_MENU_CATEGORIES = 'GET_MENU_CATEGORIES';
@@ -360,10 +360,12 @@ export function Login(email,password) {
       dispatch(loadSuccess(LOGIN_SUCCESSFULL, data.data));
       dispatch(loadSuccess(GET_PROFILE,data.data.user));
       dispatch(homeWishlist())
-        dispatch(hideLoading('Login'))
-        dispatch(hideLoading())
+      dispatch(hideLoading('Login'))
+      dispatch(hideLoading())
        dispatch(shopCarts())
-      openNotificationWithIcon('success',store.getState().language.code === 'ar'? 'تم التسجيل بنجاح' :'Login Successfull','')
+       setTimeout(()=>{
+        openNotificationWithIcon('success',store.getState().language.code === 'ar'? `${data.data.user.username} , اهلاَ` :`Welcome, ${data.data.user.username}`,'')
+       },4000)
     }).catch(error => {
       dispatch(loadSuccess(LOGIN_FAILED,error.response?error.response.data:{error:['Error']}))
       dispatch(resetLoading())
@@ -428,11 +430,11 @@ export function courseEnrollAll(){
 }
 }
 
-export function doPayment(ref_no,course,round,cart) {
+export function doPayment(ref_no,course,round,cart,image) {
   return function (dispatch) {
     dispatch(showLoading())
     dispatch(showLoading('doPayment'))
-    return httpService.doPayment(cart,store.getState().Authentication.user_id,course,round,ref_no).then(data => {
+    return httpService.doPayment(cart,store.getState().Authentication.user_id,course,round,ref_no,image).then(data => {
       dispatch(loadSuccess(DO_PAYMENT, data.data));
       dispatch(hideLoading('doPayment'))
       dispatch(hideLoading())
@@ -441,18 +443,17 @@ export function doPayment(ref_no,course,round,cart) {
       openNotificationWithIcon('error',store.getState().language.code === 'ar'?'لم تتم عمليه الدفع':'Your payment  failed','')      
       dispatch(resetLoading())
 
-      // console.log(error.response);
+      console.log(error.response);
     });
   };
 }
 
 export function createShopCart() {
   return function (dispatch) {
-    let id = localStorage.getItem('shopcart_id');
-    if(!id||typeof id === 'undefined'){ 
+   
     dispatch(showLoading())
     dispatch(showLoading('createshopcart'))
-    return httpService.createShopCart(localStorage.getItem('user_id')).then(data => {
+    return httpService.createShopCart(store.getState().Authentication.user_id).then(data => {
       dispatch(loadSuccess(CREATE_SHOPCART, data.data));
       dispatch(hideLoading('createshopcart'))
       dispatch(hideLoading())
@@ -460,9 +461,6 @@ export function createShopCart() {
       dispatch(resetLoading())
       // console.log(error.response);
     });
-  }else{
-    dispatch(CREATE_SHOPCART,{id:id});
-  }
   };
 }
 
@@ -775,7 +773,7 @@ export function checkAuth() {
     var status = !token || token === '' || typeof token === 'undefined' ? false : true;
     dispatch(loadSuccess(CHECK_AUTHENTICATION, { token: token, status: status,user_id:user_id }))
     if(status){    
-    if(typeof store.getState().shop_cart.shop_cart.id === 'undefined'|| !store.getState().shop_cart.shop_cart.id){
+    if(typeof store.getState().shop_cart.shop_cart.id === 'undefined'){
       dispatch(shopCarts())
       }
       dispatch(homeWishlist())

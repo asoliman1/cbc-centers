@@ -39,31 +39,27 @@ class Login_register extends Component {
     }
 
     componentWillReceiveProps(c) {
+        console.log(c)
         this.setState({ open: c.modal });
+        if(c.auth.status){
+            this.setState({
+                visible: false,
+            });
+            this.setState({username1:'',password1:'',username:'',email:'',password:''})
+           if(!this.state.login)
+            this.toggle()
+        }
     }
 
 
     login(e) {
         e.preventDefault();
         this.props.Login(this.state.username1,this.state.password1)
-        setTimeout(() => {
-            if(this.props.auth.status){ 
-            this.props.history.goBack()
-            this.setState({username1:'',password1:''})
-            window.location.reload()
-            }
-        }, 3000);
     }
 
     register(e) {
         e.preventDefault();
         this.props.Register(this.state.username,this.state.email,this.state.password)
-        setTimeout(() => {
-            if(this.props.auth.status){ 
-            this.toggle()
-            this.setState({username:'',email:'',password:''});
-            }
-        }, 4000);
     }
 
 
@@ -98,6 +94,7 @@ class Login_register extends Component {
                     title={this.state.login? <Translate id="header.login"/> :<Translate id="header.register"/>}
                     footer={null}
                     onCancel={this.handleCancel}
+                    afterClose={()=>{this.props.history.goBack()}}
                 >
                         <div className="module form-module">
                             <div  className="toggle">
@@ -105,7 +102,7 @@ class Login_register extends Component {
                             <div className="form">
                                 <h3> <Translate id="header.login.title" /> </h3>
                                 <form onSubmit={this.login} >
-                                    <input type="text" name="username1" placeholder={this.props.language==='ar'?'اسم المستخدم':'Username'} value={this.state.username1} onChange={this.handleChange} required />
+                                    <input type="text" name="username1" placeholder={this.props.language==='ar'?' البريد الالكتروني':'Email'} value={this.state.username1} onChange={this.handleChange} required />
                                     <input type="password" name="password1" placeholder={this.props.language==='ar'?'كلمه السر':'Password'} value={this.state.password1} onChange={this.handleChange} required />
                                     <Checkbox style={{marginBottom:'15px'}} onChange={(e)=>{this.props.rememberMe(e.target.checked);console.log(e.target.checked)}} > {this.props.language==='ar'?'تذكرني':'Remember me'} </Checkbox>                                    
                                     {this.props.loading.Login===1?<div style={{textAlign:'center'}} > <Icon type="loading" style={{fontSize:'25px',color:'#04bafe'}} spin={true} /> </div>: <input type="submit" value={this.props.language==='ar'?'تسجيل الدخول':'Login' } />}

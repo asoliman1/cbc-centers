@@ -10,7 +10,7 @@ function shop_cart(state = initialize_state.shop_cart, action) {
              case CREATE_SHOPCART :
             return {...state,shop_cart:action.data};
              case GET_USER_SHOPCARTS :
-            return {...state,shop_cart:action.data[0]};
+            return {...state,shop_cart:action.data.filter(e=>e.status===118)[0]};
              case ENROLLMENT_SUCCESSFULL :
             return {...state,shop_cart:{}};
         default:

@@ -9,6 +9,8 @@ import {
     addWishList,
     getCourseRounds
 } from '../../actions'
+import { withRouter } from "react-router-dom";
+
 const ButtonGroup = Button.Group;
 const RadioGroup = Radio.Group;
 class Search_item extends Component {
@@ -22,11 +24,13 @@ class Search_item extends Component {
     }
 
     onChange = (e) => {
+        if(!this.props.auth.status){ this.props.history.push({pathname:'/login_signup',state:{modal:true}}) } else{
         this.setState({
             value: e.target.value,
         });
         this.hide()
         this.props.addShopCart(e.target.value.price,this.props.id,e.target.value.id)
+    }
     }
     checkLike(){
         if(   this.props.wishlist.filter(e=>e.course===this.props.id).length > 0 ){
@@ -107,7 +111,7 @@ class Search_item extends Component {
                                 </Link>
 
                                 <div className="col-md-4 text-right" >
-                                    <button className="btn btn-light" style={{ fontSize: '11px' }} onClick={() => {this.props.addWishList(this.props.id);this.setState({liked:true}) }} >
+                                    <button className="btn btn-light" style={{ fontSize: '11px' }} onClick={() => {if(!this.props.auth.status){ this.props.history.push({pathname:'/login_signup',state:{modal:true}}) } else{this.props.addWishList(this.props.id);this.setState({liked:true}) }}} >
                                         <i className={this.state.liked ? "fa fa-heart fa-2x fa-red" : "fa fa-heart-o fa-2x fa-red"} ></i>
                                     </button>
                                     <Popover
@@ -134,9 +138,9 @@ class Search_item extends Component {
 }
 
 function mapStateToProps(state){
-    return {rounds:state.shop_cart.rounds,loading:state.loadingBar,categories:state.header.categories,wishlist:state.wishlist.mini}
+    return {rounds:state.shop_cart.rounds,loading:state.loadingBar,categories:state.header.categories,wishlist:state.wishlist.mini,auth:state.Authentication}
 }
 
 export default connect(mapStateToProps,{ addShopCart,
     addWishList,
-    getCourseRounds}) (Search_item);
+    getCourseRounds}) (withRouter(Search_item));

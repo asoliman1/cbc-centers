@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {contactUs} from '../../actions/index';
-import {Icon} from 'antd'
+import {Icon,Alert} from 'antd'
 import {Translate} from 'react-localize-redux';
+import * as EmailValidator from 'email-validator';
+
 const initial = {};
 class contact extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {email_error:false}
         this.onChangeInput = this.onChangeInput.bind(this);
     }
 
@@ -33,12 +35,13 @@ class contact extends Component {
                 <div className="shopf-sear-headinfo_mail_grids">
                     <div className="col-md-7 contctf_mail_grid_right" style={{float:this.props.language === 'ar' ? 'right' : ''}} >
                         <h3 className="sub-w3ls-headf" style={{color:'black'}} > <Translate id="contact.rule" /> </h3>
-                        <form onReset={()=>{this.setState({name:'',email:'',telephone:'',message:'',subject:''})}} onSubmit={(e)=>{e.preventDefault();this.props.contactUs(this.state.name,this.state.email,this.state.telephone,this.state.subject,this.state.message)}}  >
+                        <form onReset={()=>{this.setState({name:'',email:'',telephone:'',message:'',subject:'',email_error:false})}} onSubmit={(e)=>{e.preventDefault(); if(EmailValidator.validate(this.state.email)){this.props.contactUs(this.state.name,this.state.email,this.state.telephone,this.state.subject,this.state.message);this.setState({email_error:false})} else this.setState({email_error:true});}}  >
                             <div className="inputf_left">
                                 <input type="text" name="name" placeholder={this.props.language==='ar'?'الاسم':'Name'} value={this.state.name} onChange={this.onChangeInput} required />
                             </div>
                             <div className="inputf_right">
-                                <input type="email" name="email" placeholder={this.props.language==='ar'?'البريد الالكتروني':'Email'} value={this.state.email} onChange={this.onChangeInput} required />
+                                <input type="text" name="email" placeholder={this.props.language==='ar'?'البريد الالكتروني':'Email'} value={this.state.email} onChange={this.onChangeInput} required />
+                            {this.state.email_error?    <Alert closable message={this.props.language==='ar'?'البريد الالكتروني خطآ':'Email is wrong'} type="error" />:''}
                             </div>
                             <div className="clearfix"> </div>
                             <div className="inputf_left">

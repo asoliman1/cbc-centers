@@ -2,13 +2,26 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { doPayment } from '../../actions/index';
-import { Rate, Icon, Button, Row, Spin, Popover, Radio, Input } from 'antd';
+import { Rate, Icon, Button, Row, Spin, Popover, Radio, Input,Upload } from 'antd';
 import './enrollments.css';
 import { Translate } from '../../../node_modules/react-localize-redux';
+
+function beforeUpload(file) {
+    const isJPG = file.type === 'image/jpeg';
+    if (!isJPG) {
+        // message.error('You can only upload JPG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+        // message.error('Image must smaller than 2MB!');
+    }
+    return isJPG && isLt2M;
+}
+
 class Course_enrollment extends Component {
     constructor(props) {
         super(props);
-        this.state = { ref_no: '',payment:this.props.payment }
+        this.state = { ref_no: '',payment:this.props.payment,image:'' }
     }
     componentDidMount() {
         console.log(this.props)
@@ -24,17 +37,54 @@ class Course_enrollment extends Component {
         this.setState({ visible });
 
     }
+    handleImageChange = (info) => {
+        console.log(info)
+        if (info.file.status === 'uploading') {
+            this.setState({ loading: true });
+            return;
+        }
+        if (info.file.status === 'done') {
+            // Get this url from response in real world.
+             this.setState({
+                loading: false,
+            });
+        }
+    }
+
+    uploadPic(e){
+        const reader = new FileReader();
+        reader.addEventListener('load', () => {
+            console.log(reader.result)
+            this.setState({image:reader.result})
+            });
+        reader.readAsDataURL(e.file);
+    }
 
 
     render() {
         const elmAfter = (
             <div>
-                <Button type="primary" onClick={() => { this.props.doPayment(this.state.ref_no, this.props.id, this.props.round, this.props.cart);setTimeout(()=>{this.setState({payment:false}),1000}) }} > {this.props.lang==='ar'?'إدخال':'Submit'} </Button>
+                <Button type="primary"  onClick={() => { this.props.doPayment(this.state.ref_no, this.props.id, this.props.round, this.props.cart,this.state.image);setTimeout(()=>{this.setState({payment:false}),1000}) }} > {this.props.lang==='ar'?'إدخال':'Submit'} </Button>
             </div>
         );
         const content = (
             <div>
-                <Input addonAfter={elmAfter} onChange={(e) => { this.setState({ ref_no: e.target.value }) }} value={this.state.ref_no} placeholder={this.props.lang==='ar'?'الرقم المرجعي':'Reference Number'} />
+                <Input addonBefore={this.props.lang==='ar'?'الرقم المرجعي':"Reference Number"}  onChange={(e) => { this.setState({ ref_no: e.target.value }) }} value={this.state.ref_no} placeholder={this.props.lang==='ar'?'الرقم المرجعي':'Reference Number'} /> <br/>
+                <Upload 
+                                      name="image"
+                                      showUploadList={false}
+                                      customRequest={(e)=>{this.uploadPic(e)}}
+                                      beforeUpload={beforeUpload}
+                                      onChange={this.handleImageChange}>
+    <Button style={{border:0,marginTop:20,marginBottom:20}} >
+      <Icon type="upload" /> {this.props.lang === 'ar' ? 'اضافه الصرره' :'Add Picture'}
+    </Button>
+  </Upload> {this.state.image!==''?<img className="small-img" src={this.state.image}/>:''}
+   <div style={{textAlign:'center'}} >
+
+  {elmAfter}
+  </div>
+
             </div>
         );
         return (
@@ -60,9 +110,10 @@ class Course_enrollment extends Component {
 
 {this.state.payment? 
                                 <Popover
+                                
                                     trigger="click"
                                     onVisibleChange={this.handleVisibleChange}
-                                    content={content} visible={this.state.visible} title={this.props.lang==='ar'?"اضف الرقم المرجعي للمعاملة في الحقل أدناه والضغط على الزر":"Add the transaction reference number in the below field and press the button"}>
+                                    content={content} visible={this.state.visible} >
                                     <a style={{ color: 'white' }}  >
                                         {this.props.lang==='ar'?'إضافه الرقم المرجعي':'Add Reference Number'}
         </a>

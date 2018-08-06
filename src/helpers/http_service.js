@@ -66,8 +66,8 @@ function courseEnroll(user, course , round) {
     return Axios.post(`${api_url}/userenrollment/`, { "user": user, "course": course, "round":round , "status": "190" });
 }
 
-function doPayment(enroll_id, user, course,round,ref_no) {
-    return Axios.put(`${api_url}/userenrollment/${enroll_id}/`, { "user": user, "course": course, "round": round, "status": "192","payment_reference_number":ref_no });
+function doPayment(enroll_id, user, course,round,ref_no,image) {
+    return Axios.put(`${api_url}/userenrollment/${enroll_id}/`, { "user": user, "course": course, "round": round, "status": "192","payment_reference_number":ref_no,image:image });
 }
 
 function wishList(user, page, size) {
@@ -181,7 +181,7 @@ function searchByfilters(category,sub_category,language,location,text, page, siz
 }
 
 function share(email,course){
-    return Axios.get(`${api_url}/share/`,{"email":email,"id":course})
+    return Axios.get(`${api_url}/share/?email=${email}&id=${course}`)
 }
 
 export const httpService = {

@@ -35,9 +35,13 @@ class home extends Component {
     componentDidMount() {
         // this.props.homeSlider();
         // this.props.homeEventNotif();
+        if(this.props.courses.popular.results.length===0)
         this.props.homePopCourses('1', '4');
+        if(this.props.courses.offers.results.length===0)
         this.props.homeOffCourses('1', '4');
+        if(this.props.courses.rated.results.length===0)
         this.props.homeRatCourses('1', '4');
+        if(this.props.courses.new.results.length===0)
         this.props.homeNewCourses('1', '4');
     }
 

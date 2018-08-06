@@ -627,7 +627,6 @@ li.subitem1 p {
 }
 @media(max-width: 1050px){
     .mtextmk-nav.fixed-header {
-        width: 20%;
     }    
     .mcontent-course {
         padding: 3.5em 0;
@@ -656,7 +655,6 @@ li.subitem1 p {
         padding: 0;
     }
     .mtextmk-nav.fixed-header {
-        width: 18.5%;
     }
     .mheading-mainsmk ul li {
         font-size: 15px;
@@ -731,7 +729,6 @@ li.subitem1 p {
 }
 @media(max-width: 900px){
     .mtextmk-nav.fixed-header {
-        width: 25%;
         padding: 0;
         top:150px;
     }
@@ -741,7 +738,6 @@ li.subitem1 p {
         padding: 0 .5em;
     }
     .mtextmk-nav.fixed-header {
-        width: 21%;
     }
     h3.mtittle {
         font-size: 30px;
