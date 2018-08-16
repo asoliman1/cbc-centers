@@ -35,7 +35,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
             store.getState().Authentication.status ? (
                 <Component {...props} />
             ) : (
-                    <Redirect to={{ pathname: '/login_signup', state: { modal: true } }} />
+                    <Redirect to={{ pathname: '/login_signup', state: { modal: true,from:props.location } }} />
                 )
         }
     />

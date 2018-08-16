@@ -51,7 +51,9 @@ export const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE';
 export const CONTACT_US = 'CONTACT_US';
 export const REMEMBER_ME = 'REMEMBER_ME';
 export const HOME_WISHLIST = 'HOME_WISHLIST';
-export const SHARE = 'SHARE'
+export const SHARE = 'SHARE';
+export const GET_ALL_INSTRUCTORS = 'GET_ALL_INSTRUCTORS';
+
 const openNotificationWithIcon = (type,title,message) => {
   notification.config({
       placement: store.getState().language.code==='ar'?'bottomLeft': 'bottomRight',
@@ -113,6 +115,21 @@ export function menuCat() {
       dispatch(hideLoading('menucat'))
       dispatch(hideLoading())
       dispatch(homeCatList(store.getState().header.categories[0].id))
+    }).catch(error => {
+      dispatch(resetLoading())
+      // console.log(error);
+    });
+  };
+}
+
+export function getInstructors() {
+  return function (dispatch) {
+    dispatch(showLoading())
+    dispatch(showLoading('instructors'))
+    return httpService.getInstructors().then(data => {
+      dispatch(loadSuccess(GET_ALL_INSTRUCTORS, data.data));
+      dispatch(hideLoading('instructors'))
+      dispatch(hideLoading())
     }).catch(error => {
       dispatch(resetLoading())
       // console.log(error);

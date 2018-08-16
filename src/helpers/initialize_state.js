@@ -11,5 +11,6 @@ export default {
     shop_cart: { rounds:[],shop_cart:{}},
     enrollments : { enrollments:[],courses:[]},
     course_details: {modules:[],describtion:[],course:{},instructors:[]},
+    instructors: [],
     language:{code:localStorage.getItem('language')}
 }

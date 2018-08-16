@@ -3,10 +3,7 @@
     padding-bottom: 20px;
 }
 
-.itOSKA {
-    border-left: 4px solid blue;
-    font-weight: bold;
-}
+
 .course-enrollment-content{
     padding: 50px;
     flex: 1;
@@ -14,6 +11,7 @@
 .sc-bdVaJa {
     margin-left: 3px;
     margin-bottom: 5px;
+    margin-right: 3px;
 }
 
 .side-header {
@@ -28,4 +26,24 @@
 }
 .__rsnav___itemchild{
     margin-left: 25px
+}
+
+.arabic .itOSKA{
+    border-right: 4px solid blue !important ; 
+}
+.english .itOSKA{
+    border-right: 4px solid blue !important ; 
+}
+
+.arabic .sc-bxivhb.kwcFda{
+    transform:rotate(180deg);
+    bottom: 10px;
+    position: absolute;
+    right: 200px;
+}
+
+.arabic .sc-bxivhb.fdIEpy{
+    bottom: -1px;
+    position: absolute;
+    right: 200px;
 }

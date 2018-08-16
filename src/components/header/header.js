@@ -26,6 +26,7 @@ class Header extends Component {
 	componentWillMount() {
 		window.addEventListener("resize", this.resize.bind(this));
 		this.resize();
+		if(this.props.header.categories.length===0)
 		this.props.menuCat();
 
 	}

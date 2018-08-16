@@ -39,7 +39,6 @@ class Login_register extends Component {
     }
 
     componentWillReceiveProps(c) {
-        console.log(c)
         this.setState({ open: c.modal });
         if(c.auth.status){
             this.setState({
@@ -83,7 +82,13 @@ class Login_register extends Component {
 
     render() {
         const { visible, confirmLoading } = this.state;
-
+        const { from } = this.props.location.state || { from: { pathname: "/" } };
+        if (this.props.auth.status) {
+            if(typeof from !=='undefined'){ 
+            return <Redirect to={from} />;
+             }
+          }
+      
         return (
 
             <div>

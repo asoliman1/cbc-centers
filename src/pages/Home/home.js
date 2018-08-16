@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './home.css';
 import Shop_card from '../../components/shop_card/shop_card';
 import Courses_type from '../../components/courses_type/courses_type';
-import { Tabs, Card, Carousel, Col, Row ,Button} from 'antd';
+import { Tabs, Card, Carousel, Col, Row } from 'antd';
 import { connect } from 'react-redux';
 import { Translate } from "react-localize-redux";
 
@@ -18,6 +18,7 @@ import {
     searchByfilters,
     homeWishlist
 } from '../../actions'
+
 const TabPane = Tabs.TabPane;
 
 class home extends Component {
@@ -77,24 +78,24 @@ class home extends Component {
                                 return <TabPane tab={ this.props.language==='ar'? e.attr2:e.attr1} key={i} >
 
                                     {this.props.loading.homecat === 1 ?
-                                        <Row style={{ marginLeft:'60px',marginRight:'60px' }} gutter={16}>
-                                            <Col span={6}>
+                                        <Row style={{ marginLeft:'60px',marginRight:'60px' }} gutter={16} >
+                                        <Col xs={12} sm={12} md={12} lg={6} xl={6} >
                                             <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                            <Col span={6}>
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                            <Col span={6}>
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                            <Col span={6}>
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                        </Row>
+                                            <Card loading={true} bordered={false}>Card content</Card>
+                                        </Col>
+                                        <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                        <div className='image-loading' ></div>
+                                            <Card loading={true} bordered={false}>Card content</Card>
+                                        </Col>
+                                        <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                        <div className='image-loading' ></div>
+                                            <Card loading={true} bordered={false}>Card content</Card>
+                                        </Col>
+                                        <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                        <div className='image-loading' ></div>
+                                            <Card loading={true} bordered={false}>Card content</Card>
+                                        </Col>
+                                    </Row>
                                         :
 
                                         <div style={{ marginLeft:'60px',marginRight:'60px' }} >
@@ -115,20 +116,20 @@ class home extends Component {
                             <div className="carousel slide materialf-slider" id="myCarousel4">
                                 <div className="carousel-inner" >
                                     {this.props.loading.homenewcourses === 1 ?
-                                        <Row style={{ padding: '16px' }} gutter={16}>
-                                            <Col span={6}>
+                                        <Row style={{ padding: '20px' }} gutter={16} >
+                                            <Col xs={12} sm={12} md={12} lg={6} xl={6} >
                                                 <div className='image-loading' ></div>
                                                 <Card loading={true} bordered={false}>Card content</Card>
                                             </Col>
-                                            <Col span={6}>
+                                            <Col xs={12} sm={12} md={12} lg={6} xl={6} >
                                             <div className='image-loading' ></div>
                                                 <Card loading={true} bordered={false}>Card content</Card>
                                             </Col>
-                                            <Col span={6}>
+                                            <Col xs={12} sm={12} md={12} lg={6} xl={6} >
                                             <div className='image-loading' ></div>
                                                 <Card loading={true} bordered={false}>Card content</Card>
                                             </Col>
-                                            <Col span={6}>
+                                            <Col xs={12} sm={12} md={12} lg={6} xl={6} >
                                             <div className='image-loading' ></div>
                                                 <Card loading={true} bordered={false}>Card content</Card>
                                             </Col>
@@ -171,24 +172,24 @@ class home extends Component {
                             <div className="carousel slide materialf-slider" id="myCarousel1">
                                 <div className="carousel-inner" >
                                     {this.props.loading.homepopcourses === 1 ?
-                                        <Row style={{ padding: '16px' }} gutter={16}>
-                                            <Col span={6}>
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                            <Col span={6}>
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                            <Col span={6}>
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                            <Col span={6}>
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                        </Row>
+                                         <Row style={{ padding: '20px' }} gutter={16} >
+                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                             <div className='image-loading' ></div>
+                                             <Card loading={true} bordered={false}>Card content</Card>
+                                         </Col>
+                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                         <div className='image-loading' ></div>
+                                             <Card loading={true} bordered={false}>Card content</Card>
+                                         </Col>
+                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                         <div className='image-loading' ></div>
+                                             <Card loading={true} bordered={false}>Card content</Card>
+                                         </Col>
+                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                         <div className='image-loading' ></div>
+                                             <Card loading={true} bordered={false}>Card content</Card>
+                                         </Col>
+                                     </Row>
                                         :
                                         this.props.courses.popular.results.map((e, i) => {
                                             return <div key={i} className={i === 0 ? "item active" : "item"} style={{ background: 'none' }} >
@@ -227,24 +228,24 @@ class home extends Component {
                             <div className="carousel slide materialf-slider" id="myCarousel2">
                                 <div className="carousel-inner" >
                                     {this.props.loading.homeoffcourses === 1 ?
-                                        <Row style={{ padding: '16px' }} gutter={16}>
-                                            <Col span={6}>
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                            <Col span={6}>
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                            <Col span={6}>
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                            <Col span={6}>
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                        </Row>
+                                         <Row style={{ padding: '20px' }} gutter={16} >
+                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                             <div className='image-loading' ></div>
+                                             <Card loading={true} bordered={false}>Card content</Card>
+                                         </Col>
+                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                         <div className='image-loading' ></div>
+                                             <Card loading={true} bordered={false}>Card content</Card>
+                                         </Col>
+                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                         <div className='image-loading' ></div>
+                                             <Card loading={true} bordered={false}>Card content</Card>
+                                         </Col>
+                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                         <div className='image-loading' ></div>
+                                             <Card loading={true} bordered={false}>Card content</Card>
+                                         </Col>
+                                     </Row>
                                         :
                                         this.props.courses.offers.results.map((e, i) => {
                                             return <div key={i} className={i === 0 ? "item active" : "item"} style={{ background: 'none' }} >
@@ -285,24 +286,24 @@ class home extends Component {
                             <div className="carousel slide materialf-slider" id="myCarousel3">
                                 <div className="carousel-inner" >
                                     {this.props.loading.homeratedcourses === 1 ?
-                                        <Row style={{ padding: '16px' }} gutter={16}>
-                                            <Col span={6}>
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                            <Col span={6}>
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                            <Col span={6}>
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                            <Col span={6}>
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                        </Row>
+                                         <Row style={{ padding: '20px' }} gutter={16} >
+                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                             <div className='image-loading' ></div>
+                                             <Card loading={true} bordered={false}>Card content</Card>
+                                         </Col>
+                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                         <div className='image-loading' ></div>
+                                             <Card loading={true} bordered={false}>Card content</Card>
+                                         </Col>
+                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                         <div className='image-loading' ></div>
+                                             <Card loading={true} bordered={false}>Card content</Card>
+                                         </Col>
+                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                         <div className='image-loading' ></div>
+                                             <Card loading={true} bordered={false}>Card content</Card>
+                                         </Col>
+                                     </Row>
                                         :
                                         this.props.courses.rated.results.map((e, i) => {
                                             return <div key={i} className={i === 0 ? "item active" : "item"} style={{ background: 'none' }} >

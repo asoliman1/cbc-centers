@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import './course_enrollment.css';
 import {withRR4, Nav, NavIcon, NavText } from 'react-sidenav';
 import { BrowserRouter as Router, Route, Link, Redirect, Switch  } from "react-router-dom";
-import Course_instructor from '../../components/course_instructor/course_instructor';
-import Course_card from '../../components/course_card/course_card';
+import {connect} from 'react-redux';
+import { courseDesc,courseDetails,courseModules } from '../../actions/index'
+import weeks from '../weeks/weeks';
+import { Steps,Popover } from 'antd';
+import {Translate} from 'react-localize-redux'
+const Step = Steps.Step;
 
 const description = "ahmed"
 const SideNav = withRR4();
@@ -11,98 +15,104 @@ const SideNav = withRR4();
 class course_enrollment extends Component {
     constructor(props) {
         super(props);
+    }
 
+
+    componentDidMount(){
+        this.props.courseDetails(this.props.match.params.id)
+        this.props.courseModules(this.props.match.params.id)
+        this.props.courseDesc(this.props.match.params.id)
     }
     renderSales = () => {
-        return <Course_card />;
+        const customDot = (dot, { status, index }) => (
+            <Popover placement="bottom" content={<span>step {index} status: {status}</span>}>
+              {dot}
+            </Popover>
+          );
+
+          var week = this.props.language === 'ar' ? 'اسبوع ' : 'Week '
+        return <div>
+
+               <Steps  style={{overflow:'auto'}} progressDot={customDot} size="small" current={this.props.language==='ar'?this.props.weeks.length:1} >
+               {this.props.weeks.map(e=>{
+                   return <Step  key={e.id} title={week+e.week_number} status="wait" />
+               })}
+
+  </Steps>
+        </div>;
     }
     renderSales1 = () => {
-        return <Course_instructor/>;
+        return <div />;
     }
 
     render() {
         return (
             <div className="course-enrollment-page" >
             <Router>
-            <div style={{display:'flex',flexDirection:'row'}}>
-                <div style={{ background: 'whitesmoke', color: 'gray', width: 250, fontSize: '14px' }}>
-                    <SideNav highlightColor='#000' borderLeftColor='blue' highlightBgColor='#FFF' selected={'course_enrollment'}   >
+            <div style={{display:'flex',flexDirection:this.props.language==='ar'?'row-reverse':'row'}}>
+                <div className={this.props.language==='ar'?'arabic':'english'} style={{ background: 'whitesmoke', color: 'gray', width: 250, fontSize: '14px',direction:this.props.language === 'ar'?'rtl':'' }}>
+                    <SideNav   highlightColor='#000' borderLeftColor='blue' highlightBgColor='#FFF' selected={'course_enrollment'}   >
                         <div className="side-header" >
-                            <h4>Name of the course </h4>
-                            <small> department </small>
+                            <h4>{this.props.language==='ar'?this.props.course.name_a:this.props.course.name_e} </h4>
+                            {/* <small> department </small> */}
                         </div>
-                        <Nav id='course_enrollment' >
+                        <Nav id={`course_enrollment/${this.props.match.params.id}`} >
                             {/* <NavIcon><SvgIcon size={20} icon={ic_aspect_ratio} /></NavIcon> */}
-                            <NavText> Course Home </NavText>
-                            <Nav id='week/1'  >
-                                <NavText> Week 1 </NavText>
+                            <NavText > <Translate id="home" /> </NavText>
+                            {this.props.weeks.map(e=>{
+                                return     <Nav key={e.id} id={`week/${e.id}`}  >
+                                <NavText> {this.props.language==='ar'?e.text_a:e.text_e} </NavText>
                             </Nav>
-                            <Nav id='week/2'>
-                                <NavText> Week 2 </NavText>
-                            </Nav>
-                            <Nav id='week/3'>
-                                <NavText> Week 3 </NavText>
-                            </Nav>
-                            <Nav id='week/4'>
-                                <NavText> Week 4 </NavText>
-                            </Nav>
-                            <Nav id='week/5'>
-                                <NavText> Week 5 </NavText>
-                            </Nav>
+                            })}
+                        
+                         
                         </Nav>
-                        <Nav id='course_enrollment/grades'>
+                        <Nav id={`course_enrollment/${this.props.match.params.id}/grades`}>
                             {/* <NavIcon><SvgIcon size={20} icon={ic_business} /></NavIcon> */}
-                            <NavText> Grades </NavText>
+                            <NavText> <Translate id="grades" /> </NavText>
                         </Nav>
-                        <Nav id='course_enrollment/discussion'>
+                        <Nav id={`course_enrollment/${this.props.match.params.id}/discussion`}>
                             {/* <NavIcon><SvgIcon size={20} icon={ic_business} /></NavIcon> */}
-                            <NavText> Discussion Forums </NavText>
+                            <NavText> <Translate id="discussion_forums" /></NavText>
                         </Nav>
-                        <Nav id='course_enrollment/messages'>
+                        <Nav id={`course_enrollment/${this.props.match.params.id}/messages`}>
                             {/* <NavIcon><SvgIcon size={20} icon={ic_business} /></NavIcon> */}
-                            <NavText> Messages </NavText>
+                            <NavText> <Translate id="messages" /> </NavText>
                         </Nav>
-                        <Nav id='course_enrollment/resources'>
+                        <Nav id={`course_enrollment/${this.props.match.params.id}/resources`}>
                             {/* <NavIcon><SvgIcon size={20} icon={ic_business} /></NavIcon> */}
-                            <NavText> Resources </NavText>
+                            <NavText> <Translate id="resources" /> </NavText>
                         </Nav>
-                        <Nav id='course_enrollment/info'>
+                        <Nav id={`course_enrollment/${this.props.match.params.id}/info`}>
                             {/* <NavIcon><SvgIcon size={20} icon={ic_business} /></NavIcon> */}
-                            <NavText> Course Info </NavText>
+                            <NavText> <Translate id="course.info" /> </NavText>
                         </Nav>
                     </SideNav>
             
                 </div>
-                <div style={{padding: 20}}>
-                         <Route exact path="/course_enrollment/" render={this.renderSales}/> 
-                        <Route  path="/course_enrollment/info" render={this.renderSales1}/>
-                        <Route  path="/course_enrollment/messages" render={this.renderSales}/>
-                        <Route  path="/course_enrollment/resources" render={this.renderSales1}/>
-                        <Route  path="/course_enrollment/discussion" render={this.renderSales}/>
-                        <Route  path="/course_enrollment/grades" render={this.renderSales1}/>
-                        <Route  path="/course_enrollment/week/:id" render={this.renderSales1}/>
-                        
-                         
+                <div style={{padding: 20,width:'80%'}}>
+                         <Route exact path="/course_enrollment/:id" render={this.renderSales}/> 
+                        <Route  path="/course_enrollment/:id/info" render={this.renderSales1}/>
+                        <Route  path="/course_enrollment/:id/messages" render={this.renderSales}/>
+                        <Route  path="/course_enrollment/:id/resources" render={this.renderSales1}/>
+                        <Route  path="/course_enrollment/:id/discussion" render={this.renderSales}/>
+                        <Route  path="/course_enrollment/:id/grades" component={weeks}  />
+                        <Route  path="/course_enrollment/:id/week/:week" component={weeks}/>
                     </div>
             </div>    
                 </Router>
                 <div style={{ margin: '0 auto' }} >
              
 
-                    {/* <div className='course-enrollment-content'>
-                        <Steps labelPlacement="vertical" current={1}>
-                            <Step title="Step 1" status='finish'  />
-                            <Step title="Step 2" status='process' />
-                            <Step title="Step 3" />
-                            <Step title="Step 4" />
-                            <Step title="Step 5" />
-                        </Steps>
-                    </div>
-                    <div>dsadas</div> */}
                 </div>
             </div>
         );
     }
 }
 
-export default course_enrollment;
+function mapStateToProps(state){
+    console.log(state)
+    return {course:state.course_details.course,weeks:state.course_details.modules,description:state.course_details.describtion,language:state.language.code}
+}
+
+export default connect(mapStateToProps,{courseDesc,courseDetails,courseModules}) (course_enrollment);

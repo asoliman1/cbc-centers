@@ -160,7 +160,7 @@ function homeWishlist(user){
 }
 
 
-function searchByfilters(category,sub_category,language,location,text, page, size,type){
+function searchByfilters(category,sub_category,language,type,text, page, size){
     switch (type){
         case 'popular':
         type= '-popularity'
@@ -177,14 +177,21 @@ function searchByfilters(category,sub_category,language,location,text, page, siz
          
         default : type = ""
     }
-    return Axios.get(`${api_url}/course/?category__in=${category}&coursecategories__subcategory=${sub_category}&language__in=${language}&name_a__icontains=${text}&name_e__icontains=${text}&page_size=${size}&page=${page}&location=${location}&ordering=${type}`);
+    console.log(category,sub_category,language,text,page,size,type)
+    return Axios.get(`${api_url}/course/?category__in=${category}&coursecategories__subcategory=${sub_category}&language__in=${language}&name_a__icontains=${text}&name_e__icontains=${text}&page_size=${size}&page=${page}&location=${''}&ordering=${type}`);
 }
 
 function share(email,course){
     return Axios.get(`${api_url}/share/?email=${email}&id=${course}`)
 }
 
+function getInstructors(){
+    return Axios.get(`${api_url}/courseinstructor/`)
+}
+
+
 export const httpService = {
+    getInstructors,
     share,
     homeWishlist,
     contactUs,

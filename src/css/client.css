@@ -94,7 +94,10 @@ ol.breadcrumb li a{
     margin-right: 4px;
 }
 .date-text{
-	position:relative;
+    position:relative;
+    background: rgba(255, 255, 255, 0.76);
+    padding: 10px;
+    border-radius: 20px;
 }
 .date-text span.fa{
     font-size: 1em;

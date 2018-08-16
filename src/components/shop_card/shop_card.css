@@ -2,7 +2,7 @@
     color:white !important;
 }
 .ant-popover-inner-content{
-    height:200px;
+    max-height:200px;
     overflow: auto;
 }
 

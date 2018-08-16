@@ -23,6 +23,30 @@
       "الإعداد",
       "Config"
     ],
+    "grades":[
+      "النتائج",
+      "Grades"
+    ],
+    "resources":[
+      "المصادر",
+      "Resources"
+    ],
+    "messages":[
+      "الرسايل",
+      "Messages"
+    ],
+    "course.info":[
+      "تفاصيل الكورس",
+      "Course info"
+    ],
+    "home":[
+      "الرئيسية",
+      "Home"
+    ],
+    "discussion_forums":[
+      "منتديات النقاش",
+      "discussion forums"
+    ],
     "home.title.popular": [
       "الكورسات ذات الشعبية",
       "Top most popular courses"
@@ -39,13 +63,9 @@
       " الكورسات التي بيها عرض",
       "Offered courses"
     ],
-    "header.notifications": [
-      "التنبيهات",
-      "Notifications"
-    ],
     "header.courses.offered": [
       "الكورسات التي عليها عرض",
-      "Notifications"
+      "Offered Courses"
     ],
     "header.shopcart": [
       "سله المشتريات",
@@ -227,6 +247,10 @@
     "months.december": [
       "ديسمبر",
       "December"
+    ],
+    "week":[
+      "الاسبوع",
+      "Week"
     ],
     "week.friday": [
       "الجمعة",

@@ -24,10 +24,10 @@ class enrollments extends Component {
     }
     
     render() {
-        const unpaid = this.props.enrollments.enrollments.filter(e=>e.status===190)
-        const invalid = this.props.enrollments.enrollments.filter(e=>e.status===196)
-        const under_validation = this.props.enrollments.enrollments.filter(e=>e.status===192)
-        const paid = this.props.enrollments.enrollments.filter(e=>e.status===193)
+        var unpaid = this.props.enrollments.enrollments.filter(e=>e.status===190)
+        var invalid = this.props.enrollments.enrollments.filter(e=>e.status===196)
+        var under_validation = this.props.enrollments.enrollments.filter(e=>e.status===192)
+        var paid = this.props.enrollments.enrollments.filter(e=>e.status===193)
 
         return (
             <div className="enrollments-page"  >
@@ -52,7 +52,7 @@ class enrollments extends Component {
     : <div>
         {unpaid.length===0?<div><Translate id="course.notfound" /> </div>:''}
 
-                     {unpaid.map(e=>{
+                     {this.props.enrollments.enrollments.filter(e=>e.status===190).map(e=>{
             return <Course_enrollment key={e.id} payment={true} lang={this.props.language} id={e.course} round={e.round} status={e.status} cart={e.id} course_details={e.course_details} />
         })}
                     </div>

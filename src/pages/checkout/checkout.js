@@ -92,7 +92,7 @@ modal_ref=Modal.error({
 										{this.props.shopcarts.content.map(e => {
 											return e.items.length > 0 ?
 												e.items.map(e1 => {
-													return <li key={e1.course_details.name_e+'price'} >{this.props.language==='ar'?e1.course_details.name_a:e1.course_details.name_e} <i></i> <span style={{float:this.props.language==='ar'?'left':'right'}} >${e1.price}</span></li>
+													return <li key={e1.course_details.name_e+'price'} > {this.props.language==='ar'?e1.course_details.name_a:e1.course_details.name_e} <i></i> <span style={{float:this.props.language==='ar'?'left':'right'}} >->  ${e1.price}</span></li>
 												})
 												: ''
 										})}

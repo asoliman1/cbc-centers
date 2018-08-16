@@ -91,7 +91,7 @@ class Shop_card extends Component {
         );
 
         return (
-            <li className="col-md-3 col-sm-6 col-xs-6 mtrl-f-grids animated fadeIn" >
+            <li className="shop_card col-md-3 col-sm-6 col-xs-6 mtrl-f-grids animated fadeIn" >
                 <div className="fff">
                     <div className="thumbnail">
                     <Link to={{ pathname: `/courses/${this.props.id}`, state: { course: this.props.course } }} >  

@@ -640,6 +640,7 @@ ul.tag2:last-child {
 }
 
 h3.sub-w3ls-headf {
+    color: white;
     font-size: 1.5em;
     font-weight: 600;
     letter-spacing: 1.5px;
@@ -1168,12 +1169,11 @@ p.white-clrf{
     }
     .fteam_grid_info {
         padding: 40px 11px;
-        margin: 0 4px;
+        margin: 5 4px;
     }
 }
 @media(max-width:1280px){
 	.fteam_grid_info:nth-child(3), .fteam_grid_info:nth-child(4), .fteam_grid_info:nth-child(5), .fteam_grid_info:nth-child(6){
-        margin-top: 1em;
     }
     .fteam_grid_info {
         width: 48%;

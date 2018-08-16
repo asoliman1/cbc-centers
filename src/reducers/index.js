@@ -12,9 +12,12 @@ import shop_carts from './shop_carts'
 import enrollments from './enrollments'
 import course_details from './course_details';
 import language from './language';
+import instructors from './instructors';
+
 import { loadingBarReducer } from 'react-redux-loading-bar'
 
 const rootReducer = combineReducers({
+    instructors,
     language,
     course_details,
     enrollments,

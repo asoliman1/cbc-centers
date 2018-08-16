@@ -5,10 +5,16 @@ import CountUp from 'react-countup';
 import Instructor from '../../components/instructor/instructor';
 import Reviews from '../../components/reviews/reviews';
 import { Translate } from "react-localize-redux";
-
+import {connect} from 'react-redux'
+import {getInstructors} from '../../actions/index'
 class about extends Component {
 	constructor(props) {
 		super(props)
+	}
+
+	componentDidMount(){
+		if(this.props.instructors.length===0)
+		this.props.getInstructors();
 	}
 
 	render() {
@@ -19,7 +25,7 @@ class about extends Component {
 			
 				<div className="about-ftop-inn">
 					<div className="container">
-						<h3 className="tittlef-agileits-w3layouts"> <Translate id="header.config"  /> About Us</h3>
+						<h3 className="tittlef-agileits-w3layouts"> About Us</h3>
 						<div className="abt-img">
 							<h3 className="sub-w3ls-headf white-clrf">Shortly about CBC Centers Coaching Sessions.</h3>
 						</div>
@@ -86,16 +92,18 @@ class about extends Component {
 				<div className="finner_team">
 					<h3 className="tittlef-agileits-w3layouts">Instructors</h3>
 					<div className="col-md-6 teamf-left">
-						<Instructor />
-						<Instructor />
-						<Instructor />
-						<Instructor />
+					{this.props.instructors.map(e=>{
+						return	<Instructor key={e.id} details={e} />
+					})}
+					<div className="clearfix" ></div>
 					</div>
 					<div className="col-md-6 teamf-right">
-						<Reviews />
-						<Reviews />
-						<Reviews />
-						<Reviews />
+					{this.props.instructors.map(e=>{
+
+					return	<Reviews key={e.id} details={e} />
+						
+					})}
+
 					</div>
 					<div className="clearfix"> </div>
 				</div>
@@ -105,4 +113,8 @@ class about extends Component {
 	}
 }
 
-export default about;
+function mapStateToProps(state){
+	return {instructors:state.instructors}
+}
+
+export default connect(mapStateToProps,{getInstructors}) (about);
