@@ -144,7 +144,7 @@ class home extends Component {
                                                 </ul>
                                             </div>
                                         })}
-                                               <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.history.push('/search',{type:'new'}) }}> <Translate id="more" /> ... </a>
+                                               {/* <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.history.push('/search',{type:'new'}) }}> <Translate id="more" /> ... </a> */}
 
                                 </div>
                                 <nav>
@@ -200,7 +200,7 @@ class home extends Component {
                                                 </ul>
                                             </div>
                                         })}
-                                               <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.history.push('/search',{type:'popular'}) }} > <Translate id="more" /> ... </a>
+                                               {/* <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.history.push('/search',{type:'popular'}) }} > <Translate id="more" /> ... </a> */}
 
                                 </div>
                                 <nav>
@@ -258,7 +258,7 @@ class home extends Component {
                                         })
 
                                     }
-                                               <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.history.push('/search',{type:'offered'}) }} > <Translate id="more" /> ... </a>
+                                               {/* <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.history.push('/search',{type:'offered'}) }} > <Translate id="more" /> ... </a> */}
 
                                 </div>
                                 <nav>
@@ -315,7 +315,7 @@ class home extends Component {
                                             </div>
                                         })
                                     }
-                                               <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.history.push('/search',{type:'rated'}) }} > <Translate id="more" /> ... </a>
+                                               {/* <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.history.push('/search',{type:'rated'}) }} > <Translate id="more" /> ... </a> */}
 
                                 </div>
                                 <nav>

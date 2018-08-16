@@ -76,14 +76,11 @@ function successModal(title,content) {
 
 export function search(text, page, size) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('search'))
     return httpService.search(text, page, size).then(data => {
       dispatch(loadSuccess(SEARCH, data.data));
       dispatch(hideLoading('search'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error);
     });
   };
@@ -91,14 +88,11 @@ export function search(text, page, size) {
 
 export function searchByfilters(category='',sub_category='',language='',type='',text='', page='1', size='10') {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('searchbyfilters'))
     return httpService.searchByfilters(category,sub_category,language,type,text, page, size).then(data => {
       dispatch(loadSuccess(SEARCH_BY_FILTERS, data.data));
       dispatch(hideLoading('searchbyfilters'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error);
     });
   };
@@ -108,12 +102,10 @@ export function searchByfilters(category='',sub_category='',language='',type='',
 
 export function menuCat() {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('menucat'))
     return httpService.menuCat().then(data => {
       dispatch(loadSuccess(GET_MENU_CATEGORIES, data.data));
       dispatch(hideLoading('menucat'))
-      dispatch(hideLoading())
       dispatch(homeCatList(store.getState().header.categories[0].id))
     }).catch(error => {
       dispatch(resetLoading())
@@ -124,14 +116,11 @@ export function menuCat() {
 
 export function getInstructors() {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('instructors'))
     return httpService.getInstructors().then(data => {
       dispatch(loadSuccess(GET_ALL_INSTRUCTORS, data.data));
       dispatch(hideLoading('instructors'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error);
     });
   };
@@ -139,14 +128,11 @@ export function getInstructors() {
 
 export function homeSlider() {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('homeslider'))
     return httpService.homeSlider().then(data => {
       dispatch(loadSuccess(GET_HOME_SLIDER, data.data));
       dispatch(hideLoading('homeslider'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error);
     });
   };
@@ -160,14 +146,11 @@ export function rememberMe(status) {
 
 export function homeEventNotif() {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('homeEvents'))
     return httpService.homeEventNotif().then(data => {
       dispatch(loadSuccess(GET_HOME_EVENTS_NOTIFICATIONS, data.data));
       dispatch(hideLoading('homeEvents'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error);
     });
   };
@@ -175,14 +158,11 @@ export function homeEventNotif() {
 
 export function homeCatList(category) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('homecat'))
     return httpService.homeCatList(category).then(data => {
       dispatch(loadSuccess(GET_HOME_CATEGORY_ITEMS, data.data));
       dispatch(hideLoading('homecat'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error);
     });
   };
@@ -190,14 +170,11 @@ export function homeCatList(category) {
 
 export function homeCatItems(id, page, size) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('homecatitem'))
     return httpService.homeCatItems(id, page, size).then(data => {
       dispatch(loadSuccess(GET_HOME_CATEGORY_ITEMS, data.data));
       dispatch(hideLoading('homecatitem'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error);
     });
   };
@@ -206,14 +183,11 @@ export function homeCatItems(id, page, size) {
 
 export function courseModules(id) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('coursemodules'))
     return httpService.courseModules(id).then(data => {
       dispatch(loadSuccess(GET_COURSE_MODULES, data.data));
       dispatch(hideLoading('coursemodules'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error);
     });
   };
@@ -222,14 +196,11 @@ export function courseModules(id) {
 
 export function courseDesc(id) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('coursedesc'))
     return httpService.courseDesc(id).then(data => {
       dispatch(loadSuccess(GET_COURSE_DESCRIBTION, data.data));
       dispatch(hideLoading('coursedesc'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error);
     });
   };
@@ -238,14 +209,11 @@ export function courseDesc(id) {
 
 export function homeRatCourses(page, size) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('homeratedcourses'))
     return httpService.homeClassfCourseSerach('total_raters', page, size).then(data => {
       dispatch(loadSuccess(GET_HOME_RATED_COURSES, data.data));
       dispatch(hideLoading('homeratedcourses'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error);
     });
   };
@@ -253,14 +221,11 @@ export function homeRatCourses(page, size) {
 
 export function homeOffCourses(page, size) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('homeoffcourses'))
     return httpService.homeClassfCourseSerach('creation_date', page, size).then(data => {
       dispatch(loadSuccess(GET_HOME_OFFERED_COURSES, data.data));
       dispatch(hideLoading('homeoffcourses'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error);
     });
   };
@@ -268,14 +233,11 @@ export function homeOffCourses(page, size) {
 
 export function homeNewCourses(page, size) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('homenewcourses'))
     return httpService.homeClassfCourseSerach('creation_date', page, size).then(data => {
       dispatch(loadSuccess(GET_HOME_NEW_COURSES, data.data));
       dispatch(hideLoading('homenewcourses'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error);
     });
   };
@@ -283,14 +245,11 @@ export function homeNewCourses(page, size) {
 
 export function homePopCourses(page, size) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('homepopcourses'))
     return httpService.homeClassfCourseSerach('popularity', page, size).then(data => {
       dispatch(loadSuccess(GET_HOME_POPULAR_COURSES, data.data));
       dispatch(hideLoading('homepopcourses'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error);
     });
   };
@@ -299,17 +258,14 @@ export function homePopCourses(page, size) {
 export function addWishList(course) {
   return function (dispatch) {
     if(store.getState().Authentication.status){ 
-    dispatch(showLoading())
     dispatch(showLoading('addWishList'))
     return httpService.addWishList(store.getState().Authentication.user_id,course).then(data => {
       dispatch(loadSuccess(ADD_TO_USER_WISHLIST, data.data));
       dispatch(hideLoading('addWishList'))
-      dispatch(hideLoading())
       openNotificationWithIcon('success',store.getState().language.code === 'ar'?'تم اضافه الكورس':'Course added to wishlist','')
     }).catch(error => {
       // console.log(error.response);
       openNotificationWithIcon('error','Error','')
-      dispatch(resetLoading())
       dispatch(resetLoading('addWishList'))
     });
   }else{
@@ -321,16 +277,13 @@ export function addWishList(course) {
 export function addShopCart(price,course,round) {
   return function (dispatch) {
     if(store.getState().Authentication.status){ 
-    dispatch(showLoading())
     dispatch(showLoading('addShopCart'))
     return httpService.addShopCart(store.getState().shop_cart.shop_cart.id,price,course,round).then(data => {
       dispatch(loadSuccess(ADD_TO_USER_SHOPCART, data.data));
       dispatch(hideLoading('addShopCart'))
-      dispatch(hideLoading())
       openNotificationWithIcon('success','Course added to shop cart','')
     }).catch(error => {
       openNotificationWithIcon('error','Error','')
-      dispatch(resetLoading())
       dispatch(resetLoading('addShopCart'))
       // console.log(error.response);
     });
@@ -343,19 +296,16 @@ export function addShopCart(price,course,round) {
 
 export function Register(username,email,password) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('Register'))
     return httpService.Register(username,email,password).then(data => {
       localStorage.setItem('user_id',data.data.user.id);
       dispatch(createShopCart())
       localStorage.removeItem('user_id');
       dispatch(hideLoading('Register'))
-      dispatch(hideLoading())
       successModal('Registeration Successful',store.getState().language.code === 'ar'?'من فضلك راجع البريد الالكتروني':'Please check your email')
       // openNotificationWithIcon('success','Registeration Successfull Please Check your email','')
     }).catch(error => {
       dispatch(loadSuccess(REGISTER_FAILED, error.response.data));
-      dispatch(resetLoading())
       dispatch(hideLoading('Register'))
       // console.log(error.response);
     });
@@ -364,7 +314,6 @@ export function Register(username,email,password) {
 
 export function Login(email,password) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('Login'))
     return httpService.Login(email,password).then(data => {
       if(store.getState().Authentication.remember_me){ 
@@ -378,14 +327,12 @@ export function Login(email,password) {
       dispatch(loadSuccess(GET_PROFILE,data.data.user));
       dispatch(homeWishlist())
       dispatch(hideLoading('Login'))
-      dispatch(hideLoading())
        dispatch(shopCarts())
        setTimeout(()=>{
         openNotificationWithIcon('success',store.getState().language.code === 'ar'? `${data.data.user.username} , اهلاَ` :`Welcome, ${data.data.user.username}`,'')
        },4000)
     }).catch(error => {
       dispatch(loadSuccess(LOGIN_FAILED,error.response?error.response.data:{error:['Error']}))
-      dispatch(resetLoading())
       dispatch(hideLoading('Login'))
       // console.log(error.response);
     });
@@ -395,15 +342,12 @@ export function Login(email,password) {
 
 export function editProfile(user) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('editprofile'))
     return httpService.editProfile(store.getState().Authentication.user_id,store.getState().Authentication.token,user).then(data => {
       dispatch(loadSuccess(EDIT_PROFILE, data.data));
       dispatch(hideLoading('editprofile'))
-      dispatch(hideLoading())
       openNotificationWithIcon('success',store.getState().language.code === 'ar'?'تم تعديل الحساب بنجاح':'Profile updated Successfully','')      
     }).catch(error => {
-      dispatch(resetLoading())      
       // console.log(error.response);
       openNotificationWithIcon('error','Error',error.response.data)
     });
@@ -412,14 +356,11 @@ export function editProfile(user) {
 
 export function courseEnroll(course,round) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('courseEnroll'));
     return httpService.courseEnroll(store.getState().Authentication.user_id,course,round).then(data => {
       dispatch(loadSuccess(COURSE_ENROLL, data.data));
       dispatch(hideLoading('courseEnroll'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error.response);
     });
   };
@@ -428,7 +369,6 @@ export function courseEnroll(course,round) {
 export function courseEnrollAll(){
   return function (dispatch) {
     if(store.getState().shop_carts.content.length>0){ 
-      dispatch(showLoading())
     dispatch(showLoading('courseEnrollall'))
     store.getState().shop_carts.content.forEach(e=>{
       e.items.forEach(e1=>{ 
@@ -437,7 +377,6 @@ export function courseEnrollAll(){
       dispatch(unactivateShopCart(e.id))
     })
     dispatch(hideLoading('courseEnrollall'))
-    dispatch(hideLoading())
     dispatch(loadSuccess(ENROLLMENT_SUCCESSFULL,{content:[],size:0,total_price:0}))
     openNotificationWithIcon('success',store.getState().language.code === 'ar'?'تم الالتحاق بنجاح':'You enrolled successfully','')      
     dispatch(createShopCart())
@@ -449,17 +388,13 @@ export function courseEnrollAll(){
 
 export function doPayment(ref_no,course,round,cart,image) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('doPayment'))
     return httpService.doPayment(cart,store.getState().Authentication.user_id,course,round,ref_no,image).then(data => {
       dispatch(loadSuccess(DO_PAYMENT, data.data));
       dispatch(hideLoading('doPayment'))
-      dispatch(hideLoading())
       openNotificationWithIcon('success',store.getState().language.code === 'ar'?'تمت عمليه الدفع بنجاح':'Your payment is successfull','')      
     }).catch(error => {
       openNotificationWithIcon('error',store.getState().language.code === 'ar'?'لم تتم عمليه الدفع':'Your payment  failed','')      
-      dispatch(resetLoading())
-
       console.log(error.response);
     });
   };
@@ -468,14 +403,11 @@ export function doPayment(ref_no,course,round,cart,image) {
 export function createShopCart() {
   return function (dispatch) {
    
-    dispatch(showLoading())
     dispatch(showLoading('createshopcart'))
     return httpService.createShopCart(store.getState().Authentication.user_id).then(data => {
       dispatch(loadSuccess(CREATE_SHOPCART, data.data));
       dispatch(hideLoading('createshopcart'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error.response);
     });
   };
@@ -483,14 +415,11 @@ export function createShopCart() {
 
 export function unactivateShopCart(cart_id) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('unactivateShopCart'))
     return httpService.unactivateShopCart(cart_id).then(data => {
       dispatch(loadSuccess(UNACTIVATE_SHOPCART, data.data));
       dispatch(hideLoading('unactivateShopCart'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error.response);
     });
   };
@@ -498,14 +427,11 @@ export function unactivateShopCart(cart_id) {
 
 export function wishList(page,size) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('wishList'))
     return httpService.wishList(store.getState().Authentication.user_id,page,size).then(data => {
       dispatch(loadSuccess(GET_USER_WISHLIST, data.data));
       dispatch(hideLoading('wishList'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error.response);
     });
   };
@@ -513,15 +439,12 @@ export function wishList(page,size) {
 
 export function share(email,course) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('share'))
     return httpService.share(email,course).then(data => {
       dispatch(loadSuccess(SHARE, data.data));
       dispatch(hideLoading('share'))
-      dispatch(hideLoading())
       openNotificationWithIcon('success',store.getState().language.code==='ar'?'تم نشر الكورس':'Course shared ')
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error.response);
     });
   };
@@ -530,15 +453,11 @@ export function share(email,course) {
 
 export function shopCarts() {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('shopcarts'))
     return httpService.shopCarts(store.getState().Authentication.user_id).then(data => {
       dispatch(loadSuccess(GET_USER_SHOPCARTS, data.data));
       dispatch(hideLoading('shopcarts'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
-
       // console.log(error.response);
     });
   };
@@ -546,16 +465,12 @@ export function shopCarts() {
 
 export function removeWishlist(id) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('removeWishlist'))
     return httpService.removeWishlist(id).then(data => {
       dispatch(loadSuccess(REMOVE_ITEM_FROM_WISHLIST, id));
       dispatch(hideLoading('removeWishlist'))
-      dispatch(hideLoading())
       openNotificationWithIcon('success',store.getState().language.code === 'ar'?'تم حذف الكورس':'Course removed from your wishlist','')      
     }).catch(error => {
-      dispatch(resetLoading())
-
       // console.log(error.response);
 
     });
@@ -564,16 +479,12 @@ export function removeWishlist(id) {
 
 export function removeShopItem(id,index) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('removeWishlist'))
     return httpService.removeShopItem(id).then(data => {
       dispatch(loadSuccess(REMOVE_ITEM_FROM_SHOPCART, {id:id,index:index}));
       dispatch(hideLoading('removeWishlist'))
-      dispatch(hideLoading())
       openNotificationWithIcon('success',store.getState().language.code === 'ar'?'تم حذف الكورس':'Course removed from your shop cart','')      
     }).catch(error => {
-      dispatch(resetLoading())
-
       // console.log(error.response);
 
     });
@@ -582,15 +493,11 @@ export function removeShopItem(id,index) {
 
 export function checkEnrollment(page, size) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('checkEnrollment'))
     return httpService.checkEnrollment('POPULAR', page, size).then(data => {
       dispatch(loadSuccess(CHECK_ENROLLMENT, data.data));
       dispatch(hideLoading('checkEnrollment'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
-
       // console.log(error.response);
     });
   };
@@ -598,15 +505,11 @@ export function checkEnrollment(page, size) {
 
 export function courseDetails(id) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('courseDetails'))
     return httpService.courseDetails(id).then(data => {
       dispatch(loadSuccess(GET_COURSE_DETAILS, data.data));
       dispatch(hideLoading('courseDetails'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
-
       // console.log(error.response);
     });
   };
@@ -614,15 +517,11 @@ export function courseDetails(id) {
 
 export function getLanguages() {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('getlanguges'))
     return httpService.getLanguages().then(data => {
       dispatch(loadSuccess(GET_LANGUAGES, data.data));
       dispatch(hideLoading('getlanguges'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
-
       // console.log(error.response);
     });
   };
@@ -630,15 +529,11 @@ export function getLanguages() {
 
 export function courseInstr(id) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('courseinstructor'))
     return httpService.courseInstr(id).then(data => {
       dispatch(loadSuccess(GET_COURSE_INSTRUCTORS, data.data));
       dispatch(hideLoading('courseinstructor'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
-
       // console.log(error.response);
     });
   };
@@ -646,15 +541,11 @@ export function courseInstr(id) {
 
 export function Tags(page, size) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('Tags'))
     return httpService.Tags('POPULAR', page, size).then(data => {
       dispatch(loadSuccess(GET_TAGS, data.data));
       dispatch(hideLoading('Tags'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
-
       // console.log(error.response);
     });
   };
@@ -662,15 +553,12 @@ export function Tags(page, size) {
 
 export function userEnrollments(page, size) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('userEnrollments'))
     return httpService.userEnrollments(store.getState().Authentication.user_id).then(data => {
       dispatch(loadSuccess(GET_USER_ENROLLMENTS, data.data));
       dispatch(hideLoading('userEnrollments'))
       dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
-
       // console.log(error.response);
     });
   };
@@ -678,15 +566,11 @@ export function userEnrollments(page, size) {
 
 export function userProfile() {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('userProfile'))
     return httpService.userProfile(store.getState().Authentication.user_id,store.getState().Authentication.token).then(data => {
       dispatch(loadSuccess(GET_PROFILE, data.data));
       dispatch(hideLoading('userProfile'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
-
       // console.log(error.response);
     });
   };
@@ -694,15 +578,11 @@ export function userProfile() {
 
 export function searchCourseByTags(page, size) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('searchCourseByTags'))
     return httpService.searchCourseByTags('POPULAR', page, size).then(data => {
       dispatch(loadSuccess(SEARCH_COURSES_BY_TAG, data.data));
       dispatch(hideLoading('searchCourseByTags'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
-
       // console.log(error.response);
     });
   };
@@ -710,15 +590,11 @@ export function searchCourseByTags(page, size) {
 
 export function coursesByCategory(page, size) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('coursesByCategory'))
     return httpService.coursesByCategory('POPULAR', page, size).then(data => {
       dispatch(loadSuccess(GET_COURSES_BY_CATEGORY, data.data));
       dispatch(hideLoading('coursesByCategory'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
-
       // console.log(error.response);
     });
   };
@@ -728,15 +604,11 @@ export function coursesByCategory(page, size) {
 
 export function getCourseRounds(id) {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('getCourseRounds'))
     return httpService.getCourseRounds(id).then(data => {
       dispatch(loadSuccess(GET_COURSE_ROUNDS, data.data));
       dispatch(hideLoading('getCourseRounds'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
-
       // console.log(error.response);
     });
   };
@@ -745,14 +617,11 @@ export function getCourseRounds(id) {
 
 export function homeWishlist() {
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('homeWishlist'))
     return httpService.homeWishlist(store.getState().Authentication.user_id).then(data => {
       dispatch(loadSuccess(HOME_WISHLIST, data.data));
       dispatch(hideLoading('homeWishlist'))
-      dispatch(hideLoading())
     }).catch(error => {
-      dispatch(resetLoading())
       // console.log(error.response);
     });
   };
@@ -761,17 +630,12 @@ export function homeWishlist() {
 
 export function contactUs(name,email,telephone,subject,message){
   return function (dispatch) {
-    dispatch(showLoading())
     dispatch(showLoading('contactus'))
     return httpService.contactUs(name,email,telephone,subject,message).then(data => {
       dispatch(loadSuccess(CONTACT_US, data.data));
       dispatch(hideLoading('contactus'))
-      dispatch(hideLoading())
     openNotificationWithIcon('success',store.getState().language.code === 'ar'?'تمت العمليه بنجاح':'Process sent Successfully','')
-
     }).catch(error => {
-      dispatch(resetLoading())
-
       // console.log(error.response);
     });
   };
@@ -800,14 +664,12 @@ export function checkAuth() {
 
 export function Logout() {
   return function (dispatch) {
-    dispatch(showLoading())
     localStorage.removeItem('api_token')
     localStorage.removeItem('user_id')
     localStorage.removeItem('shopcart_id')
     sessionStorage.clear()
     dispatch(loadSuccess(CREATE_SHOPCART,{}))
     dispatch(loadSuccess(LOGOUT, {}))
-    dispatch(hideLoading())
   }
 }
 

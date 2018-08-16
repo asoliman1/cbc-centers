@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import './header.css';
-import { Layout, Menu, Icon, Tooltip, Input, Button, Anchor, Badge, Avatar, Popconfirm, message } from 'antd';
+import { Layout, Menu, Icon, Input, Button, Anchor, Badge, Avatar, Popconfirm, message } from 'antd';
 import { connect } from 'react-redux';
 import LoadingBar from 'react-redux-loading-bar'
 import { menuCat, search, checkAuth, Logout, searchByfilters, userProfile } from '../../actions';
@@ -26,8 +26,8 @@ class Header extends Component {
 	componentWillMount() {
 		window.addEventListener("resize", this.resize.bind(this));
 		this.resize();
-		if(this.props.header.categories.length===0)
-		this.props.menuCat();
+		if (this.props.header.categories.length === 0)
+			this.props.menuCat();
 
 	}
 	resize() {
@@ -57,43 +57,9 @@ class Header extends Component {
 
 	handleClick = (e) => {
 		this.setState({
-			current: e.key,
+			current: e.key, isOpen: false
 		});
-		switch (e.key) {
-			case 'contact':
-				this.props.history.push('/contact');
-				this.setState({ isOpen: false })
-				break;
-			case 'about':
-				this.props.history.push('/about');
-				this.setState({ isOpen: false })
-				break;
-			case 'profile':
-				this.setState({ isOpen: false })
-				this.props.history.push('/profile');
-				break;
-			// case 'notifications':
-			// 	this.setState({ isOpen: false })
-			// 	this.props.history.push('/notifications');
-			// 	break;
-			case 'wishlist':
-				this.setState({ isOpen: false })
-				this.props.history.push('/wish');
-				break;
-			case 'enrollments':
-				this.setState({ isOpen: false })
-				this.props.history.push('/enrollments');
-				break;
-		}
 
-		if (e.keyPath[2] === 'item_1') {
-			if (this.props.location.pathname === '/search') {
-				this.props.history.replace({ pathname: '/search', state: { sub_categories: e.key }  });
-				window.location.reload(true)
-			}
-			else
-				this.props.history.push({ pathname: '/search', state: { sub_categories: e.key }  })
-		}
 	}
 
 
@@ -128,7 +94,7 @@ class Header extends Component {
 
 							<div className="header_agileits_left" style={{ float: this.props.language === 'ar' ? 'right' : 'left' }} >
 								<ul>
-									<li>
+									<li style={{ float: this.props.language === 'ar' ? 'right' : 'left' }} >
 										<LanguageToggle />
 									</li>
 									<li>
@@ -148,7 +114,6 @@ class Header extends Component {
 											<a className="log"  >
 												<Translate id="header.logout" />  </a> </Popconfirm> </div> : <Link to={{ pathname: '/login_signup', state: { modal: true } }} className="log" ><Translate id="header.login" /></Link>}
 
-
 								</div>
 								: ''}
 
@@ -166,7 +131,7 @@ class Header extends Component {
 
 							<div className=" animated fadeIn" style={{ display: 'inline-flex', direction: this.props.language === 'ar' ? 'rtl' : 'ltr', float: this.props.language === 'ar' ? 'right' : 'left', padding: 7, width: '80%' }} >
 								<Search
-									placeholder={this.props.language === 'ar' ? 'ادخل كلمه للبحث' : 'Search text'}
+									placeholder={this.props.language === 'ar' ? 'ابحث في الكورسات' : 'Search for courses'}
 									onSearch={value => this.handleSearch(value)}
 									enterButton
 
@@ -212,27 +177,32 @@ class Header extends Component {
 
 							</SubMenu>
 
-							<SubMenu title={<span><Translate id="header.categories" /> </span>}>
+							<SubMenu title={<span  ><Translate id="header.categories" /> <Icon type="arrow-down" /></span>}>
 
 								{this.props.header.categories.map(e => {
-									return e.subcategories.length > 0 ? <SubMenu key={e.id} title={<span onClick={() => {
-									
-									if (this.props.location.pathname === '/search') {
-										this.props.history.replace({ pathname: '/search', state: { categories: e.id }  });
-										window.location.reload(true)
-									}
-									else
-										this.props.history.push({ pathname: '/search', state: { categories: e.id }  });
-									}}  > {this.props.language === 'ar' ? e.attr2 : e.attr1} </span>} >
-										{e.subcategories.map(e1 => { return <Menu.Item key={e1.id} >{this.props.language === 'ar' ? e1.attr2 : e1.attr1}</Menu.Item> })}
-									</SubMenu> : <Menu.Item key={e.id}  >{this.props.language === 'ar' ? e.attr2 : e.attr1}</Menu.Item>
+									return e.subcategories.length > 0 ? <SubMenu key={e.id} title={<Link to={{ pathname: `/courses/category/${e.id}` }} > <span > {this.props.language === 'ar' ? e.attr2 : e.attr1} </span> </Link>} >
+										{e.subcategories.map(e1 => { return <Menu.Item key={e1.id} > <Link to={{ pathname: `/courses/category/${e.id}/${e1.id}` }} > {this.props.language === 'ar' ? e1.attr2 : e1.attr1} </Link> </Menu.Item> })}
+									</SubMenu> : <Menu.Item key={e.id}  > <Link to={{ pathname: `/courses/category/${e.id}` }} > {this.props.language === 'ar' ? e.attr2 : e.attr1} </Link> </Menu.Item>
 								})}
 							</SubMenu>
 
 							{this.props.Authentication.status ? <SubMenu title={<span><Translate id="header.my.account" /></span>}>
-								<Menu.Item key="profile"><Translate id="header.my.profile" /></Menu.Item>
-								<Menu.Item key="wishlist"><Translate id="header.my.wish.list" /></Menu.Item>
-								<Menu.Item key="enrollments"><Translate id="header.my.courses" /></Menu.Item>
+								<Menu.Item key="profile">
+									<Link to={{ pathname: '/profile' }} >
+										<Translate id="header.my.profile" />
+									</Link>
+								</Menu.Item>
+								<Menu.Item key="wishlist">
+									<Link to={{ pathname: '/wish' }} >
+
+										<Translate id="header.my.wish.list" />
+									</Link>
+								</Menu.Item>
+								<Menu.Item key="enrollments">
+									<Link to={{ pathname: '/enrollments' }} >
+										<Translate id="header.my.courses" />
+									</Link>
+								</Menu.Item>
 								{/* <Menu.Item key="notifications"><Translate id="header.notifications" /></Menu.Item> */}
 							</SubMenu>
 
@@ -245,16 +215,25 @@ class Header extends Component {
 								</Badge>
 							</Menu.Item> */}
 							<Menu.Item key="checkout">
-								<Badge overflowCount={10} count={this.props.shopcarts.size}>
-									<Icon type="shopping-cart" />  <Translate id="header.shopcart" />
-								</Badge>
+								<Link to={{ pathname: '/checkout' }} >
 
+									<Badge dot={true} count={this.props.shopcarts.size}>
+										<Icon type="shopping-cart" />  <Translate id="header.shopcart" />
+									</Badge>
+								</Link>
 							</Menu.Item>
 							<Menu.Item key="about">
-								<Icon type="mail" />  <Translate id="header.about" />
+								<Link to={{ pathname: '/about' }} >
+
+									<Icon type="mail" />  <Translate id="header.about" />
+								</Link>
 							</Menu.Item>
 							<Menu.Item key="contact">
-								<Icon type="mobile" />  <Translate id="header.contact" />
+								<Link to={{ pathname: '/contact' }} >
+
+									<Icon type="mobile" />  <Translate id="header.contact" />
+
+								</Link>
 							</Menu.Item>
 						</Menu>
 					</Menu1>
@@ -267,7 +246,7 @@ class Header extends Component {
 							style={{ color: 'white', display: 'flex', justifyContent: 'space-around', backgroundColor: '#090c2d', direction: this.props.language === 'ar' ? 'rtl' : 'ltr' }}
 						>
 
-							<SubMenu   title={<span><Translate id="header.courses" /> <Icon type="arrow-down" /></span>}>
+							<SubMenu title={<span><Translate id="header.courses" /> <Icon type="arrow-down" /></span>}>
 								<Anchor bounds={100} offsetTop={150} showInkInFixed={true} affix={false}>
 									<Link1 href="/home#new_courses" title={<Translate id="header.courses.new" />} />
 									<Link1 href="/home#popular_courses" title={<Translate id="header.courses.popular" />} />
@@ -280,32 +259,42 @@ class Header extends Component {
 							<SubMenu title={<span  ><Translate id="header.categories" /> <Icon type="arrow-down" /></span>}>
 
 								{this.props.header.categories.map(e => {
-									return e.subcategories.length > 0 ? <SubMenu key={e.id} title={<span onClick={() => { 
-										if (this.props.location.pathname === '/search') {
-											this.props.history.replace({ pathname: '/search', state: { categories: e.id }  });
-											window.location.reload(true)
-										}
-										else
-											this.props.history.push({ pathname: '/search', state: { categories: e.id }  })
-										
-									 } } > {this.props.language === 'ar' ? e.attr2 : e.attr1} </span>} >
-										{e.subcategories.map(e1 => { return <Menu.Item key={e1.id} >{this.props.language === 'ar' ? e1.attr2 : e1.attr1}</Menu.Item> })}
-									</SubMenu> : <Menu.Item key={e.id}  >{this.props.language === 'ar' ? e.attr2 : e.attr1}</Menu.Item>
+									return e.subcategories.length > 0 ? <SubMenu key={e.id} title={<Link style={{ color: 'black' }} to={{ pathname: `/courses/category/${e.id}` }} > <span > {this.props.language === 'ar' ? e.attr2 : e.attr1} </span> </Link>} >
+										{e.subcategories.map(e1 => { return <Menu.Item key={e1.id} > <Link to={{ pathname: `/courses/category/${e.id}/${e1.id}` }} > {this.props.language === 'ar' ? e1.attr2 : e1.attr1} </Link> </Menu.Item> })}
+									</SubMenu> : <Menu.Item key={e.id}  > <Link to={{ pathname: `/courses/category/${e.id}` }} > {this.props.language === 'ar' ? e.attr2 : e.attr1} </Link> </Menu.Item>
 								})}
 							</SubMenu>
 
 							{this.props.Authentication.status ? <SubMenu title={<span><Translate id="header.my.account" /> <Icon type="arrow-down" /></span>}>
-								<Menu.Item key="profile"><Icon type="user" /> <Translate id="header.my.profile" /></Menu.Item>
-								<Menu.Item key="wishlist"><Icon type="heart" /> <Translate id="header.my.wish.list" /></Menu.Item>
-								<Menu.Item key="enrollments"><Icon type="database" /> <Translate id="header.my.courses" /></Menu.Item>
+								<Menu.Item key="profile">
+									<Link style={{ color: 'black' }} to={{ pathname: '/profile' }} >
+
+										<Icon type="user" /> <Translate id="header.my.profile" />
+									</Link>
+								</Menu.Item>
+								<Menu.Item key="wishlist">
+									<Link style={{ color: 'black' }} to={{ pathname: '/wish' }} >
+
+										<Icon type="heart" /> <Translate id="header.my.wish.list" />
+									</Link>
+								</Menu.Item>
+								<Menu.Item key="enrollments">
+									<Link style={{ color: 'black' }} to={{ pathname: '/enrollments' }} >
+										<Icon type="database" /> <Translate id="header.my.courses" />
+									</Link>
+								</Menu.Item>
 								{/* <Menu.Item key="notifications"><Icon type="notification" /> <Translate id="header.notifications" /></Menu.Item> */}
 							</SubMenu> : ''}
 
 							<Menu.Item key="about">
-								<Translate id="header.about" />  <Icon type="mail" />
+								<Link style={{ color: 'white' }} to={{ pathname: '/about' }} >
+									<Translate id="header.about" />  <Icon type="mail" />
+								</Link>
 							</Menu.Item>
 							<Menu.Item key="contact">
-								<Translate id="header.contact" />  <Icon type="mobile" />
+								<Link style={{ color: 'white' }} to={{ pathname: '/contact' }} >
+									<Translate id="header.contact" />  <Icon type="mobile" />
+								</Link>
 							</Menu.Item>
 						</Menu>
 						: ''}

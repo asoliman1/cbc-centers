@@ -8,10 +8,10 @@ function wishlist(state = initialize_state.wishlist, action) {
             return { ...state, content: action.data, size: action.data.length }
         case ADD_TO_USER_WISHLIST:
             let size = state.size + 1;
-            return { ...state, size: size }
+            return { ...state, size: size,mini:[...state.mini.concat([action.data])] }
         case REMOVE_ITEM_FROM_WISHLIST:
             size = state.size - 1;
-            return { ...state, size: size, content: [...state.content.filter(e=>e.id!==action.data)] }
+            return { ...state, size: size, content: [...state.content.filter(e=>e.id!==action.data)],mini:state.mini.filter(e=>e.id!==action.data) }
         case HOME_WISHLIST:
             return { ...state, mini:action.data.results }
         default:

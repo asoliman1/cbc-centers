@@ -211,7 +211,7 @@ class search extends Component {
                 </Modal>
 
                 <div className="row">
-                    <Affix style={{ marginBottom: '15px' }} offsetTop={this.state.hideNav ? 100 : 155} offsetBottom={100} >
+                    <Affix style={{ marginBottom: '15px' }} offsetTop={this.state.hideNav ? 120 : 155} offsetBottom={100} >
 
                         <Button type="primary" style={{ float: 'right' }} onClick={this.showModal} icon="filter">Filters</Button>
                     </Affix>

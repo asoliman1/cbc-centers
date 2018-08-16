@@ -52,7 +52,7 @@ modal_ref=Modal.error({
 							<div className="checkout-right">
 								<h4><Translate id="checkout.title"/> : <span>{this.props.shopcarts.size} <Translate id="header.courses" /></span></h4>
 								{this.props.shopcarts.content.map((e, i) => {
-									return e.items.length > 0 ? <div key={e.id} > <h2 style={{ marginBottom: '10px' }} > <Translate id="header.shopcart"/> #{i + 1} </h2> <table style={{ marginBottom: '20px' }} className="timetable_sub">
+									return e.items.length > 0 ? <div key={e.id} > <h2 style={{ marginBottom: '10px' }} > <Translate id="header.shopcart"/> </h2> <table style={{ marginBottom: '20px' }} className="timetable_sub">
 										<thead>
 											<tr>
 												<th><Translate id="sl.no" /></th>

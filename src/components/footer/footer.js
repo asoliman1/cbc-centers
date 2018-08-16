@@ -26,7 +26,7 @@ class Footer extends Component {
 								<ul className="footer_w3layouts_gridf_list">
 									<li>
 										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<Link to={{pathname:'/search',state:{all:true}}} ><Translate id="header.courses" /></Link>
+										<Link to={{pathname:'/courses',state:{all:true}}} ><Translate id="header.courses" /></Link>
 									</li>
 									<li>
 										<span className="fa fa-angle-right" aria-hidden="true"></span>

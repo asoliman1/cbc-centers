@@ -7,7 +7,8 @@ import {Link} from 'react-router-dom'
 import {
     addShopCart,
     addWishList,
-    getCourseRounds
+    getCourseRounds,
+    removeWishlist
 } from '../../actions'
 import { withRouter } from "react-router-dom";
 
@@ -16,11 +17,10 @@ const RadioGroup = Radio.Group;
 class Search_item extends Component {
     constructor(props) {
         super(props);
-        this.state = { rating: 3.3, liked: false }
+        this.state = { rating: 3.3, liked: false,wish_id:'' }
     }
 
     componentDidMount(){
-        this.checkLike()
     }
 
     onChange = (e) => {
@@ -33,8 +33,11 @@ class Search_item extends Component {
     }
     }
     checkLike(){
-        if(   this.props.wishlist.filter(e=>e.course===this.props.id).length > 0 ){
-            this.setState({liked:true})
+        let items = this.props.wishlist.filter(e=>e.course===this.props.id);
+        if(   items.length > 0 ){
+            this.setState({liked:true,wish_id:items[0].id})
+        }else{
+            this.setState({liked:false})
         }
        }
 
@@ -53,6 +56,7 @@ class Search_item extends Component {
     }
 
     componentWillReceiveProps(e){
+        this.checkLike()
     }
 
     render() {
@@ -111,9 +115,15 @@ class Search_item extends Component {
                                 </Link>
 
                                 <div className="col-md-4 text-right" >
-                                    <button className="btn btn-light" style={{ fontSize: '11px' }} onClick={() => {if(!this.props.auth.status){ this.props.history.push({pathname:'/login_signup',state:{modal:true}}) } else{this.props.addWishList(this.props.id);this.setState({liked:true}) }}} >
-                                        <i className={this.state.liked ? "fa fa-heart fa-2x fa-red" : "fa fa-heart-o fa-2x fa-red"} ></i>
+                                {this.state.liked?
+                                    <button className="btn btn-light" style={{ fontSize: '11px' }} onClick={() => {this.setState({liked:false});this.props.removeWishlist(this.state.wish_id)}} >
+                                        <i className={"fa fa-heart fa-2x fa-red"} ></i>
                                     </button>
+                                    :
+                                    <button className="btn btn-light" style={{ fontSize: '11px' }} onClick={() => {if(!this.props.auth.status){ this.props.history.push({pathname:'/login_signup',state:{modal:true}}) } else{this.props.addWishList(this.props.id);this.setState({liked:true}) }}} >
+                                        <i className={"fa fa-heart-o fa-2x fa-red"} ></i>
+                                    </button>
+                                }
                                     <Popover
                                     trigger="click"
                                     onVisibleChange={this.handleVisibleChange}
@@ -141,6 +151,6 @@ function mapStateToProps(state){
     return {rounds:state.shop_cart.rounds,loading:state.loadingBar,categories:state.header.categories,wishlist:state.wishlist.mini,auth:state.Authentication}
 }
 
-export default connect(mapStateToProps,{ addShopCart,
+export default connect(mapStateToProps,{removeWishlist, addShopCart,
     addWishList,
     getCourseRounds}) (withRouter(Search_item));

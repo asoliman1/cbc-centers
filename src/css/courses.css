@@ -731,6 +731,8 @@ li.subitem1 p {
     .mtextmk-nav.fixed-header {
         padding: 0;
         top:150px;
+        widows: 25%;
+        font: smaller !important;
     }
 }
 @media(max-width: 800px){

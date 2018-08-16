@@ -2,24 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { userProfile, editProfile } from '../../actions/index';
 import './myprofile.css';
-import { Row, Col, Card, Icon, Button, Switch, List, Input, Tooltip, Tag, Timeline, Divider, DatePicker } from 'antd';
+import { Row, Col, Card, Icon, Button, Switch, List, Input, Divider, DatePicker,Modal,Upload } from 'antd';
 import moment from 'moment';
 import { Translate } from 'react-localize-redux';
-import { Upload, message } from 'antd';
 
-   
+function errorModal(title,content) {
+    const modal = Modal.error({
+      title: title,
+      content: content,
+    });
+    setTimeout(() => modal.destroy(), 4000);
+  }
 
-function beforeUpload(file) {
-    const isJPG = file.type === 'image/jpeg';
-    if (!isJPG) {
-        message.error('You can only upload JPG file!');
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-        message.error('Image must smaller than 2MB!');
-    }
-    return isJPG && isLt2M;
-}
+
 const { Meta } = Card;
 const { TextArea } = Input;
 
@@ -142,6 +137,24 @@ class myprofile extends Component {
             this.props.editProfile({image:reader.result})
             });
         reader.readAsDataURL(e.file);
+    }
+
+ beforeUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        if (!isJPG) {
+            if(this.props.language==='ar')
+            errorModal('خطآ','نوع الصوره غير صحيح');
+            else
+            errorModal('Error','You can only upload JPG file!');
+        }
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isLt2M) {
+            if(this.props.language==='ar')
+            errorModal('خطآ','الصوره اكبر من ٢ م.ب');
+            else            
+            errorModal('Error','Image must smaller than 2MB!');
+        }
+        return isJPG && isLt2M;
     }
 
 
@@ -367,7 +380,7 @@ class myprofile extends Component {
                     <Col xs={25} sm={25} md={6} lg={5} xl={5} style={{ display: 'flex', justifyContent: 'space-around', float: this.props.language === 'ar' && !this.state.hideNav ? 'right' : '' }}  >  <Card
 
                         hoverable
-                        style={{ borderBottom: '3px solid #035ea4', marginBottom: '16px' }}
+                        style={{ borderBottom: '3px solid #035ea4', marginBottom: '16px',cursor:'default' }}
                         cover={
                         
                      <img alt={this.props.profile.username} src={this.props.profile.image} onError={(e) => { e.target.src = './images/error.jpg' }}  /> }
@@ -379,10 +392,10 @@ class myprofile extends Component {
                                       name="image"
                                       showUploadList={false}
                                       customRequest={(e)=>{this.uploadPic(e)}}
-                                      beforeUpload={beforeUpload}
+                                      beforeUpload={(props)=>this.beforeUpload(props)}
                                       onChange={this.handleImageChange}>
     <Button style={{border:0}} >
-      <Icon type="upload" /> {this.props.language === 'ar' ? 'تعديل الصرره' :'Edit Profile Picture'}
+      <Icon type="upload" /> {this.props.language === 'ar' ? 'تعديل الصوره' :'Edit Profile Picture'}
     </Button>
   </Upload> <br/> <br/>
                                     {this.props.profile.username} 

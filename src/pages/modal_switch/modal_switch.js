@@ -99,6 +99,9 @@ class ModalSwitch extends React.Component {
                     <Route path="/contact" component={contact} />
                     <Route path="/terms" component={terms_conditions} />
                     <Route path="/search" component={search} />
+                    <Route path="/courses/category/:cat" component={search} />
+                    <Route path="/courses/category/:cat/:sub" component={search} />
+                    <Route path="/courses" component={search} />
                     {/* <Route path="/instructor" component={instructor} /> */}
                     <PrivateRoute path="/payment" component={payment} />
                     <Route path="/courses/:id" component={course_main} />
