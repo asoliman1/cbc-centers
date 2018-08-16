@@ -253,7 +253,7 @@ class course_main extends Component {
 								<div className="clearfix"></div>
 							</div>
 							<div style={{ textAlign: 'center', marginLeft: '80px', marginTop: '50px', fontSize: '30px' }} >
-								<a style={{ color: 'white' }} onClick={() => { if (!this.props.auth.status) { this.props.history.push({ pathname: '/login_signup', state: { modal: true } }) } else { this.setState({ round: e }); this.props.addShopCart(e.price, e.course, e.id) } }} > <Translate id="enroll" /> </a>
+								<a className="myButton" onClick={() => { if (!this.props.auth.status) { this.props.history.push({ pathname: '/login_signup', state: { modal: true } }) } else { this.setState({ round: e }); this.props.addShopCart(e.price, e.course, e.id) } }} > <Translate id="enroll" /> </a>
 
 							</div>
 						</div>
