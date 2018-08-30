@@ -12,6 +12,7 @@ import {CHANGE_LANGUAGE} from '../actions/index'
       }else{
         require('moment/locale/en-au');
       }
+      window.location.reload(true);
         return {...state,code:action.data.language};
         default :
         return state

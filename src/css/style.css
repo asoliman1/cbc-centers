@@ -233,7 +233,7 @@ ul.short_ls li a {
     -moz-box-shadow: 0px 1px 10px -4px rgba(0,0,0,0.75);
     box-shadow: 0px 1px 10px -4px rgba(0,0,0,0.75);
     margin: 0 5px;
-    width: 31.8%;
+    /* width: 31.8%; */
     background: rgba(255, 255, 255, 0.76);
 }
 .fteam_grid_info h3 {
@@ -280,12 +280,8 @@ ul.short_ls li a {
     text-align: center;
     border-radius: 50%;
 }
-.fteam_grid_info:nth-child(4),.fteam_grid_info:nth-child(5),.fteam_grid_info:nth-child(6) {
-    margin-top:1em;
-}
-.finner_team .date-text:nth-child(even) {
-    margin: 1em 0;
-}
+
+
 
 /*-- //instructors section --*/
 /*--// About page --*/
@@ -640,7 +636,6 @@ ul.tag2:last-child {
 }
 
 h3.sub-w3ls-headf {
-    color: white;
     font-size: 1.5em;
     font-weight: 600;
     letter-spacing: 1.5px;
@@ -1169,7 +1164,6 @@ p.white-clrf{
     }
     .fteam_grid_info {
         padding: 40px 11px;
-        margin: 5 4px;
     }
 }
 @media(max-width:1280px){
@@ -1473,9 +1467,7 @@ p.white-clrf{
         width: 100%;
         margin: 0;
     }
-    .fteam_grid_info:nth-child(2) {
-        margin-top: 1em;
-    }
+
     .date-text img {
         width: 60px;
     }

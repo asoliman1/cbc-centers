@@ -5,13 +5,15 @@ import {connect} from 'react-redux';
 import {searchByfilters,shopCarts,wishList} from '../../actions/index'
 import Signup_news from '../signup_news_letter/signup_news';
 import { Translate } from '../../../node_modules/react-localize-redux';
+import LanguageToggle from '../language_toggle/language_toggle';
 class Footer extends Component {
 	
 	render() {
 		return (
 			<div>
 				{/* Footer */}
-
+				{/* <Signup_news /> */}
+				<Signup_news />
 				{/* <Signup_news /> */}
 				<div className="footer_agileinfo_topf">
 					<div className="container">
@@ -26,16 +28,9 @@ class Footer extends Component {
 								<ul className="footer_w3layouts_gridf_list">
 									<li>
 										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<Link to={{pathname:'/courses',state:{all:true}}} ><Translate id="header.courses" /></Link>
+									 <LanguageToggle />
 									</li>
-									<li>
-										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<Link to="/wish"><Translate id="header.my.wish.list" /></Link>
-									</li>
-									<li>
-										<span className="fa fa-angle-right" aria-hidden="true"></span>
-										<Link to="/checkout" ><Translate id="header.shopcart" /></Link>
-									</li>
+								
 								</ul>
 							</nav>
 						</div>
@@ -60,7 +55,7 @@ class Footer extends Component {
 						</div>
 						<div className="clearfix"> </div>
 						<div className="w3ls-fsocial-grid">
-							<h3 className="sub-w3ls-headf"> <Translate id="footer.follow.us" /> </h3>
+							<h3 style={{color:'white'}} className="sub-w3ls-headf"> <Translate id="footer.follow.us" /> </h3>
 							<div className="social-ficons">
 								<ul>
 									<li>

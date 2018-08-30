@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import './about.css';
 import CountUp from 'react-countup';
 import Instructor from '../../components/instructor/instructor';
 import Reviews from '../../components/reviews/reviews';
-import { Translate } from "react-localize-redux";
 import {connect} from 'react-redux'
 import {getInstructors} from '../../actions/index'
 class about extends Component {
@@ -18,7 +16,6 @@ class about extends Component {
 	}
 
 	render() {
-		window.scrollTo(0, 0)
 
 		return (
 			<div>

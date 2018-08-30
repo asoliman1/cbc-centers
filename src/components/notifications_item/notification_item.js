@@ -3,13 +3,13 @@ import './notification_item.css';
 class Notification_item extends Component {
     render() {
         return (
-                <li class="list-group-item" style={{borderLeft:'6px solid blue',width:'80%',margin:'auto',marginBottom:'20px'}} >
+                <li class="list-group-item" style={{borderLeft:'6px solid #04bafe',width:'80%',margin:'auto',marginBottom:'20px'}} >
                     <span class="badge">14</span>
 
                     <div class="media">
                         <div class="media-left">
                             <a >
-                                <img class="media-object img-rounded" src="/images/m1.jpg" alt="..."  />
+                                <img class="media-object img-rounded" src="/images/m1.jpg" onError={(e) => { e.target.src = '/images/error.jpg' }}  alt="..."  />
                             </a>
                         </div>
                         <div class="media-body">

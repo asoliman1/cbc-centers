@@ -76,7 +76,8 @@ label {
     -ms-background-size: cover;
     min-height: 400px;
     text-align: left;
-    padding-left: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 h3.mtittle {
     color: #fff;
@@ -125,7 +126,6 @@ ul.short_ls li a {
 .mtextmk-nav.fixed-header {
     position: fixed;
     top: 160px;
-    width: 23.3%;
 }
 
 
@@ -175,7 +175,7 @@ nav.navbar.navbar-default ul li:nth-child(9) {
 h4.tittle-course {
     color: #000;
     font-size: 28px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     letter-spacing: 1px;
     position: relative;
 }
@@ -368,7 +368,7 @@ a.mbutton-course2 i{
     padding-top: 40px;
 }
 .mexperience-textmkayouts {
-    padding: 40px 0;
+    margin-top: 30px;
 }
 /*-- //how it works --*/
 
@@ -526,7 +526,6 @@ li.subitem1 p {
     margin-right: 12px;
 }
 .exce-grid1-mmstyle:nth-child(4), .exce-grid1-mmstyle:nth-child(5)  {
-    margin: 25px 0;
 }
 /*-- //Like also section --*/
 
@@ -560,17 +559,14 @@ li.subitem1 p {
 /*--responsive--*/
 @media(max-width: 1680px){
     .mtextmk-nav.fixed-header {
-        width: 24%;
     }
 }
 @media(max-width: 1600px){
     .mtextmk-nav.fixed-header {
-        width: 23%; 
     }
 }
 @media(max-width: 1440px){
     .mtextmk-nav.fixed-header {
-        width: 23%;
     }
 }
 @media(max-width: 1366px){
@@ -589,7 +585,6 @@ li.subitem1 p {
     .minner_page_mainsmk p {
     }
     .mtextmk-nav.fixed-header {
-        width: 22%;
     }
   
 }
@@ -600,7 +595,6 @@ li.subitem1 p {
     .minner_page_mainsmk p {
     }
     .mtextmk-nav.fixed-header {
-        width: 22%;
     }
     .mteam_grid_info {
         padding: 25px 20px;
@@ -724,7 +718,6 @@ li.subitem1 p {
         padding: 0 .5em;
     }
     .exce-grid1-mmstyle:nth-child(4), .exce-grid1-mmstyle:nth-child(5) {
-        margin: 20px 0;
     }    
 }
 @media(max-width: 900px){
@@ -748,7 +741,6 @@ li.subitem1 p {
 }
 @media(max-width: 768px){
     .mtextmk-nav.fixed-header {
-        width: 22%;
     }
     #small-dialog, #small-dialog1 {
         max-width: 650px;

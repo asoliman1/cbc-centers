@@ -9,17 +9,9 @@
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-    <link rel="shortcut icon" href="%PUBLIC_URL%/images/cbclogo.png">
+    <link rel="shortcut icon" href="/images/cbclogo.png">
     	<!--// Metga-tags -->
-      <script type="application/x-javascript">
-        addEventListener("load", function () {
-          setTimeout(hideURLbar, 0);
-        }, false);
-    
-        function hideURLbar() {
-          window.scrollTo(0, 0);
-        }
-      </script>
+  
  
     <title>CBC Centers</title>
   </head>
@@ -40,18 +32,6 @@
   <script src="%PUBLIC_URL%/js/jquery-ui.js"></script>
 	<script src="%PUBLIC_URL%/js/bootstrap.js"></script>
   <script src="%PUBLIC_URL%/js/jquery.flexslider.js"></script>
-
-
-  <script>
-		$(window).scroll(function () {
-			if ($(window).scrollTop() >= 195) {
-				$('nav').addClass('fixed-header');
-			} else {
-				$('nav').removeClass('fixed-header');
-			}
-		});
-
-  </script>
 
   
   </body>

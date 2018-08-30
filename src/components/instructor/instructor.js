@@ -8,7 +8,7 @@ class Instructor extends Component {
     
     render() {
         return (
-                <div className="col-xs-4 fteam_grid_info">
+                <div className="col-xs-2 col-sm-2 col-md-3 col-lg-5 fteam_grid_info">
                     <img src={'http://167.99.244.62:8000'+this.props.details.instructor_details.image} alt=" " className="img-responsive" />
                     <h3> {this.props.details.title_e } </h3>
                     <p>{this.props.details.instructor_details.name_e}</p>

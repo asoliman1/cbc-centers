@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import './home.css';
 import Shop_card from '../../components/shop_card/shop_card';
 import Courses_type from '../../components/courses_type/courses_type';
-import { Tabs, Card, Carousel, Col, Row } from 'antd';
+import { Tabs, Card, Carousel, Col, Row, Anchor } from 'antd';
 import { connect } from 'react-redux';
 import { Translate } from "react-localize-redux";
+import range from 'lodash/range';
 
 import {
     homeCatItems,
@@ -19,325 +20,314 @@ import {
     homeWishlist
 } from '../../actions'
 
+
 const TabPane = Tabs.TabPane;
+const Link1 = Anchor.Link;
 
 class home extends Component {
 
     constructor(props) {
         super(props)
-        this.state={current_tab:this.props.language === 'ar' ? (this.props.categories.length -1)+'' :'0'}
+        this.state = { current_tab: '' }
         this.callback = this.callback.bind(this)
     }
 
-    componentWillMount() {
-        window.scrollTo(0, 0)
-    }
 
     componentDidMount() {
-        // this.props.homeSlider();
-        // this.props.homeEventNotif();
-        if(this.props.courses.popular.results.length===0)
+    if (this.props.courses.popular.results.length === 0)
         this.props.homePopCourses('1', '4');
-        if(this.props.courses.offers.results.length===0)
+    if (this.props.courses.offers.results.length === 0)
         this.props.homeOffCourses('1', '4');
-        if(this.props.courses.rated.results.length===0)
+    if (this.props.courses.rated.results.length === 0)
         this.props.homeRatCourses('1', '4');
-        if(this.props.courses.new.results.length===0)
-        this.props.homeNewCourses('1', '4');
+    if (this.props.courses.new.results.length === 0)
+        this.props.homeNewCourses('1', '4');   
+
     }
 
     callback(key) {
-        this.setState({current_tab:key})
-        this.props.homeCatList(this.props.categories[key].id)
+        this.setState({ current_tab: key })
+        this.props.homeCatList(this.props.categories[key].id, 1, 8)
+    }
+
+    componentWillReceiveProps(e) {
+        if (this.state.current_tab === '' && e.categories.length > 0) {
+            this.setState({ current_tab:this.props.language==='ar'? e.categories.length - 1 + '' : '0' },()=>{this.props.homeCatList(this.props.categories[this.state.current_tab].id, 1, 8)})
+        }
     }
 
 
     render() {
-
         return (
             <div>
-                <div>
-                        <Carousel rtl={this.props.language==='ar'?true:false} className="animated fadeIn" pauseOnHover swipe swipeToSlide autoplay>
-                            <div><img height="100%" width="100%" src="./images/banner1.jpg" /></div>
-                            <div><img height="100%" width="100%" src="./images/banner2.jpg" /></div>
-                            <div><img height="100%" width="100%" src="./images/banner3.jpg" /></div>
-                            <div><img height="100%" width="100%" src="./images/banner4.jpg" /></div>
-                            <div><img height="100%" width="100%" src="./images/banner5.jpg" /></div>
+                    <div>
+                        <Carousel rtl={this.props.language === 'ar' ? true : false} className="animated fadeIn" swipe swipeToSlide autoplay>
+                            <div style={{ height: 500 }} ><img height="100%" width="100%" src="/images/banner1.jpg" /></div>
+                            <div style={{ height: 500 }} ><img height="100%" width="100%" src="/images/banner2.jpg" /></div>
+                            <div style={{ height: 500 }} ><img height="100%" width="100%" src="/images/banner3.jpg" /></div>
+                            <div style={{ height: 500 }} ><img height="100%" width="100%" src="/images/banner4.jpg" /></div>
+                            <div style={{ height: 500 }} ><img height="100%" width="100%" src="/images/banner5.jpg" /></div>
                         </Carousel>
+                        <div style={{ position: 'relative', bottom: 0, top: '-110px', textAlign: 'center', opacity: 0.8 }} className="animated infinite bounce"  > <Anchor affix={false} prefixCls="slider ant-anchor" offsetTop={80} style={{ background: 'none' }} ><Link1 title={<img src="/images/down.png" />} href="#categories" />  </Anchor> </div>
+                        <div style={{ minHeight: 500 }} className="aboutf" id="categories" >
 
-                    <div className="aboutf">
-                        <div className="container">
-                            <h3 className="tittlef-agileits-w3layouts"> <Translate id="home.title.popular" />  </h3>
-                            <p className="paragraphf"></p>
-                        </div>
+                            <Tabs className="animated fadeIn" activeKey={this.state.current_tab} onChange={this.callback} animated={true} tabBarStyle={{ display: 'flex', justifyContent: 'space-around' }} tabBarGutter={90} size="large" type="card">
+                                {this.props.categories.map((e, i) => {
+                                    return <TabPane className="animated fadeIn" tab={<div style={{ borderBottom: 'inherit' }} >  {this.props.language === 'ar' ? e.attr2 : e.attr1} <small style={{ color: 'red', fontSize: 'small' }} >{e.count}</small> </div>} key={i} >
 
+                                        {this.props.loading.homecat === 1 ?
+                                            <Row style={{ marginLeft: '60px', marginRight: '60px' }} gutter={16} >
+                                                {
+                                                    range(0, e.count).map(e => {
+                                                        return <Col key={e} xs={12} sm={12} md={12} lg={6} xl={6} >
+                                                            <div className='image-loading' ></div>
+                                                            <Card loading={true} bordered={false}>Card content</Card>
+                                                        </Col>
+                                                    })
+                                                }
 
+                                            </Row>
+                                            :
 
-                        <Tabs activeKey={this.state.current_tab} onChange={this.callback} animated={true} tabBarStyle={{ display: 'flex', justifyContent: 'space-around' }} tabBarGutter={110} size="large" type="card">
-                            {this.props.categories.map((e,i) => {
-                                return <TabPane tab={ this.props.language==='ar'? e.attr2:e.attr1} key={i} >
-
-                                    {this.props.loading.homecat === 1 ?
-                                        <Row style={{ marginLeft:'60px',marginRight:'60px' }} gutter={16} >
-                                        <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                            <div className='image-loading' ></div>
-                                            <Card loading={true} bordered={false}>Card content</Card>
-                                        </Col>
-                                        <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                        <div className='image-loading' ></div>
-                                            <Card loading={true} bordered={false}>Card content</Card>
-                                        </Col>
-                                        <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                        <div className='image-loading' ></div>
-                                            <Card loading={true} bordered={false}>Card content</Card>
-                                        </Col>
-                                        <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                        <div className='image-loading' ></div>
-                                            <Card loading={true} bordered={false}>Card content</Card>
-                                        </Col>
-                                    </Row>
-                                        :
-
-                                        <div style={{ marginLeft:'60px',marginRight:'60px' }} >
-                                            {this.props.home.category_items.results.length > 0 ? this.props.home.category_items.results.map(e1 => {
-                                                return <Courses_type lang={this.props.language} course={e1} id={e1.id} key={e1.id} name={this.props.language==='ar'?e1.name_a:e1.name_e} image={e1.image} desc={this.props.language==='ar'?e1.short_desc_a:e1.short_desc_e} text={true} />
-                                            }) : <div className="animated fadeIn" style={{ fontSize: '20px', fontVariant: 'petite-caps', padding: '16px' }} > <Translate id="course.notfound"/> </div>}
-                                            <div className="clearfix"> </div>
-                                        </div>
-                                    } </TabPane>
-                            })}
-
-                        </Tabs>
-
-                    </div>
-                    <div id="new_courses" className="materialsf-section">
-                        <div className="container">
-                            <h3 className="tittlef-agileits-w3layouts white-clrf"> <Translate id="home.title.new" /> </h3>
-                            <div className="carousel slide materialf-slider" id="myCarousel4">
-                                <div className="carousel-inner" >
-                                    {this.props.loading.homenewcourses === 1 ?
-                                        <Row style={{ padding: '20px' }} gutter={16} >
-                                            <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                                <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                            <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                            <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                            <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                            <div className='image-loading' ></div>
-                                                <Card loading={true} bordered={false}>Card content</Card>
-                                            </Col>
-                                        </Row>
-                                        :
-                                        this.props.courses.new.results.map((e, i) => {
-                                            return <div key={i} className={i === 0 ? "item active" : "item"} style={{ background: 'none' }} >
-                                                <ul className="thumbnails">
-                                                    {e.map(e1 => {
-                                                        return <Shop_card course={e1} key={e1.id} name={this.props.language==='ar'?e1.name_a:e1.name_e} raters={e1.total_raters} image={e1.image} desc={this.props.language==='ar'?e1.short_desc_a:e1.short_desc_e} price={e1.price} rate={e1.total_rating / e1.total_raters} instructor={''} id={e1.id} />
-                                                    })}
-                                                </ul>
+                                            <div style={{ marginLeft: '60px', marginRight: '60px' }} >
+                                                {this.props.home.category_items.results.length > 0 ? this.props.home.category_items.results.map(e1 => {
+                                                    return <Courses_type lang={this.props.language} course={e1} id={e1.id} key={e1.id} name={this.props.language === 'ar' ? e1.name_a : e1.name_e} image={e1.image} desc={this.props.language === 'ar' ? e1.short_desc_a : e1.short_desc_e} text={true} />
+                                                }) : <div className="animated fadeIn" style={{ fontSize: '20px', fontVariant: 'petite-caps', padding: '16px' }} > <Translate id="course.notfound" /> </div>}
                                             </div>
-                                        })}
-                                               {/* <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.history.push('/search',{type:'new'}) }}> <Translate id="more" /> ... </a> */}
+                                        } </TabPane>
+                                })}
 
+                            </Tabs>
+
+                        </div>
+                        <div id="new_courses" className="materialsf-section">
+                            <div className="container">
+                                <h3 className="tittlef-agileits-w3layouts white-clrf"> <Translate id="home.title.new" /> </h3>
+                                <div className="carousel slide materialf-slider" id="myCarousel4">
+                                    <div className="carousel-inner" >
+                                        {this.props.loading.homenewcourses === 1 ?
+                                            <Row style={{ padding: '20px' }} gutter={16} >
+                                                <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                                    <div className='image-loading' ></div>
+                                                    <Card loading={true} bordered={false}>Card content</Card>
+                                                </Col>
+                                                <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                                    <div className='image-loading' ></div>
+                                                    <Card loading={true} bordered={false}>Card content</Card>
+                                                </Col>
+                                                <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                                    <div className='image-loading' ></div>
+                                                    <Card loading={true} bordered={false}>Card content</Card>
+                                                </Col>
+                                                <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                                    <div className='image-loading' ></div>
+                                                    <Card loading={true} bordered={false}>Card content</Card>
+                                                </Col>
+                                            </Row>
+                                            :
+                                            this.props.courses.new.results.map((e, i) => {
+                                                return <div key={i} className={i === 0 ? "item active" : "item"} style={{ background: 'none' }} >
+                                                    <ul className="thumbnails">
+                                                        {e.map(e1 => {
+                                                            return <Shop_card course={e1} key={e1.id} name={this.props.language === 'ar' ? e1.name_a : e1.name_e} raters={e1.total_raters} image={e1.image} desc={this.props.language === 'ar' ? e1.short_desc_a : e1.short_desc_e} price={e1.price} rate={e1.total_rating / e1.total_raters} instructor={''} id={e1.id} />
+                                                        })}
+                                                    </ul>
+                                                </div>
+                                            })}
+                                        {/* <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.history.push('/search',{type:'new'}) }}> <Translate id="more" /> ... </a> */}
+
+                                    </div>
+                                    <nav>
+                                        <ul className="control-box pager">
+                                            <li>
+                                                <a data-slide="prev" href="#myCarousel4" className="">
+                                                    <i className="glyphicon glyphicon-chevron-left"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a data-slide="next" href="#myCarousel4" className="">
+                                                    <i className="glyphicon glyphicon-chevron-right"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                    <div className="clearfix"> </div>
                                 </div>
-                                <nav>
-                                    <ul className="control-box pager">
-                                        <li>
-                                            <a data-slide="prev" href="#myCarousel4" className="">
-                                                <i className="glyphicon glyphicon-chevron-left"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a data-slide="next" href="#myCarousel4" className="">
-                                                <i className="glyphicon glyphicon-chevron-right"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                                <div className="clearfix"> </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div id="popular_courses" className="materialsf-section">
-                        <div className="container">
-                            <h3 className="tittlef-agileits-w3layouts white-clrf"><Translate id="home.title.popular" /> </h3>
-                            <div className="carousel slide materialf-slider" id="myCarousel1">
-                                <div className="carousel-inner" >
-                                    {this.props.loading.homepopcourses === 1 ?
-                                         <Row style={{ padding: '20px' }} gutter={16} >
-                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                             <div className='image-loading' ></div>
-                                             <Card loading={true} bordered={false}>Card content</Card>
-                                         </Col>
-                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                         <div className='image-loading' ></div>
-                                             <Card loading={true} bordered={false}>Card content</Card>
-                                         </Col>
-                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                         <div className='image-loading' ></div>
-                                             <Card loading={true} bordered={false}>Card content</Card>
-                                         </Col>
-                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                         <div className='image-loading' ></div>
-                                             <Card loading={true} bordered={false}>Card content</Card>
-                                         </Col>
-                                     </Row>
-                                        :
-                                        this.props.courses.popular.results.map((e, i) => {
-                                            return <div key={i} className={i === 0 ? "item active" : "item"} style={{ background: 'none' }} >
-                                                <ul className="thumbnails">
-                                                    {e.map(e1 => {
-                                                        return <Shop_card course={e1} key={e1.id} name={this.props.language==='ar'?e1.name_a:e1.name_e} raters={e1.total_raters} image={e1.image} desc={this.props.language==='ar'?e1.short_desc_a:e1.short_desc_e} price={e1.price} rate={e1.total_rating / e1.total_raters} instructor={''} id={e1.id} />
-                                                    })}
-                                                </ul>
-                                            </div>
-                                        })}
-                                               {/* <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.history.push('/search',{type:'popular'}) }} > <Translate id="more" /> ... </a> */}
+                        <div id="popular_courses" className="materialsf-section">
+                            <div className="container">
+                                <h3 className="tittlef-agileits-w3layouts white-clrf"><Translate id="header.courses.popular" /> </h3>
+                                <div className="carousel slide materialf-slider" id="myCarousel1">
+                                    <div className="carousel-inner" >
+                                        {this.props.loading.homepopcourses === 1 ?
+                                            <Row style={{ padding: '20px' }} gutter={16} >
+                                                <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                                    <div className='image-loading' ></div>
+                                                    <Card loading={true} bordered={false}>Card content</Card>
+                                                </Col>
+                                                <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                                    <div className='image-loading' ></div>
+                                                    <Card loading={true} bordered={false}>Card content</Card>
+                                                </Col>
+                                                <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                                    <div className='image-loading' ></div>
+                                                    <Card loading={true} bordered={false}>Card content</Card>
+                                                </Col>
+                                                <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                                    <div className='image-loading' ></div>
+                                                    <Card loading={true} bordered={false}>Card content</Card>
+                                                </Col>
+                                            </Row>
+                                            :
+                                            this.props.courses.popular.results.map((e, i) => {
+                                                return <div key={i} className={i === 0 ? "item active" : "item"} style={{ background: 'none' }} >
+                                                    <ul className="thumbnails">
+                                                        {e.map(e1 => {
+                                                            return <Shop_card course={e1} key={e1.id} name={this.props.language === 'ar' ? e1.name_a : e1.name_e} raters={e1.total_raters} image={e1.image} desc={this.props.language === 'ar' ? e1.short_desc_a : e1.short_desc_e} price={e1.price} rate={e1.total_rating / e1.total_raters} instructor={''} id={e1.id} />
+                                                        })}
+                                                    </ul>
+                                                </div>
+                                            })}
+                                        {/* <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.history.push('/search',{type:'popular'}) }} > <Translate id="more" /> ... </a> */}
 
+                                    </div>
+                                    <nav>
+                                        <ul className="control-box pager">
+                                            <li>
+                                                <a data-slide="prev" href="#myCarousel1" className="">
+                                                    <i className="glyphicon glyphicon-chevron-left"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a data-slide="next" href="#myCarousel1" className="">
+                                                    <i className="glyphicon glyphicon-chevron-right"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                    <div className="clearfix"> </div>
                                 </div>
-                                <nav>
-                                    <ul className="control-box pager">
-                                        <li>
-                                            <a data-slide="prev" href="#myCarousel1" className="">
-                                                <i className="glyphicon glyphicon-chevron-left"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a data-slide="next" href="#myCarousel1" className="">
-                                                <i className="glyphicon glyphicon-chevron-right"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                                <div className="clearfix"> </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div id="offered_courses" className="materialsf-section">
-                        <div className="container">
-                            <h3 className="tittlef-agileits-w3layouts white-clrf"><Translate id="home.title.offered" /> </h3>
-                            <div className="carousel slide materialf-slider" id="myCarousel2">
-                                <div className="carousel-inner" >
-                                    {this.props.loading.homeoffcourses === 1 ?
-                                         <Row style={{ padding: '20px' }} gutter={16} >
-                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                             <div className='image-loading' ></div>
-                                             <Card loading={true} bordered={false}>Card content</Card>
-                                         </Col>
-                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                         <div className='image-loading' ></div>
-                                             <Card loading={true} bordered={false}>Card content</Card>
-                                         </Col>
-                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                         <div className='image-loading' ></div>
-                                             <Card loading={true} bordered={false}>Card content</Card>
-                                         </Col>
-                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                         <div className='image-loading' ></div>
-                                             <Card loading={true} bordered={false}>Card content</Card>
-                                         </Col>
-                                     </Row>
-                                        :
-                                        this.props.courses.offers.results.map((e, i) => {
-                                            return <div key={i} className={i === 0 ? "item active" : "item"} style={{ background: 'none' }} >
-                                                <ul className="thumbnails">
-                                                    {e.map(e1 => {
-                                                        return <Shop_card course={e1} key={e1.id} name={this.props.language==='ar'?e1.name_a:e1.name_e} raters={e1.total_raters} image={e1.image} desc={this.props.language==='ar'?e1.short_desc_a:e1.short_desc_e} price={e1.price} rate={e1.total_rating / e1.total_raters} instructor={''} id={e1.id} />
-                                                    })}
-                                                </ul>
-                                            </div>
-                                        })
+                        <div id="offered_courses" className="materialsf-section">
+                            <div className="container">
+                                <h3 className="tittlef-agileits-w3layouts white-clrf"><Translate id="home.title.offered" /> </h3>
+                                <div className="carousel slide materialf-slider" id="myCarousel2">
+                                    <div className="carousel-inner" >
+                                        {this.props.loading.homeoffcourses === 1 ?
+                                            <Row style={{ padding: '20px' }} gutter={16} >
+                                                <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                                    <div className='image-loading' ></div>
+                                                    <Card loading={true} bordered={false}>Card content</Card>
+                                                </Col>
+                                                <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                                    <div className='image-loading' ></div>
+                                                    <Card loading={true} bordered={false}>Card content</Card>
+                                                </Col>
+                                                <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                                    <div className='image-loading' ></div>
+                                                    <Card loading={true} bordered={false}>Card content</Card>
+                                                </Col>
+                                                <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                                    <div className='image-loading' ></div>
+                                                    <Card loading={true} bordered={false}>Card content</Card>
+                                                </Col>
+                                            </Row>
+                                            :
+                                            this.props.courses.offers.results.map((e, i) => {
+                                                return <div key={i} className={i === 0 ? "item active" : "item"} style={{ background: 'none' }} >
+                                                    <ul className="thumbnails">
+                                                        {e.map(e1 => {
+                                                            return <Shop_card course={e1} key={e1.id} name={this.props.language === 'ar' ? e1.name_a : e1.name_e} raters={e1.total_raters} image={e1.image} desc={this.props.language === 'ar' ? e1.short_desc_a : e1.short_desc_e} price={e1.price} rate={e1.total_rating / e1.total_raters} instructor={''} id={e1.id} />
+                                                        })}
+                                                    </ul>
+                                                </div>
+                                            })
 
-                                    }
-                                               {/* <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.history.push('/search',{type:'offered'}) }} > <Translate id="more" /> ... </a> */}
+                                        }
+                                        {/* <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.history.push('/search',{type:'offered'}) }} > <Translate id="more" /> ... </a> */}
 
+                                    </div>
+                                    <nav>
+                                        <ul className="control-box pager">
+                                            <li>
+                                                <a data-slide="prev" href="#myCarousel2" className="">
+                                                    <i className="glyphicon glyphicon-chevron-left"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a data-slide="next" href="#myCarousel2" className="">
+                                                    <i className="glyphicon glyphicon-chevron-right"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                    <div className="clearfix"> </div>
                                 </div>
-                                <nav>
-                                    <ul className="control-box pager">
-                                        <li>
-                                            <a data-slide="prev" href="#myCarousel2" className="">
-                                                <i className="glyphicon glyphicon-chevron-left"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a data-slide="next" href="#myCarousel2" className="">
-                                                <i className="glyphicon glyphicon-chevron-right"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                                <div className="clearfix"> </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div id="rated_courses" className="materialsf-section">
-                        <div className="container">
-                            <h3 className="tittlef-agileits-w3layouts white-clrf"><Translate id="home.title.rated" /> </h3>
-                            <div className="carousel slide materialf-slider" id="myCarousel3">
-                                <div className="carousel-inner" >
-                                    {this.props.loading.homeratedcourses === 1 ?
-                                         <Row style={{ padding: '20px' }} gutter={16} >
-                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                             <div className='image-loading' ></div>
-                                             <Card loading={true} bordered={false}>Card content</Card>
-                                         </Col>
-                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                         <div className='image-loading' ></div>
-                                             <Card loading={true} bordered={false}>Card content</Card>
-                                         </Col>
-                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                         <div className='image-loading' ></div>
-                                             <Card loading={true} bordered={false}>Card content</Card>
-                                         </Col>
-                                         <Col xs={12} sm={12} md={12} lg={6} xl={6} >
-                                         <div className='image-loading' ></div>
-                                             <Card loading={true} bordered={false}>Card content</Card>
-                                         </Col>
-                                     </Row>
-                                        :
-                                        this.props.courses.rated.results.map((e, i) => {
-                                            return <div key={i} className={i === 0 ? "item active" : "item"} style={{ background: 'none' }} >
-                                                <ul className="thumbnails">
-                                                    {e.map(e1 => {
-                                                        return <Shop_card course={e1} key={e1.id} name={this.props.language==='ar'?e1.name_a:e1.name_e} raters={e1.total_raters} image={e1.image} desc={this.props.language==='ar'?e1.short_desc_a:e1.short_desc_e} price={e1.price} rate={e1.total_rating / e1.total_raters} instructor={''} id={e1.id} />
-                                                    })}
-                                                </ul>
-                                            </div>
-                                        })
-                                    }
-                                               {/* <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.history.push('/search',{type:'rated'}) }} > <Translate id="more" /> ... </a> */}
+                        <div id="rated_courses" className="materialsf-section">
+                            <div className="container">
+                                <h3 className="tittlef-agileits-w3layouts white-clrf"><Translate id="home.title.rated" /> </h3>
+                                <div className="carousel slide materialf-slider" id="myCarousel3">
+                                    <div className="carousel-inner" >
+                                        {this.props.loading.homeratedcourses === 1 ?
+                                            <Row style={{ padding: '20px' }} gutter={16} >
+                                                <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                                    <div className='image-loading' ></div>
+                                                    <Card loading={true} bordered={false}>Card content</Card>
+                                                </Col>
+                                                <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                                    <div className='image-loading' ></div>
+                                                    <Card loading={true} bordered={false}>Card content</Card>
+                                                </Col>
+                                                <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                                    <div className='image-loading' ></div>
+                                                    <Card loading={true} bordered={false}>Card content</Card>
+                                                </Col>
+                                                <Col xs={12} sm={12} md={12} lg={6} xl={6} >
+                                                    <div className='image-loading' ></div>
+                                                    <Card loading={true} bordered={false}>Card content</Card>
+                                                </Col>
+                                            </Row>
+                                            :
+                                            this.props.courses.rated.results.map((e, i) => {
+                                                return <div key={i} className={i === 0 ? "item active" : "item"} style={{ background: 'none' }} >
+                                                    <ul className="thumbnails">
+                                                        {e.map(e1 => {
+                                                            return <Shop_card course={e1} key={e1.id} name={this.props.language === 'ar' ? e1.name_a : e1.name_e} raters={e1.total_raters} image={e1.image} desc={this.props.language === 'ar' ? e1.short_desc_a : e1.short_desc_e} price={e1.price} rate={e1.total_rating / e1.total_raters} instructor={''} id={e1.id} />
+                                                        })}
+                                                    </ul>
+                                                </div>
+                                            })
+                                        }
+                                        {/* <a style={{float:'right',color:'white',marginTop:'20px'}} onClick={()=>{this.props.history.push('/search',{type:'rated'}) }} > <Translate id="more" /> ... </a> */}
 
+                                    </div>
+                                    <nav>
+                                        <ul className="control-box pager">
+                                            <li>
+                                                <a data-slide="prev" href="#myCarousel3" className="">
+                                                    <i className="glyphicon glyphicon-chevron-left"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a data-slide="next" href="#myCarousel3" className="">
+                                                    <i className="glyphicon glyphicon-chevron-right"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                    <div className="clearfix"> </div>
                                 </div>
-                                <nav>
-                                    <ul className="control-box pager">
-                                        <li>
-                                            <a data-slide="prev" href="#myCarousel3" className="">
-                                                <i className="glyphicon glyphicon-chevron-left"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a data-slide="next" href="#myCarousel3" className="">
-                                                <i className="glyphicon glyphicon-chevron-right"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                                <div className="clearfix"> </div>
                             </div>
                         </div>
-                    </div>
 
-                    {/* <div className="loadf-section">
+                        {/* <div className="loadf-section">
                     <div className="posf-grids">
                         <div className="container">
                             <h3 className="tittlef-agileits-w3layouts">Achieve more with CBC Centers coaching sessions.</h3>
@@ -372,7 +362,7 @@ class home extends Component {
                         </div>
                     </div>
                 </div> */}
-                    {/* <div className="reviewf-main">
+                        {/* <div className="reviewf-main">
                     <div className="container">
                         <h3 className="tittlef-agileits-w3layouts">Amazing Client Stories</h3>
                         <div className="col-md-6 reviewsf-left">
@@ -404,15 +394,18 @@ class home extends Component {
                         <div className="clearfix"> </div>
                     </div>
                 </div> */}
-                </div>
-                {/* } */}
+                    </div>
+
+                    {/* } */}
+
+             
             </div>
         );
     }
 }
 
 function mapStateToProps(state) {
-    return { home: state.home, courses: state.courses, loading: state.loadingBar, categories: state.header.categories,language:state.language.code };
+    return { home: state.home, courses: state.courses, loading: state.loadingBar, categories: state.header.categories, language: state.language.code };
 }
 
 

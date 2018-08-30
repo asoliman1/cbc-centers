@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { userProfile, editProfile } from '../../actions/index';
+import { userProfile, editProfile,getGenders } from '../../actions/index';
 import './myprofile.css';
-import { Row, Col, Card, Icon, Button, Switch, List, Input, Divider, DatePicker,Modal,Upload } from 'antd';
+import { Row, Col, Card, Icon, Button, Switch, List, Input, Divider, DatePicker, Modal, Upload,Select } from 'antd';
 import moment from 'moment';
 import { Translate } from 'react-localize-redux';
 
-function errorModal(title,content) {
+function errorModal(title, content) {
     const modal = Modal.error({
-      title: title,
-      content: content,
+        title: title,
+        content: content,
     });
     setTimeout(() => modal.destroy(), 4000);
-  }
+}
 
 
 const { Meta } = Card;
 const { TextArea } = Input;
+const Option = Select.Option;
 
 
 
@@ -43,11 +44,11 @@ class myprofile extends Component {
     }
 
     componentWillMount() {
-        window.scroll(0, 0)
         let user = { last_name: 'sds', first_name: 'asa' };
         user = (({ first_name }) => ({ first_name }))(user)
         window.addEventListener("resize", this.resize.bind(this));
         this.resize();
+        this.props.getGenders()
     }
 
 
@@ -106,15 +107,20 @@ class myprofile extends Component {
     }
 
     Save() {
+        if( (this.state.user.email === '' || !this.state.user.email) || (this.state.user.gender === '' || !this.state.user.gender) || (this.state.user.first_name === '' || !this.state.user.first_name) || (this.state.user.last_name === '' || !this.state.user.last_name) || (this.state.user.mobile === '' || !this.state.user.mobile)){
+
+        }else{ 
         this.props.editProfile(this.state.user);
-        setTimeout(()=>{
+        setTimeout(() => {
             this.setState({ edit: false })
-        },1500)
+        }, 1500)
+    }
     }
 
-    componentWillReceiveProps() {
+    componentWillReceiveProps(e) {
         let user = (({ first_name, last_name, birth_date, skype, facebook, youtube, google, email, gender, linkedin, location, mobile, phone }) => ({ first_name, last_name, birth_date, skype, facebook, youtube, google, email, gender, linkedin, location, mobile, phone }))(this.props.profile)
-        this.setState({ user: user })
+        this.setState({ user: user },()=>{
+        })
     }
 
     handleImageChange = (info) => {
@@ -125,34 +131,38 @@ class myprofile extends Component {
         }
         if (info.file.status === 'done') {
             // Get this url from response in real world.
-             this.setState({
+            this.setState({
                 loading: false,
             });
         }
     }
 
-    uploadPic(e){
+    // shouldComponentUpdate(e) {
+    //     return true
+    // }
+    
+    uploadPic(e) {
         const reader = new FileReader();
         reader.addEventListener('load', () => {
-            this.props.editProfile({image:reader.result})
-            });
+            this.props.editProfile({ image: reader.result })
+        });
         reader.readAsDataURL(e.file);
     }
 
- beforeUpload(file) {
+    beforeUpload(file) {
         const isJPG = file.type === 'image/jpeg';
         if (!isJPG) {
-            if(this.props.language==='ar')
-            errorModal('خطآ','نوع الصوره غير صحيح');
+            if (this.props.language === 'ar')
+                errorModal('خطآ', 'نوع الصوره غير صحيح');
             else
-            errorModal('Error','You can only upload JPG file!');
+                errorModal('Error', 'You can only upload JPG file!');
         }
         const isLt2M = file.size / 1024 / 1024 < 2;
         if (!isLt2M) {
-            if(this.props.language==='ar')
-            errorModal('خطآ','الصوره اكبر من ٢ م.ب');
-            else            
-            errorModal('Error','Image must smaller than 2MB!');
+            if (this.props.language === 'ar')
+                errorModal('خطآ', 'الصوره اكبر من ٢ م.ب');
+            else
+                errorModal('Error', 'Image must smaller than 2MB!');
         }
         return isJPG && isLt2M;
     }
@@ -160,7 +170,7 @@ class myprofile extends Component {
 
 
     render() {
-        
+
         const uploadButton = (
             <div>
                 <Icon type={this.state.loading ? 'loading' : 'plus'} />
@@ -183,13 +193,7 @@ class myprofile extends Component {
 
         const data = [
 
-            {
-                title: <div>  <Icon style={{ fontSize: 23 }} type="mail" /> </div>,
-                value: this.props.profile.email,
-                placeholder: 'Email',
-                input: 'email'
-
-            },
+            
             {
                 title: <div>  <Icon style={{ fontSize: 23 }} type="github" /> </div>,
                 value: this.props.profile.github,
@@ -259,61 +263,87 @@ class myprofile extends Component {
             {
                 title: this.props.language === 'ar' ? " الآسم الاول :" : "First name :",
                 value: this.props.profile.first_name,
-                input: 'first_name'
+                input: 'first_name',
+                required:true
             },
             {
                 title: this.props.language === 'ar' ? " الآسم الاخير :" : "Last name :",
                 value: this.props.profile.last_name,
-                input: 'last_name'
+                input: 'last_name',
+                required:true
             },
             {
                 title: this.props.language === 'ar' ? " تاريخ الميلاد :" : "Birthdate :",
                 value: this.props.profile.birth_date ? moment(this.props.profile.birth_date ? this.props.profile.birth_date : '', dateFormat) : '',
-                input: 'birth_date'
+                input: 'birth_date',
+                required:false
             },
             {
                 title: this.props.language === 'ar' ? " الهاتف :" : "Phone :",
                 value: this.props.profile.phone,
-                input: 'phone'
-
+                input: 'phone',
+                required:false
             },
             {
                 title: this.props.language === 'ar' ? " الجوال :" : "Mobile :",
                 value: this.props.profile.mobile,
-                input: 'mobile'
+                input: 'mobile',
+                required:true
 
             },
             {
                 title: this.props.language === 'ar' ? " العنوان :" : "Location :",
                 value: this.props.profile.location,
-                input: 'location'
+                input: 'location',
+                required:false
 
             },
+            {
+                title: this.props.language === 'ar' ? "البريد الالكتروني :":"Email :",
+                value: this.props.profile.email,
+                input: 'email',
+                required:true
+
+            },
+            {
+                title: this.props.language === 'ar' ? "النوع :":"Gender :",
+                value: this.props.profile.gender,
+                input: 'gender',
+                required:true
+
+            }
         ];
 
         const contentList = {
             tab1: <div>
-                <div style={{ float: 'right',marginBottom:'20px' }}>   <Switch checked={this.state.edit} onChange={(e) => this.onChange(e)} style={{ float: 'right', marginLeft: 5, }} unCheckedChildren={<Icon type="edit" />} /> <Translate id="profile.edit" /> </div>
+                <div style={{ float: 'right', marginBottom: '20px' }}>   <Switch checked={this.state.edit} onChange={(e) => this.onChange(e)} style={{ float: 'right', marginLeft: 5, }} unCheckedChildren={<Icon type="edit" />} /> <Translate id="profile.edit" /> </div>
 
                 <Divider><h3> <Icon type="user" /> <Translate id="profile.about" /> </h3> </Divider>
                 <Row style={{ padding: '10px' }} >
                     <List split style={{ padding: '16px' }} bordered
                         grid={{ gutter: 16, xs: 1, sm: 2, md: 3, lg: 4, xl: 3, xxl: 3 }}
+                        prefixCls={this.props.language==='ar'?"arabic ant-list":"ant-list"}
                         dataSource={data2}
-                        renderItem={item => (
-                            <List.Item>
-                                {this.state.edit ? <div> {item.title}{item.input === 'birth_date' ? <div> <DatePicker onChange={this.handleDateChange} defaultValue={item.value} value={this.state.user['_birth_date']} /></div> : <Input onChange={this.handleInputChange} value={this.state.user[item.input]} name={item.input} />}</div> : <div> {item.title}  {item.input === 'birth_date' ? moment(item.value).format('MMMM Do YYYY') : item.value}  </div>}
+                        renderItem={(item,i) => (
+                            <List.Item key={i} >
+                                {this.state.edit ? <div> {item.title}{item.input === 'birth_date' ? <div> <DatePicker onChange={this.handleDateChange} defaultValue={item.value} value={this.state.user['_birth_date']} /></div> : item.input==='gender'?<div>  <Select size="large"  prefixCls={((this.state.user[item.input]===''||!this.state.user[item.input])&&item.required)?'error ant-select':'ant-select'} onSelect={(e)=>{let user=this.state.user;user['gender']=e;this.setState({user:user})}} value={this.state.user[item.input]} >
+           {this.props.genders.map(e=>{
+               return  <Option value={e.id} > {this.props.language==='ar'?e.attr2:e.attr1} </Option>
+           })}
+           
+          </Select> </div> : <Input className={((this.state.user[item.input]===''||!this.state.user[item.input])&&item.required)?'error-input':''} onChange={this.handleInputChange} value={this.state.user[item.input]} name={item.input} />}</div> : <div> {item.title}  {item.input === 'birth_date' ? moment(item.value).format('MMMM Do YYYY') : item.value}  </div>}
                             </List.Item>
                         )}
                     />
                 </Row>
                 <Divider style={{ marginTop: 16 }} ><h3> <Icon type="fork" /> <Translate id="profile.social" /> </h3> </Divider>
                 <Row style={{ padding: '10px' }} >
-                    <List split style={{ padding: '16px' }} bordered
+                    <List split style={{ padding: '16px'}} bordered
                         grid={{ gutter: 16, xs: 1, sm: 2, md: 3, lg: 4, xl: 3, xxl: 3 }}
                         dataSource={data}
-                        renderItem={item => (
-                            <List.Item>
+                        prefixCls={this.props.language==='ar'?"arabic ant-list":"ant-list"}
+                        renderItem={(item,i) => (
+                            <List.Item key={i} >
                                 {this.state.edit ? <div> {item.title} <Input placeholder={item.placeholder} defaultValue={item.value} onChange={this.handleInputChange} value={this.state.user[item.input]} name={item.input} /> </div> : <div> {item.title}  {item.value}  </div>}
                             </List.Item>
                         )}
@@ -380,30 +410,30 @@ class myprofile extends Component {
                     <Col xs={25} sm={25} md={6} lg={5} xl={5} style={{ display: 'flex', justifyContent: 'space-around', float: this.props.language === 'ar' && !this.state.hideNav ? 'right' : '' }}  >  <Card
 
                         hoverable
-                        style={{ borderBottom: '3px solid #035ea4', marginBottom: '16px',cursor:'default' }}
+                        style={{ borderBottom: '3px solid #035ea4', marginBottom: '16px', cursor: 'default' }}
                         cover={
-                        
-                     <img alt={this.props.profile.username} src={this.props.profile.image} onError={(e) => { e.target.src = './images/error.jpg' }}  /> }
-                    
+
+                            <img alt={this.props.profile.username} src={this.props.profile.image} onError={(e) => { e.target.src = '/images/error.jpg' }} />}
+
                     >
                         <Meta
                             title={<div>
-                                  <Upload 
-                                      name="image"
-                                      showUploadList={false}
-                                      customRequest={(e)=>{this.uploadPic(e)}}
-                                      beforeUpload={(props)=>this.beforeUpload(props)}
-                                      onChange={this.handleImageChange}>
-    <Button style={{border:0}} >
-      <Icon type="upload" /> {this.props.language === 'ar' ? 'تعديل الصوره' :'Edit Profile Picture'}
-    </Button>
-  </Upload> <br/> <br/>
-                                    {this.props.profile.username} 
+                                <Upload
+                                    name="image"
+                                    showUploadList={false}
+                                    customRequest={(e) => { this.uploadPic(e) }}
+                                    beforeUpload={(props) => this.beforeUpload(props)}
+                                    onChange={this.handleImageChange}>
+                                    <Button style={{ border: 0 }} >
+                                        <Icon type="upload" /> {this.props.language === 'ar' ? 'تعديل الصوره' : 'Edit Profile Picture'}
+                                    </Button>
+                                </Upload> <br /> <br />
+                                {this.props.profile.username}
 
                             </div>}
                             description={'Created at : ' + this.props.profile.creation_time}
-                            
-                            />
+
+                        />
 
                     </Card> </Col>
                     <Col xs={25} sm={25} md={18} lg={19} xl={19} style={{ padding: '10px' }} >
@@ -423,7 +453,7 @@ class myprofile extends Component {
 }
 
 function mapStateToProps(state) {
-    return { profile: state.profile, loading: state.loadingBar, language: state.language.code };
+    return { profile: state.profile.profile, loading: state.loadingBar, language: state.language.code,genders:state.profile.genders };
 }
 
-export default connect(mapStateToProps, { userProfile, editProfile })(myprofile);
+export default connect(mapStateToProps, { userProfile, editProfile,getGenders })(myprofile);

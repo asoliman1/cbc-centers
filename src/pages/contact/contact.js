@@ -4,7 +4,7 @@ import {contactUs} from '../../actions/index';
 import {Icon,Alert} from 'antd'
 import {Translate} from 'react-localize-redux';
 import * as EmailValidator from 'email-validator';
-
+import './contact.css';
 const initial = {};
 class contact extends Component {
 
@@ -15,7 +15,6 @@ class contact extends Component {
     }
 
     componentWillMount(){
-		window.scrollTo(0,0)                
     }
 
     componentDidMount(){
@@ -67,27 +66,27 @@ class contact extends Component {
                                 <span className="fa fa-home" aria-hidden="true"></span>
                             </div>
                             <div className="col-md-10 col-sm-10 col-xs-10 contact-text-shopf-sear-headinf0">
-                                <h4> <Translate id="contact.visit" /> </h4>
-                                <p>Cologne, Ehrenfeld Gutenbergstr. 50823 Cologne, Germany</p>
+                                <h4 style={{textAlign:this.props.language==='ar'?'right':'',marginBottom:10}} > <Translate id="contact.visit" /> </h4>
+                                <p>Cologne, Ehrenfeld Gutenbergstr. 50823 Cologne</p>
                             </div>
                             <div className="clearfix"></div>
                         </div>
-                        <div className="contactf-mail">
+                        <div className="visit">
                             <div className="col-md-2 col-sm-2 col-xs-2 contact-icon-sidef">
                                 <span className="fa fa-envelope" aria-hidden="true"></span>
                             </div>
                             <div className="col-md-10 col-sm-10 col-xs-10 contact-text-shopf-sear-headinf0">
-                                <h4> <Translate id="contact.mail" /> </h4>
+                                <h4  style={{textAlign:this.props.language==='ar'?'right':'',marginBottom:10}}> <Translate id="contact.mail" /> </h4>
                                 <p><a href="mailto:info@example.com">info@example.com</a></p>
                             </div>
                             <div className="clearfix"></div>
                         </div>
-                        <div className="call">
+                        <div className="visit">
                             <div className="col-md-2 col-sm-2 col-xs-2 contact-icon-sidef">
                                 <span className="fa fa-mobile" aria-hidden="true"></span>
                             </div>
                             <div className="col-md-10 col-sm-10 col-xs-10 contact-text-shopf-sear-headinf0">
-                                <h4> <Translate id="contact.call" /> </h4>
+                                <h4  style={{textAlign:this.props.language==='ar'?'right':'',marginBottom:10}}> <Translate id="contact.call" /> </h4>
                                 <p>+18044261149</p>
                             </div>
                             <div className="clearfix"></div>
@@ -97,7 +96,7 @@ class contact extends Component {
                                 <span className="fa fa-clock-o" aria-hidden="true"></span>
                             </div>
                             <div className="col-md-10 col-sm-10 col-xs-10 contact-text-shopf-sear-headinf0">
-                                <h4> <Translate id="contact.working" /> </h4>
+                                <h4  style={{textAlign:this.props.language==='ar'?'right':'',marginBottom:10}}> <Translate id="contact.working" /> </h4>
                                 <p>Mon-Sat 09:00 AM - 05:00PM</p>
                             </div>
                             <div className="clearfix"></div>

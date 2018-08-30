@@ -6,7 +6,6 @@ import Student_review from '../../components/student_review/student_review';
 import Course_card from '../../components/course_card/course_card';
 class course_details extends Component {
 	render() {
-		window.scrollTo(0, 0)
 		return (
 			<div>
 				<div className="demo-bg">

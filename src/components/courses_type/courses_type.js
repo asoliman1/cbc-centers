@@ -18,10 +18,10 @@ class Courses_type extends Component {
     render() {
         return (
             <div className="animated fadeIn" >
-                <div className="col-md-3 col-sm-6  tabsf-w3-agileits-grids" style={{float:this.props.lang==='ar'?'right':''}} >
+                <div className="col-md-3 col-sm-6 col-xs-12 tabsf-w3-agileits-grids" style={{float:this.props.lang==='ar'?'right':''}} >
                     <Card hoverable loading={this.props.loading} 
-                        cover={<Link to={{pathname:`courses/${this.props.id}`}} ><img alt="example" src={this.props.image?this.props.image:'./images/error.jpg'} onError={(e) => { e.target.src = './images/error.jpg' }} /> </Link>}
-                        actions={[<Button type="primary" > <Link style={{color:'white'}} to={{pathname:`courses/${this.props.id}`,state:this.props.course}} > <Translate id="more"/> <Icon type="ellipsis" /> </Link> </Button>]}
+                        cover={<Link to={{pathname:`courses/${this.props.id}`}} ><img alt="example" src={this.props.image?this.props.image:'./images/error.jpg'} onError={(e) => { e.target.src = '/images/error.jpg' }} /> </Link>}
+                        actions={[<Button type="primary" > <Link style={{color:'white'}} to={{pathname:`courses/${this.props.id}`,state:this.props.course}} > <Translate id="view.course.details"/> </Link> </Button>]}
                     >
                         <Meta style={{float:this.props.lang==='ar'?'right':''}}
                             title={this.props.name}

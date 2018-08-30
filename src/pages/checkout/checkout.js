@@ -7,7 +7,7 @@ import {
 	shopCarts,
 	courseEnrollAll
 } from '../../actions'
-import { Spin,Modal, Button } from 'antd';
+import { Spin,Modal,Popover,Button,Input } from 'antd';
 import { Translate } from '../../../node_modules/react-localize-redux';
 
 var modal_ref = null
@@ -16,11 +16,7 @@ class checkout extends Component {
 
 	constructor(props) {
 		super(props);
-	}
-
-	componentWillMount() {
-		window.scrollTo(0, 0);
-
+		this.state = {ref_no:''}
 	}
 
 	componentDidMount() {
@@ -40,7 +36,25 @@ modal_ref=Modal.error({
 	});
   }
 
+
+
 	render() {
+		let elmAfter = (
+            <div >
+                <Button type="primary" onClick={() => {if(!this.props.profile.last_name||!this.props.profile.first_name||!this.props.profile.mobile) {this.error()} else if(this.state.ref_no===''){}  else {this.props.courseEnrollAll(this.state.ref_no)}}} >
+				{this.props.language === 'ar' ? 'إدخال' : 'Submit'}
+				</Button>
+            </div>
+        );
+		let content = (
+            <div style={{direction:this.props.language==='ar'?'rtl':''}} >
+                <Input className={this.state.ref_no===''?'error-input':''} addonBefore={this.props.language === 'ar' ? 'الرقم المرجعي' : "Reference Number"} onChange={(e) => { this.setState({ ref_no: e.target.value }) }} value={this.state.ref_no} placeholder={this.props.language === 'ar' ? 'الرقم المرجعي' : 'Reference Number'} /> <br />
+                <div style={{ textAlign: 'center',padding:20 }} >
+                    {elmAfter}
+                </div>
+
+            </div>
+        );
 		return (
 			<div className="checkout-page" style={{direction:this.props.language==='ar'?'rtl':''}} >
 				<div className="innerf-pages">
@@ -58,22 +72,23 @@ modal_ref=Modal.error({
 												<th><Translate id="sl.no" /></th>
 												<th><Translate id="course" /></th>
 												<th><Translate id="course.round.course.name" /></th>
+												<th><Translate id="course.round" /></th>
 												<th><Translate id="course.round.price" /></th>
 												<th><Translate id="remove" /></th>
 											</tr>
 										</thead>
 										<tbody>
 											{e.items.map((e1, ind) => {
-												return <tr key={ind} className="rem1">
+												return <tr key={ind+'row'} className="rem1 animated fadeIn" >
 													<td className="invert"> {ind + 1} </td>
 													<td className="invert-image"><a ><img src={e1.course_details.image?'http://167.99.244.62:8000'+e1.course_details.image:'./images/error.jpg'} onError={(e) => { e.target.src = './images/error.jpg' }} className="img-responsive" /></a></td>
 
 													<td className="invert">{this.props.language==='ar'?e1.course_details.name_a:e1.course_details.name_e}</td>
-
+													<td className="invert">{ this.props.language==='ar'? e1.round_details.name_a:e1.round_details.name_e}</td>
 													<td className="invert">${e1.price}</td>
 													<td className="invert">
 														<div className="rem" onClick={() => { this.props.removeShopItem(e1.id, i) }} >
-															<div className="close1"> </div>
+															<div className="close1" style={{right:this.props.language==='ar'?'0':'16px'}} > </div>
 														</div>
 
 													</td>
@@ -99,7 +114,9 @@ modal_ref=Modal.error({
 										<li> <Translate id="total" /> : {this.props.shopcarts.total_price} </li>
 									</ul>
 									<div className="checkout-right-basket">
-										<a onClick={()=>{if(!this.props.profile.last_name||!this.props.profile.first_name||!this.props.profile.mobile) {this.error()}  else {this.props.courseEnrollAll();setTimeout(()=>{ this.props.history.push('/enrollments') },3000)}}} ><Translate id="enroll.all"/></a>
+									<Popover placement="right" trigger="click" content={content} >
+										<a ><Translate id="enroll.all"/></a>
+									</Popover>
 									</div>
 								</div>
 								<div className="col-md-8 address_form">
@@ -163,7 +180,7 @@ modal_ref=Modal.error({
 }
 
 function mapStateToProps(state) {
-	return { shopcarts: state.shop_carts, loading: state.loadingBar,language:state.language.code,profile:state.profile }
+	return { shopcarts: state.shop_carts, loading: state.loadingBar,language:state.language.code,profile:state.profile.profile }
 }
 
 export default connect(mapStateToProps, { removeShopItem, shopCarts,courseEnrollAll })(checkout);

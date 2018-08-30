@@ -53,6 +53,8 @@ export const REMEMBER_ME = 'REMEMBER_ME';
 export const HOME_WISHLIST = 'HOME_WISHLIST';
 export const SHARE = 'SHARE';
 export const GET_ALL_INSTRUCTORS = 'GET_ALL_INSTRUCTORS';
+export const GET_GENDERS = 'GET_GENDERS';
+
 
 const openNotificationWithIcon = (type,title,message) => {
   notification.config({
@@ -89,7 +91,8 @@ export function search(text, page, size) {
 export function searchByfilters(category='',sub_category='',language='',type='',text='', page='1', size='10') {
   return function (dispatch) {
     dispatch(showLoading('searchbyfilters'))
-    return httpService.searchByfilters(category,sub_category,language,type,text, page, size).then(data => {
+   let x = decodeURIComponent(text).match(/[\u0600-\u06FF\u0750-\u077F]+/g) ? true : false ;
+    return httpService.searchByfilters(category,sub_category,language,type, x ? text : '', !x ? text : '', page, size).then(data => {
       dispatch(loadSuccess(SEARCH_BY_FILTERS, data.data));
       dispatch(hideLoading('searchbyfilters'))
     }).catch(error => {
@@ -106,7 +109,6 @@ export function menuCat() {
     return httpService.menuCat().then(data => {
       dispatch(loadSuccess(GET_MENU_CATEGORIES, data.data));
       dispatch(hideLoading('menucat'))
-      dispatch(homeCatList(store.getState().header.categories[0].id))
     }).catch(error => {
       dispatch(resetLoading())
       // console.log(error);
@@ -156,10 +158,10 @@ export function homeEventNotif() {
   };
 }
 
-export function homeCatList(category) {
+export function homeCatList(category,page,size) {
   return function (dispatch) {
     dispatch(showLoading('homecat'))
-    return httpService.homeCatList(category).then(data => {
+    return httpService.homeCatList(category,'1','8').then(data => {
       dispatch(loadSuccess(GET_HOME_CATEGORY_ITEMS, data.data));
       dispatch(hideLoading('homecat'))
     }).catch(error => {
@@ -278,12 +280,13 @@ export function addShopCart(price,course,round) {
   return function (dispatch) {
     if(store.getState().Authentication.status){ 
     dispatch(showLoading('addShopCart'))
-    return httpService.addShopCart(store.getState().shop_cart.shop_cart.id,price,course,round).then(data => {
+    return httpService.addShopCart(store.getState().shop_cart.shop_cart.id,price,course,round,store.getState().Authentication.user_id).then(data => {
       dispatch(loadSuccess(ADD_TO_USER_SHOPCART, data.data));
       dispatch(hideLoading('addShopCart'))
-      openNotificationWithIcon('success','Course added to shop cart','')
+      openNotificationWithIcon('success',store.getState().language.code==='ar'?'تم اضافه الكورس لسله المشتريات':'Course added to shop cart','')
     }).catch(error => {
-      openNotificationWithIcon('error','Error','')
+      console.log(error.response)
+      openNotificationWithIcon('error',store.getState().language.code === 'ar'?'خطآ':'Error',store.getState().language.code==='ar'?'هذه الدوره مسجله من قبل':error.response.data.error)
       dispatch(resetLoading('addShopCart'))
       // console.log(error.response);
     });
@@ -348,31 +351,32 @@ export function editProfile(user) {
       dispatch(hideLoading('editprofile'))
       openNotificationWithIcon('success',store.getState().language.code === 'ar'?'تم تعديل الحساب بنجاح':'Profile updated Successfully','')      
     }).catch(error => {
-      // console.log(error.response);
-      openNotificationWithIcon('error','Error',error.response.data)
+      console.log(error.response);
+      openNotificationWithIcon('error','Error','')
     });
   };
 }
 
-export function courseEnroll(course,round) {
+export function courseEnroll(course,round,ref_no='') {
   return function (dispatch) {
     dispatch(showLoading('courseEnroll'));
     return httpService.courseEnroll(store.getState().Authentication.user_id,course,round).then(data => {
       dispatch(loadSuccess(COURSE_ENROLL, data.data));
       dispatch(hideLoading('courseEnroll'))
+      dispatch(doPayment(ref_no,course,round,data.data.id))
     }).catch(error => {
       // console.log(error.response);
     });
   };
 }
 
-export function courseEnrollAll(){
+export function courseEnrollAll(ref_no){
   return function (dispatch) {
-    if(store.getState().shop_carts.content.length>0){ 
+    if(store.getState().shop_carts.content[0].items.length>0){ 
     dispatch(showLoading('courseEnrollall'))
     store.getState().shop_carts.content.forEach(e=>{
       e.items.forEach(e1=>{ 
-          dispatch(courseEnroll(e1.course,e1.round))
+          dispatch(courseEnroll(e1.course,e1.round,ref_no))
       })
       dispatch(unactivateShopCart(e.id))
     })
@@ -386,7 +390,7 @@ export function courseEnrollAll(){
 }
 }
 
-export function doPayment(ref_no,course,round,cart,image) {
+export function doPayment(ref_no,course,round,cart,image='') {
   return function (dispatch) {
     dispatch(showLoading('doPayment'))
     return httpService.doPayment(cart,store.getState().Authentication.user_id,course,round,ref_no,image).then(data => {
@@ -527,6 +531,18 @@ export function getLanguages() {
   };
 }
 
+export function getGenders() {
+  return function (dispatch) {
+    dispatch(showLoading('getgenders'))
+    return httpService.getGenders().then(data => {
+      dispatch(loadSuccess(GET_GENDERS, data.data));
+      dispatch(hideLoading('getgenders'))
+    }).catch(error => {
+      // console.log(error.response);
+    });
+  };
+}
+
 export function courseInstr(id) {
   return function (dispatch) {
     dispatch(showLoading('courseinstructor'))
@@ -551,10 +567,10 @@ export function Tags(page, size) {
   };
 }
 
-export function userEnrollments(page, size) {
+export function userEnrollments(status,page, size) {
   return function (dispatch) {
     dispatch(showLoading('userEnrollments'))
-    return httpService.userEnrollments(store.getState().Authentication.user_id).then(data => {
+    return httpService.userEnrollments(store.getState().Authentication.user_id,status,page,size).then(data => {
       dispatch(loadSuccess(GET_USER_ENROLLMENTS, data.data));
       dispatch(hideLoading('userEnrollments'))
       dispatch(hideLoading())
@@ -653,7 +669,8 @@ export function checkAuth() {
     var user_id = localStorage.getItem('user_id') || sessionStorage.getItem('user_id');
     var status = !token || token === '' || typeof token === 'undefined' ? false : true;
     dispatch(loadSuccess(CHECK_AUTHENTICATION, { token: token, status: status,user_id:user_id }))
-    if(status){    
+    if(status){ 
+      dispatch(userProfile())
     if(typeof store.getState().shop_cart.shop_cart.id === 'undefined'){
       dispatch(shopCarts())
       }

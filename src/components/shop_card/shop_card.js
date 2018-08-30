@@ -103,11 +103,19 @@ class Shop_card extends Component {
                             <img height="255px" width="255px" src={this.props.image?this.props.image:'./images/error.jpg'} onError={(e) => { e.target.src = './images/error.jpg' }} alt={this.props.name} />
                         </Link>
                         <p >
-                            <Link to={{ pathname: `/courses/${this.props.id}`, state: { course: this.props.course } }} >{this.props.name} </Link></p>
+                            <Link to={{ pathname: `/courses/${this.props.id}`, state: { course: this.props.course } }} >{this.props.name} </Link> <br/>
+                            
+                            </p>
                     </div>
+                    <Row style={{background:'#fafafa',padding:6}} justify="center" type="flex" > 
+                    <Button  type="primary" ><Link style={{color:'white'}} to={{ pathname: `/courses/${this.props.id}`, state: { course: this.props.course } }} > <Translate id="view.course.details"/>  </Link> </Button>
+                    
+                     </Row>
+
                     <div className="caption">
                         <h4>
                             {this.props.desc}
+                          
                         </h4>
                         <p>{this.props.instructor}</p>
                         <div className="matrlf-mid">
@@ -133,7 +141,6 @@ class Shop_card extends Component {
                                 :
                                 <Button className="hvr-bounce-in" style={{  borderColor: 'white' }} onClick={(e) => {if(!this.props.auth.status){ this.props.history.push({pathname:'/login_signup',state:{modal:true}}) } else{this.props.addWishList(this.props.id);this.setState({liked:!this.state.liked}) }}} >  <Icon style={{fontSize:'20px',color:'red'}} type={"heart-o"} /> </Button>
                                 }
-                                <Button className="hvr-bounce-in" style={{  borderColor: 'white' }} ><Link to={{ pathname: `/courses/${this.props.id}`, state: { course: this.props.course } }} >  <Icon style={{ fontWeight: 'bold',fontSize:'20px' }} type="ellipsis" /> </Link> </Button>
                             </ButtonGroup>
                         </Row>
                     </div>

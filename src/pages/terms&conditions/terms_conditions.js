@@ -3,7 +3,6 @@ import './terms.css';
 import { Link } from 'react-router-dom';
 class terms_conditions extends Component {
 	render() {
-		window.scrollTo(0,0)        		
 		return (
 			<div>
 				<div className="innerf-banner">

@@ -6,3 +6,28 @@
 .myprofile-page .upload-cover{
     
 }
+
+.error-input{
+    border:1px solid red !important;
+}
+
+.ant-select-lg .ant-select-selection--single{
+    width: 100px;
+    height: 31px !important;
+}
+
+.error.ant-select .ant-select-selection--single{
+    border: 1px solid red !important;
+}
+.ant-select-lg .ant-select-selection__rendered{
+    line-height: normal !important;
+    font-size: small !important;
+}
+
+.arabic.ant-list .ant-row .ant-col-xs-24.ant-col-sm-12.ant-col-md-8.ant-col-lg-6.ant-col-xl-8.ant-col-xxl-8{
+    float: right !important;
+}
+
+.arabic.ant-list .ant-calendar-picker-icon{
+    left: 12px;
+}

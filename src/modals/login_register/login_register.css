@@ -1,1 +1,4 @@
 .modal{ display:block; }
+.arabic .ant-modal-close{
+    left: 0;
+}

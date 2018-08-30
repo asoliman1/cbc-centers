@@ -2,18 +2,11 @@ import React, { Component } from 'react';
 import './search.css';
 import Search_item from '../../components/search_item/search_item';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Spin, Pagination, Modal, Affix, Button, Icon, Row, Col } from 'antd';
+import { Spin, Pagination, Modal, Button, Tree, Icon } from 'antd';
 import { search as search1, getLanguages, searchByfilters } from '../../actions';
-import { Checkbox } from 'antd';
 
-const CheckboxGroup = Checkbox.Group;
+const TreeNode = Tree.TreeNode;
 
-
-
-function callback(key) {
-    console.log(key);
-}
 
 class search extends Component {
     constructor(props) {
@@ -24,40 +17,109 @@ class search extends Component {
             confirmLoading: false, currentPage: 1, hideNav: false,
             checkedList_cat: [],
             checkedList_lang: [],
-            indeterminate_cat: false,
-            indeterminate_lang: false,
-            checkAll_cat: false,
-            checkAll_lang: false,
+            checkedList_sub_cat: [],
             filters: false,
-            currentSize: 20
+            currentSize: 20,
+            search_type: '',
+            category: '',
+            subcategory: '',
+            language: '',
+            all: false,
+            categories: false,
+            keyword: false,
+            expandedKeys: ['languages'],
+            autoExpandParent: true,
+            checkedKeys: [],
+            selectedKeys: [],
         }
     }
 
 
     componentWillMount() {
-        window.scroll(0, 0);
         window.addEventListener("resize", this.resize.bind(this));
         this.resize();
-        if (typeof this.props.location.state !== 'undefined') {
-            if (this.props.location.state.all)
-                this.props.searchByfilters('', '', '', '', '', 1, 20)
-            else {
-                this.props.searchByfilters(this.props.location.state.categories, this.props.location.state.sub_categories, '', this.props.location.state.type, '', '1', '20')
+        this.set_search_type()
+        this.props.getLanguages()
+    }
+
+    onExpand = (expandedKeys) => {
+        // if not set autoExpandParent to false, if children expanded, parent can not collapse.
+        // or, you can remove all expanded children keys.
+        this.setState({
+            expandedKeys,
+            autoExpandParent: false,
+        });
+    }
+
+    onCheck = (checkedKeys, info) => {
+        let languages = [], categories = [], subcategories = []
+        info.checkedNodes.forEach(e => {
+            if (e.props.dataRef.lookup === "CRS_LNGG") {
+                languages.push(e.key)
+            } else if (e.props.dataRef.lookup === "CRS_SB_CTGRY") {
+                subcategories.push(e.key)
+            } else if (e.props.dataRef.lookup === "CRS_CTGRY") {
+                categories.push(e.key)
             }
-        } else {
-            this.props.search1(this.props.location.search.replace('?', ''), 1, 20)
+        });
+        this.setState({ checkedKeys, checkedList_cat: categories, checkedList_lang: languages, checkedList_sub_cat: subcategories });
+    }
+
+    onSelect = (selectedKeys, info) => {
+        this.setState({ selectedKeys });
+    }
+
+    renderTreeNodes = (data) => {
+        return data.map((item) => {
+            if (item.subcategories) {
+                return (
+                    <TreeNode title={this.props.language==='ar'?item.attr2:item.attr1} key={item.id} dataRef={item}>
+                        {this.renderTreeNodes(item.subcategories)}
+                    </TreeNode>
+                );
+            }
+            return <TreeNode isLeaf title={this.props.language==='ar'?item.attr2:item.attr1} key={item.id} dataRef={item} />;
+        });
+    }
+
+
+
+    componentDidUpdate(e1) {
+        if (this.props.location.pathname !== e1.location.pathname) {
+            this.set_search_type()
         }
-
     }
 
 
-    componentDidMount() {
-        if (this.props.search.languages.length === 0)
-            this.props.getLanguages();
+    set_search_type() {
+        let sub = typeof this.props.match.params.sub !== 'undefined' ? this.props.match.params.sub : '';
+        console.log(this.props.match.path)
+        switch (this.props.match.path) {
+            case "/courses/category/:cat/:sub?":
+                this.setState({ category: this.props.match.params.cat, subcategory: sub, categories: true, all: false, keyword: false }, () => this.getsearch_results());
+                break;
+            case "/courses":
+                this.setState({ categories: false, all: true, keyword: false }, () => this.getsearch_results())
+                break;
+            case "/search":
+                this.setState({ categories: false, all: false, keyword: true }, () => this.getsearch_results())
+                break;
+        }
     }
+
+    getsearch_results() {
+        if (this.state.categories) {
+            this.props.searchByfilters(this.state.category, this.state.subcategory, this.state.language, '', '', this.state.currentPage, this.state.currentSize)
+        } else if (this.state.keyword) {
+            this.props.searchByfilters(this.state.category, this.state.subcategory, this.state.language, '', this.props.location.search.replace('?', ''), this.state.currentPage, this.state.currentSize)
+        } else if (this.state.all) {
+            this.props.searchByfilters(this.state.category, this.state.subcategory, this.state.language, '', '', this.state.currentPage, this.state.currentSize)
+        }
+    }
+
 
     resize() {
-        this.setState({ hideNav: window.innerWidth <= 600 });
+        this.setState({ hideNav: window.innerWidth <= 900 });
     }
 
 
@@ -72,6 +134,9 @@ class search extends Component {
     }
 
     showModal = () => {
+        if (this.props.search.languages.length === 0)
+            this.props.getLanguages();
+
         this.setState({
             visible: true,
         });
@@ -81,15 +146,16 @@ class search extends Component {
         this.setState({
             filters: true,
             confirmLoading: true,
-        });
+            category: this.state.checkedList_cat.toString(),
+            subcategory: this.state.checkedList_sub_cat.toString(),
+            language: this.state.checkedList_lang.toString()
+        }, () => this.getsearch_results());
         setTimeout(() => {
             this.setState({
                 visible: false,
                 confirmLoading: false,
             });
-        }, 2000);
-
-        this.props.searchByfilters(this.state.checkedList_cat.toString(), '', this.state.checkedList_lang.toString(), this.props.location.state ? this.props.location.state.type : '', this.props.location.search.replace('?', ''), '1', '20')
+        }, 1000);
     }
 
     handleCancel = () => {
@@ -98,56 +164,9 @@ class search extends Component {
         });
     }
 
-    onChange_cat = (checkedList) => {
-        this.setState({
-            checkedList_cat: checkedList,
-            indeterminate_cat: !!checkedList.length && (checkedList.length < this.props.categories.length),
-            checkAll_cat: checkedList.length === this.props.categories.length,
-        });
-    }
-
-    onChange_lang = (checkedList) => {
-        this.setState({
-            checkedList_lang: checkedList,
-            indeterminate_lang: !!checkedList.length && (checkedList.length < this.props.search.languages.length),
-            checkAll_lang: checkedList.length === this.props.search.languages.length,
-        });
-    }
-
-    onCheckAllChange = (e) => {
-        if (e.target.name === 'checkAll_cat') {
-            this.setState({
-                checkedList_cat: e.target.checked ? this.props.categories.map(e => { return e.id }) : [],
-                indeterminate_cat: false,
-                checkAll_cat: e.target.checked,
-            });
-        } else {
-            this.setState({
-                checkedList_lang: e.target.checked ? this.props.search.languages.map(e => { return e.id }) : [],
-                indeterminate_lang: false,
-                checkAll_lang: e.target.checked,
-            });
-        }
-    }
 
     onPage_size_change(page, size) {
-        this.setState({ currentPage: page, currentSize: size });
-        if (typeof this.props.location.state !== 'undefined') {
-            if (this.props.location.state.all){ 
-                if (this.state.filters)
-                    this.props.searchByfilters(this.state.checkedList_cat, '', this.state.checkedList_lang, '', '', page, size)
-                else
-                this.props.searchByfilters('', '', '', '', '', page, size)
-
-                }     else {
-                    this.props.searchByfilters(this.props.location.state.categories, this.props.location.state.sub_categories, '', this.props.location.state.type, '', page, size)
-                }
-        } else {
-            if (this.state.filters) {
-                this.props.searchByfilters(this.props.state.checkedList_cat, '', this.state.checkedList_lang, '', this.props.location.search.replace('?', ''), page, size)
-            } else
-                this.props.search1(this.props.location.search.replace('?', ''), page, size)
-        }
+        this.setState({ currentPage: page, currentSize: size }, () => this.getsearch_results());
     }
 
     render() {
@@ -164,84 +183,96 @@ class search extends Component {
 
                 >
                     <div className="modal-filters" >
-                        <div className="filter-container">
-                            <div style={{ borderBottom: '1px solid #E9E9E9' }}>
-                                <Checkbox
-                                    indeterminate={this.state.indeterminate_lang}
-                                    onChange={this.onCheckAllChange}
-                                    checked={this.state.checkAll_lang}
-                                    name="checkAll_lang"
-                                >
-                                    Languages
-          </Checkbox>
-                            </div>
-                            <br />
-                            <Checkbox.Group style={{ width: '100%' }} value={this.state.checkedList_lang} onChange={this.onChange_lang}>
-                                <Row>
-                                    {this.props.search.languages.map(e => {
-                                        return <Col key={e.id} ><Checkbox value={e.id}  >{e.attr1}</Checkbox></Col>
-                                    })}
 
-                                </Row>
-                            </Checkbox.Group>
-                        </div>
-                        <div className="filter-container" >
-                            <div style={{ borderBottom: '1px solid #E9E9E9' }}>
-                                <Checkbox
-                                    indeterminate={this.state.indeterminate_cat}
-                                    onChange={this.onCheckAllChange}
-                                    checked={this.state.checkAll_cat}
-                                    name="checkAll_cat"
-                                >
-                                    Categories
-          </Checkbox>
-                            </div>
-                            <br />
-                            <Checkbox.Group style={{ width: '100%' }} value={this.state.checkedList_cat} onChange={this.onChange_cat}>
-                                <Row>
-                                    {this.props.categories.map(e => {
-                                        return <Col key={e.id} ><Checkbox value={e.id} >{e.attr1}</Checkbox></Col>
-                                    })}
+                        <div className="filter-container" style={{direction:this.props.language==='ar'?'rtl':''}} >
 
-                                </Row>
-                            </Checkbox.Group>
+                            <Tree
+                                checkable
+                                onExpand={this.onExpand}
+                                expandedKeys={this.state.expandedKeys}
+                                autoExpandParent={this.state.autoExpandParent}
+                                onCheck={this.onCheck}
+                                checkedKeys={this.state.checkedKeys}
+                                onSelect={this.onSelect}
+                                selectedKeys={this.state.selectedKeys}
+                                prefixCls={this.props.language==='ar'?"arabic ant-tree":"ant-tree"}
+
+                            >
+                                {this.renderTreeNodes([{ attr1: 'Categories',attr2:'الاقسام', id: 'categories', subcategories: this.props.categories }, { attr1: 'Languages', id: 'languages',attr2:'اللغات', subcategories: this.props.search.languages }])}
+                            </Tree>
                         </div>
 
                     </div>
                 </Modal>
 
-                <div className="row">
-                    <Affix style={{ marginBottom: '15px' }} offsetTop={this.state.hideNav ? 120 : 155} offsetBottom={100} >
+                {this.state.hideNav ?
+                    <div className="row" style={{ position:'sticky',top:100,zIndex:1 }} >
 
-                        <Button type="primary" style={{ float: 'right' }} onClick={this.showModal} icon="filter">Filters</Button>
-                    </Affix>
-                </div>
-                <div className="row text-center" >
-                    {this.props.search.counts > 0 ?
-                        <Pagination size="small" current={this.state.currentPage} pageSize={this.state.currentSize} total={this.props.search.counts} showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`} onChange={(size, page) => this.onPage_size_change(size, page)} onShowSizeChange={(size, page) => this.onPage_size_change(size, page)} showSizeChanger showQuickJumper />
-                        : this.props.loading.search === 1 || this.props.loading.searchbyfilters === 1 ? <Spin size="large" /> : <div> No items found </div>}
-                </div>
-
-                <div className="row" >
-                    <div className="col-md-"  >
-                        <ul className="list-group">
-                            {this.props.search.results.map(e => {
-                                return <Search_item key={e.id} name={e.name_e} image={e.image} desc={e.short_desc_e} price={e.price} raters={e.total_raters} rate={e.total_rating} category={e.categories.length > 0 ? e.categories[0] : ''} creation_date={e.creation_date} id={e.id} />
-                            })}
-
-                        </ul>
+                            <Button type="primary" style={{ float:this.props.language==='ar'?'left':'right' }} onClick={this.showModal} icon="filter">Filters</Button>
                     </div>
-                </div>
+                    : ''}
                 <div className="row text-center" >
-                    {this.props.search.counts > 0 ?
-                        <Pagination size="small" current={this.state.currentPage} pageSize={this.state.currentSize} total={this.props.search.counts} showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`} onChange={(size, page) => this.onPage_size_change(size, page)} onShowSizeChange={(size, page) => this.onPage_size_change(size, page)} showSizeChanger showQuickJumper />
-                        : <div> </div>}                </div>
+                    {this.props.search.counts === 0 && ( this.props.loading.searchbyfilters === 0) ? <div style={{ fontSize: '20px', fontVariant: 'petite-caps', padding: '16px',textAlign:'center' }}> No items found </div> :
+                        ''
+                    }
+                    {this.props.loading.search === 1 || this.props.loading.searchbyfilters === 1 ? <Spin size="large" /> :
+                        ''
+                    }
+                </div>
+                <div className="row" style={{display:'flex',flexDirection:this.props.language==='ar'?'row-reverse':''}} >
+                    {!this.state.hideNav ?
+                        <div style={{ marginTop: 45 }} className="col-lg-3 col-md-3 col-sm-auto" >
+                            <div style={{position:'sticky',top:110}} >
+                                <div className="search-filters" style={{direction:this.props.language==='ar'?'rtl':''}}>
+                                    <div className="filter-container" >
+
+                                        <Tree
+                                            checkable
+                                            onExpand={this.onExpand}
+                                            expandedKeys={this.state.expandedKeys}
+                                            autoExpandParent={this.state.autoExpandParent}
+                                            onCheck={this.onCheck}
+                                            checkedKeys={this.state.checkedKeys}
+                                            onSelect={this.onSelect}
+                                            selectedKeys={this.state.selectedKeys}
+                                            prefixCls={this.props.language==='ar'?"arabic ant-tree":"ant-tree"}
+                                        >
+                                            {this.renderTreeNodes([{ attr1: 'Categories',attr2:'الاقسام', id: 'categories', subcategories: this.props.categories }, { attr1: 'Languages',attr2:'اللغات' ,id: 'languages', subcategories: this.props.search.languages }])}
+                                        </Tree>
+                                    </div>
+                                    <div style={{ textAlign: 'center' }} >
+                                    {this.props.loading.searchbyfilters === 0? 
+                                        <Button onClick={()=>this.handleOk()} >{this.props.language==='ar'?'بحث':'Apply Filters'}  <Icon type="search" /> </Button>
+                                    : <Icon style={{color:'#1890ff'}} type="loading" spin /> }
+                                    </div>
+                                </div>
+                            </div>
+                        </div> : ''}
+                    {this.props.loading.search === 0 || this.props.loading.searchbyfilters === 0 ?
+
+                        <div className="col-lg-8 col-md-9 col-sm-auto col-xs-15"  >
+                            <div style={{ marginBottom: 20 }} className="row text-center" >
+
+                                <Pagination style={{direction:this.props.language==='ar'?'rtl':''}} size="small"  current={this.state.currentPage} pageSize={this.state.currentSize} total={this.props.search.counts} showTotal={(total, range) => `${range[0]}-${range[1]} ${this.props.language==='ar'?'من':'of'} ${total}`} onChange={(size, page) => this.onPage_size_change(size, page)} onShowSizeChange={(size, page) => this.onPage_size_change(size, page)} showSizeChanger showQuickJumper />
+                            </div>
+                            <ul style={{direction:this.props.language==='ar'?'rtl':'ltr'}} className="list-group">
+                                {this.props.search.results.map(e => {
+                                    return <Search_item lang={this.props.language} key={e.id} name_e={e.name_e} name_a={e.name_a} image={e.image} desc={e.short_desc_e} price={e.price} raters={e.total_raters} rate={e.total_rating} category={e.categories.length > 0 ? e.categories[0] : ''} creation_date={e.creation_date} id={e.id} />
+                                })}
+
+                            </ul>
+                            <div className="row text-center" >
+
+                                <Pagination size="small" style={{direction:this.props.language==='ar'?'rtl':''}}  current={this.state.currentPage} pageSize={this.state.currentSize} total={this.props.search.counts} showTotal={(total, range) => `${range[0]}-${range[1]} ${this.props.language==='ar'?'من':'of'} ${total}`} onChange={(size, page) => this.onPage_size_change(size, page)} onShowSizeChange={(size, page) => this.onPage_size_change(size, page)} showSizeChanger showQuickJumper />
+                            </div>
+                        </div> : ''}
+                </div>
             </div>
         );
     }
 }
 function mapStateToProps(state) {
-    return { search: state.search, loading: state.loadingBar, categories: state.header.categories };
+    return { search: state.search, loading: state.loadingBar, categories: state.header.categories, language: state.language.code };
 }
 
 

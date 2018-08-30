@@ -3,7 +3,7 @@ a{
     cursor: pointer;
 }
 .main{
-    margin-top: 140px;
+    margin-top: 97px;
 }
 .ant-back-top-content{
     background-color: rgb(4,186,254,0.7) !important;
@@ -11,9 +11,14 @@ a{
 .ant-back-top{
     right: 20px !important;
 }
+
+.anticon {
+    
+    -webkit-font-smoothing: auto !important ;
+}
 @media only screen and (max-width: 600px) {
   .main{
-      margin-top: 110px;
+      margin-top: 90px;
   }
 }
 

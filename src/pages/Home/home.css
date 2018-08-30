@@ -13,7 +13,9 @@
     color: gray !important;
 }
 
-
+.no-items{
+   font-size: '20px'; font-variant: 'petite-caps'; padding: '16px' ;
+}
 
   .ant-carousel .slick-slide h3 {
     color: #fff;
@@ -27,7 +29,9 @@
   .ant-tabs-tab{
       width: auto;
 }
-
+.slider.ant-anchor-ink:before{
+  background-color: transparent;
+}
 .ant-tabs.ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
  background: unset !important;
  border: 0 !important;
@@ -72,4 +76,22 @@
 
 .ant-carousel .slick-dots li.slick-active button{
     background: #035ea4 !important;
+}
+.ant-tabs-tab-next.ant-tabs-tab-btn-disabled.ant-tabs-tab-arrow-show{
+  pointer-events: none !important;
+}
+
+.ant-carousel.slick-prev{
+  left: 25px !important;
+}
+
+.slick-arrow.slick-prev{
+  left: 50px !important;
+  background: red !important
+}
+
+.slick-arrow.slick-next{
+  right: 50px !important;
+  background: red !important
+
 }

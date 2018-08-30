@@ -7,10 +7,10 @@ export default {
     authentication: { token: '', status: false, user_id: '',remember_me : false },
     wishlist: { content: [] , size:0 , mini:[]},
     shopcarts: { content: [] , size:0 ,total_price:0},
-    profile: {},
+    profile: {profile:{},genders:[]},
     shop_cart: { rounds:[],shop_cart:{}},
-    enrollments : { enrollments:[],courses:[]},
+    enrollments : { enrollments:[],counts:0},
     course_details: {modules:[],describtion:[],course:{},instructors:[]},
     instructors: [],
-    language:{code:localStorage.getItem('language')}
+    language:{code:localStorage.getItem('language')},
 }

@@ -14,7 +14,6 @@ class wish extends Component {
     }
 
     componentWillMount() {
-        window.scrollTo(0, 0)
     }
 
     componentDidMount() {
@@ -24,7 +23,7 @@ class wish extends Component {
 
         return (
             <div className="page-wishlist" style={{direction:this.props.language==='ar'?'rtl':''}} >
-                {this.props.loading.wishList === 0 && this.props.wishlist.content.length === 0 ? <div style={{ textAlign: 'center', fontSize: '15px' }} > No items found </div> : ''}
+                {this.props.loading.wishList === 0 && this.props.wishlist.content.length === 0 ? <div style={{ fontSize: '20px', fontVariant: 'petite-caps', padding: '16px',textAlign:'center' }} > No items found </div> : ''}
                 <ul>
                     {this.props.loading.wishList === 1 ?
                         <div style={{ padding: '24px' }} >

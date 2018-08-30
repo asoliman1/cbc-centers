@@ -100,6 +100,8 @@ class Login_register extends Component {
                     footer={null}
                     onCancel={this.handleCancel}
                     afterClose={()=>{this.props.history.goBack()}}
+                    closable={true}
+                    className={this.props.language==='ar'? "arabic":''}
                 >
                         <div className="module form-module">
                             <div  className="toggle">

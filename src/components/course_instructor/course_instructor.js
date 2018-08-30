@@ -9,7 +9,7 @@ class Course_instructor extends Component {
     
     render() {
         return (
-            <div className="col-md-2 col-sm-1 col-xs-1 col-lg-3  mteam_grid_info" style={{float:this.props.lang==='ar'?'right':''}} >
+            <div className="col-md-3 col-sm-2 col-xs-1 col-lg-3 col-xl-4 mteam_grid_info" style={{float:this.props.lang==='ar'?'right':''}} >
             <img src={this.props.details.instructor_details.image?'http://167.99.244.62:8000'+this.props.details.instructor_details.image:'/images/error.jpg'} onError={(e) => { e.target.src = '/images/error.jpg' }} className="img-responsive" />
             <h3 style={{lineHeight:'25px',height:'51px',overflow:'hidden'}} >{this.props.lang==='ar'?this.props.details.title_a+"/ "+this.props.details.instructor_details.name_a:this.props.details.title_e+"/ "+this.props.details.instructor_details.name_e}</h3>
             <p style={{whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipse',height:22}} >{this.props.lang==='ar'?this.props.details.text_a:this.props.details.text_e}</p>

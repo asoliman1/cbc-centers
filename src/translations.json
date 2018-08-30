@@ -9,7 +9,7 @@
     ],
     "header.login": [
       "الدخول",
-      "LOGIN"
+      "Login"
     ],
     "header.popConfirm.logout": [
       "تآكيد الخروج",
@@ -57,15 +57,15 @@
     ],
     "home.title.rated": [
       "الكورسات ذات التقييم العالي",
-      "Rated courses"
+      "Top Rated Courses"
     ],
     "home.title.offered": [
       " الكورسات التي بيها عرض",
-      "Offered courses"
+      "On Sale"
     ],
     "header.courses.offered": [
       "الكورسات التي عليها عرض",
-      "Offered Courses"
+      "On Sale"
     ],
     "header.shopcart": [
       "سله المشتريات",
@@ -73,7 +73,7 @@
     ],
     "header.courses.popular": [
       "الكورسات الاكتر شعبيه",
-      "Popular Courses"
+      "Most Popular Courses"
     ],
     "header.courses.new": [
       "الكورسات الجديده",
@@ -199,6 +199,10 @@
     "CHECKING": [
       "يتم التأكد",
       "Checking"
+    ],
+    "months":[
+      "شهور",
+      "Months"
     ],
     "months.january": [
       "يناير",
@@ -890,7 +894,7 @@
     ],
     "course.rounds": [
       " الدورات",
-      "Rounds!"
+      "Rounds"
     ],
     "course.add.new": [
       "إضافة كورس جديد",
@@ -987,6 +991,10 @@
     "course.round.payment.date": [
       "تاريخ السداد",
       "Payment Date"
+    ],
+    "course.round":[
+      "الدوره",
+      "Round"
     ],
     "course.round.choose": [
       "اختار دوره ",
@@ -1110,7 +1118,7 @@
     ],
     "course.details.about": [
       " عن هذا الكورس",
-      "About this Course"
+      "About Course"
     ],
     "course.details.nodata": [
       " لا يوجد معلومات ",
@@ -1121,7 +1129,7 @@
       "Duration"
     ],
     "visit_tot": [
-      " اذهب الي ال ",
+      "اذهب الي الرابط ",
       "Visit tutorial"
     ],
     "enroll": [
@@ -1134,7 +1142,7 @@
     ],
     "syllabus": [
       "المنهج",
-      "Syllbus"
+      "Syllabus"
     ],
     "instructors": [
       "المعلمين",
@@ -1247,5 +1255,17 @@
     "hours": [
       "ساعات",
       "Hours"
+    ],
+    "view.course.details":[
+      "تفاصيل الكورس",
+      "View Course Details"
+    ],
+    "signup.for.newsletter":[
+      "سجل لجريده الاخبار الخاصه بنا",
+      "Sign Up For Our Newsletter"
+    ],
+    "news.letter.details":[
+      "استقبل اخر اخبار في بريدك",
+      "Recieve our latest news straight to your inbox"
     ]
   }

@@ -5,9 +5,25 @@
   }
   .s{
       background: transparent;
-      padding-top:9px;
       font-size: 12px;
       display: inline;
+      margin-bottom: 0;
+      font-size: 14px;
+      font-weight: normal;
+      line-height: 1.42857143;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      -ms-touch-action: manipulation;
+      touch-action: manipulation;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      background-image: none;
+      border: 1px solid transparent;
+      border-radius: 4px;
   }
   
   .bm-burger-button {
@@ -28,7 +44,7 @@
   /* General sidebar styles */
   .bm-menu {
     background: white;
-    padding: 2.5em 1.5em 0;
+    padding-top: 20px;
     font-size: 1.15em;
   }
   
@@ -36,24 +52,37 @@
   .bm-morph-shape {
     fill: #373a47;
   }
-  
+
+
   /* Wrapper for item list */
   .bm-item-list {
     color: #b8b7ad;
     padding: 0.8em;
   }
-  
+
+  .ant-menu-submenu.ant-menu-submenu-inline:hover{
+    background: lightgrey;
+  }
+
+  .ant-menu-item:hover{
+    background: lightgrey ;
+  }
   /* Individual item */
   .bm-item {
     display: inline-block;
   }
   
+  .ant-avatar-lg{
+    width: 100px !important ;
+    height: 100px !important ;
+    line-height: 100px !important ;
+    border-radius: 50px !important;
+  }
   /* Styling of overlay */
   .bm-overlay {
     background: rgba(0, 0, 0, 0.5);
   }
   .ant-menu-item.ant-menu-item-selected{
-    background-color: black ;
     color:white !important ;
   }
   .ant-menu-submenu-arrow{
@@ -61,7 +90,7 @@
       right: 14px !important;
   }
   .ant-anchor-wrapper{
-    padding:20px !important;
+    padding:10px !important;
     border-radius: 4px !important;
   }
 
@@ -70,7 +99,6 @@
       font-size: 14px !important;
   }
   .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-    background-color: black !important;
   }
 
   .ant-menu-item-active{
@@ -101,6 +129,36 @@
   .ant-input-search.ant-input-search-enter-button > .ant-input{
     padding-right: 50px !important;
   }
-  /* ::-webkit-scrollbar {
-    display: none;
-    } */
+.logout .ant-popover-inner{
+  padding: 5px;
+}
+.logout .ant-popover-message-title{
+  margin-bottom: 20px;
+}
+.logout .ant-popover-buttons{
+  text-align: center
+}
+.logout .ant-popover-buttons button{ 
+  width: 100px ;
+}
+.ant-row-flex-space-around{
+  padding: 0px 10px 0px 10px;
+}
+
+.arabic-submenu.ant-menu.ant-menu-sub.ant-menu-vertical{
+  direction: rtl;
+}
+.arabic-submenu.ant-menu-submenu-arrow{
+  right:170px !important;
+  transform: rotate(180deg)
+}
+.arabic-submenu.ant-menu-submenu.ant-menu-submenu-popup.ant-menu-submenu-placement-rightTop  {
+   left: 0 !important;
+  right: 187.859px !important;
+}
+
+.header-shadow {
+  -webkit-box-shadow: 0 6px 10px rgba(57, 63, 72, 0.3);
+-moz-box-shadow: 0 6px 10px rgba(57, 63, 72, 0.3);
+box-shadow: 0 6px 10px rgba(57, 63, 72, 0.3);
+}

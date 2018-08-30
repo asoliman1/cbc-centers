@@ -34,13 +34,38 @@ a:hover img.imagedropshadow {
 
 .anchor-items a{
     color: white !important;
-    font-weight: bold;
-    font-size: 17px;
+	font-size: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
-.anchor-items .ant-anchor-link-active > .ant-anchor-link-title{
+.anchor-items{
+	max-height: calc(100vh - 400px) !important;
+	min-height: 100px !important;
+	overflow: auto;
+}
 
-    }
+.anchor-items-menu a{
+	color: white !important;
+}
+
+.anchor-items-menu .ant-anchor{
+	justify-content: center;
+	overflow: hidden;
+}
+
+.anchor-items-menu a{
+	padding-right: 3px;
+	color: white !important;
+}
+.anchor-items-menu .ant-anchor-ink-ball.visible{
+	display: none;
+}
+
+.anchor-items-menu .ant-anchor-ink:before{
+	display: none;
+}
+
 
     .ant-menu-vertical > .ant-menu-item, .ant-menu-vertical-left > .ant-menu-item, .ant-menu-vertical-right > .ant-menu-item, .ant-menu-inline > .ant-menu-item, .ant-menu-vertical > .ant-menu-submenu > .ant-menu-submenu-title, .ant-menu-vertical-left > .ant-menu-submenu > .ant-menu-submenu-title, .ant-menu-vertical-right > .ant-menu-submenu > .ant-menu-submenu-title, .ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title{
         line-height: 30px !important;
@@ -49,7 +74,23 @@ a:hover img.imagedropshadow {
 
 .anchor-items .ant-anchor-link-active {
     background: #035ea4;
-    margin-left: 3px;
+	margin-left: 3px;
+	margin-right: 3px;
+	border-radius: 7px;
+}
+.anchor-items-menu .ant-anchor-link-active {
+    background: #035ea4;
+	border-radius: 7px;
+}
+.anchor-items-menu .ant-anchor-link{
+	padding: 5px;
+}
+.anchor-items-menu .ant-anchor-wrapper{
+	padding: 0px !important;
+}
+
+.anchor-items-menu .ant-anchor-link-active {
+    background: #035ea4;
     border-radius: 7px;
 }
 
@@ -91,4 +132,8 @@ a:hover img.imagedropshadow {
 .myButton:active {
 	position:relative;
 	top:1px;
+}
+
+.course-main{
+	padding-bottom: 40px;
 }

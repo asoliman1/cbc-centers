@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { LocalizeProvider } from "react-localize-redux";
 import store from './helpers/store';
 import { BackTop,LocaleProvider } from 'antd';
-import { checkAuth } from './actions';
+import { checkAuth,menuCat } from './actions';
 import 'antd/dist/antd.css';
 import './css/animate.css'
 import './css/banner.css'
@@ -24,16 +24,18 @@ import './css/font-awesome.css'
 import './css/jquery-ui1.css'
 import './css/index.css'
 import './index.css';
+import './css/404.css';
 import ar_EG from 'antd/lib/locale-provider/ar_EG';
 import en_US from 'antd/lib/locale-provider/en_US';
 
+store.dispatch(menuCat())
 store.dispatch(checkAuth())
 
 ReactDOM.render(
 <Provider store={store} >
 <LocalizeProvider >
 <LocaleProvider locale={localStorage.getItem('language')==='ar'?ar_EG:en_US} >
-  <Router>
+  <Router  >
     <div>
       <Route  component={Header} />
       <div className="main">

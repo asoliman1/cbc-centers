@@ -8,7 +8,6 @@ class payment extends Component {
 
 
 	render() {
-		window.scroll(0, 0)
 		return (
 			<div className="payment-page" >
 				<div className="innerf-pages">
